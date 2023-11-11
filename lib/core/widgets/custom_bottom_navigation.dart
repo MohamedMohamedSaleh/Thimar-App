@@ -4,11 +4,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({
     super.key,
     required this.text,
-    required this.buttonText, this.paddingBottom = 26,
+    required this.buttonText,
+    this.paddingBottom = 26,
+    required this.onPress,
   });
   final String text;
   final String buttonText;
   final double paddingBottom;
+  final void Function() onPress;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,6 +28,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
           ),
           TextButton(
+            onPressed: onPress,
             child: Text(
               buttonText,
               style: TextStyle(
@@ -33,7 +37,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            onPressed: () {},
           ),
         ],
       ),

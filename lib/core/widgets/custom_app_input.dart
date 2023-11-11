@@ -38,9 +38,13 @@ class _CustomAppInputState extends State<CustomAppInput> {
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12
             ),
-            child: Image.asset(
-              widget.prefixIcon,
-              fit: BoxFit.scaleDown,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Image.asset(
+                widget.prefixIcon,
+                width: 18,
+                height: 20,
+              ),
             ),
           ),
           suffixIcon: widget.isPassword
@@ -69,7 +73,10 @@ class _CustomAppInputState extends State<CustomAppInput> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/images/saudia_flag.png"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Image.asset("assets/images/saudia_flag.png"),
+                      ),
                       const SizedBox(
                         height: 5,
                       ),

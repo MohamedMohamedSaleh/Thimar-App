@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 
 class CustomFillButton extends StatelessWidget {
-  const CustomFillButton({super.key, required this.title});
+  const CustomFillButton({super.key, required this.title, required this.onPress});
   final String title;
+  final void Function() onPress;
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: () {
-        print(MediaQuery.of(context).size.height);
-        FocusScope.of(context).unfocus();
-      },
-      child: Text(title),
+    return SizedBox(
+      height: 55,
+      child: FilledButton(
+        onPressed: onPress,
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ),
     );
   }
 }
