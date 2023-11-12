@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: getMaterialColor(),
         filledButtonTheme: FilledButtonThemeData(
-          
           style: FilledButton.styleFrom(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -33,21 +32,30 @@ class MyApp extends StatelessWidget {
             side: BorderSide(color: getMaterialColor()),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
-            
             ),
-
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
-            
-            borderRadius: BorderRadius.circular(
-              15,
-            ),
-            borderSide: const BorderSide(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderSide: BorderSide(
+
+          )),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
               color: Color(0xffF3F3F3),
             ),
-            
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
           ),
         ),
       ),

@@ -8,12 +8,16 @@ class CustomAppInput extends StatefulWidget {
     this.paddingBottom = 16,
     this.isPhone = false,
     this.isPassword = false,
+    this.isEnabled = true,
+    this.validator,
   });
   final String labelText;
   final String prefixIcon;
   final double paddingBottom;
   final bool isPhone;
   final bool isPassword;
+  final bool isEnabled;
+  final String? Function(String?)? validator;
 
   @override
   State<CustomAppInput> createState() => _CustomAppInputState();
@@ -29,15 +33,20 @@ class _CustomAppInputState extends State<CustomAppInput> {
         bottom: widget.paddingBottom,
       ),
       child: TextFormField(
-        keyboardType: widget.isPhone
-            ? TextInputType.number
-            : TextInputType.text,
+        validator: widget.validator,
+        enabled: widget.isEnabled,
+        keyboardType:
+            widget.isPhone ? TextInputType.number : TextInputType.text,
         obscureText: isSecure && widget.isPassword,
         decoration: InputDecoration(
+          labelStyle: !widget.isEnabled && widget.labelText != 'المدينة'
+              ? TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w400)
+              : null,
           labelText: widget.labelText,
           prefixIcon: Padding(
-            padding: const EdgeInsets.all(12
-            ),
+            padding: const EdgeInsets.all(12),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Image.asset(

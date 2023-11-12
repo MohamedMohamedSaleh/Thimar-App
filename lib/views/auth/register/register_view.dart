@@ -3,7 +3,9 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/models/cities_model.dart';
 import '../../../core/logic/helper_methods.dart';
+import '../../sheets/cities_sheet.dart';
 import '../confirm_code/confirm_code_view.dart';
 import '../login/login_view.dart';
 
@@ -12,6 +14,7 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CityModel? city;
     return Container(
       color: Colors.white,
       child: Stack(
@@ -46,10 +49,49 @@ class RegisterView extends StatelessWidget {
                       prefixIcon: "assets/icon/phone_icon.png",
                       isPhone: true,
                     ),
-                    const CustomAppInput(
-                      labelText: "المدينة",
-                      prefixIcon: "assets/icon/city_icon.png",
-                      paddingBottom: 9,
+                    StatefulBuilder(
+                      builder: (context, setState) => Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                city = await showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => const CitiesSheet(),
+                                );
+                                if (city != null) {
+                                  setState(
+                                    () {},
+                                  );
+                                }
+                              },
+                              child: CustomAppInput(
+                                labelText: city?.name ?? "المدينة",
+                                prefixIcon: "assets/icon/city_icon.png",
+                                paddingBottom: 0,
+                                isEnabled: false,
+                              ),
+                            ),
+                          ),
+                          (city != null)
+                              ? IconButton(
+                                  onPressed: () {
+                                    city = null;
+                                    setState(
+                                      () {},
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.clear,
+                                    color: Colors.red.shade400,
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 9,
                     ),
                     const CustomAppInput(
                       labelText: "كلمة المرور",

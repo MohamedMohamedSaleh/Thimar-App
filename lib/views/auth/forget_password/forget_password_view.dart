@@ -7,9 +7,14 @@ import '../../../core/logic/helper_methods.dart';
 import '../confirm_code/confirm_code_view.dart';
 import '../login/login_view.dart';
 
-class ForgetPasswordView extends StatelessWidget {
+class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
 
+  @override
+  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+}
+
+class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +43,8 @@ class ForgetPasswordView extends StatelessWidget {
                       supText: "أدخل رقم الجوال المرتبط بحسابك",
                       paddingHeight: 24,
                     ),
-                    const CustomAppInput(
+                     CustomAppInput(
+                     
                       labelText: "رقم الجوال",
                       prefixIcon: "assets/icon/phone_icon.png",
                       isPhone: true,
