@@ -3,10 +3,12 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/register/register_view.dart';
+import '../../../core/logic/helper_methods.dart';
+import '../confirm_code/confirm_code_view.dart';
+import '../login/login_view.dart';
 
-class ChangePasswordView extends StatelessWidget {
-  const ChangePasswordView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +31,47 @@ class ChangePasswordView extends StatelessWidget {
                   left: 16,
                 ),
                 child: ListView(
-                  padding: const EdgeInsets.only(top: 0),
                   children: [
                     const CustomIntroduction(
-                      mainText: "نسيت كلمة المرور",
-                      supText: "أدخل كلمة المرور الجديدة",
-                      paddingHeight: 17,
+                      mainText: "مرحبا بك مرة أخرى",
+                      supText: "يمكنك تسجيل الدخول الأن",
+                      paddingHeight: 22,
+                    ),
+                    const CustomAppInput(
+                      labelText: "اسم المستخدم",
+                      prefixIcon: "assets/icon/name_icon.png",
+                    ),
+                    const CustomAppInput(
+                      labelText: "رقم الجوال",
+                      prefixIcon: "assets/icon/phone_icon.png",
+                      isPhone: true,
+                    ),
+                    const CustomAppInput(
+                      labelText: "المدينة",
+                      prefixIcon: "assets/icon/city_icon.png",
+                      paddingBottom: 9,
                     ),
                     const CustomAppInput(
                       labelText: "كلمة المرور",
                       prefixIcon: "assets/icon/lock_icon.png",
                       isPassword: true,
+                      paddingBottom: 9,
                     ),
                     const CustomAppInput(
                       labelText: "تأكيد كلمة المرور",
                       prefixIcon: "assets/icon/lock_icon.png",
                       isPassword: true,
-                      paddingBottom: 25,
+                      paddingBottom: 24,
                     ),
                     CustomFillButton(
-                      title: "تغيير كلمة المرور",
+                      title: "تسجيل الدخول",
                       onPress: () {
                         FocusScope.of(context).unfocus();
-                      /*   Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ConfirmCodeView(isActive: true,),
+                        navegateTo(
+                          toPage: const ConfirmCodeView(
+                            isActive: true,
                           ),
-                        ); */
+                        );
                       },
                     ),
                     const SizedBox(
@@ -65,18 +81,13 @@ class ChangePasswordView extends StatelessWidget {
                 ),
               ),
             ),
-            bottomNavigationBar:  CustomBottomNavigationBar(
-                text: "ليس لديك حساب ؟",
-                buttonText: " تسجيل الدخول",
-                paddingBottom: 22,
-                onPress: () {
-                Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const RegisterView(),
-                ),
-              );
+            bottomNavigationBar: CustomBottomNavigationBar(
+              text: "لديك حساب بالفعل ؟ ",
+              buttonText: "تسجيل الدخول",
+              onPress: () {
+                navegateTo(toPage: const LoginView());
               },
-                ),
+            ),
           ),
         ],
       ),

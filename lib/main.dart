@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'views/splash_view.dart';
+import 'core/logic/helper_methods.dart';
+import 'views/auth/splash/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       builder: (context, child) =>
           Directionality(textDirection: TextDirection.rtl, child: child!),
       title: 'Orders App',

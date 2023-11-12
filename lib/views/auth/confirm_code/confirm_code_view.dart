@@ -4,8 +4,8 @@ import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.d
 import 'package:vegetable_orders_project/core/widgets/custom_circle_or_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/change_password/change_password_view.dart';
-
+import '../../../core/logic/helper_methods.dart';
+import '../change_password/change_password_view.dart';
 import '../login/login_view.dart';
 
 class ConfirmCodeView extends StatelessWidget {
@@ -63,11 +63,7 @@ class ConfirmCodeView extends StatelessWidget {
                       onPress: () {
                         if (isActive == false) {
                           FocusScope.of(context).unfocus();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const ChangePasswordView(),
-                            ),
-                          );
+                          navegateTo(toPage: const ChangePasswordView());
                         }
                       },
                     ),
@@ -96,11 +92,7 @@ class ConfirmCodeView extends StatelessWidget {
               text: "لديك حساب بالفعل ؟ ",
               buttonText: "تسجيل الدخول",
               onPress: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginView(),
-                  ),
-                );
+                navegateTo(toPage: const LoginView());
               },
             ),
           ),

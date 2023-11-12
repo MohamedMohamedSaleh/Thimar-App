@@ -3,12 +3,14 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/confirm_code/confirm_code_view.dart';
 
-import 'package:vegetable_orders_project/views/login/login_view.dart';
+import '../../../core/logic/helper_methods.dart';
+import '../forget_password/forget_password_view.dart';
+import '../register/register_view.dart';
 
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +33,12 @@ class RegisterView extends StatelessWidget {
                   left: 16,
                 ),
                 child: ListView(
+                  padding: const EdgeInsets.only(top: 0),
                   children: [
                     const CustomIntroduction(
                       mainText: "مرحبا بك مرة أخرى",
                       supText: "يمكنك تسجيل الدخول الأن",
-                      paddingHeight: 22,
-                    ),
-                    const CustomAppInput(
-                      labelText: "اسم المستخدم",
-                      prefixIcon: "assets/icon/name_icon.png",
+                      paddingHeight: 28,
                     ),
                     const CustomAppInput(
                       labelText: "رقم الجوال",
@@ -47,31 +46,36 @@ class RegisterView extends StatelessWidget {
                       isPhone: true,
                     ),
                     const CustomAppInput(
-                      labelText: "المدينة",
-                      prefixIcon: "assets/icon/city_icon.png",
-                      paddingBottom: 9,
-                    ),
-                    const CustomAppInput(
                       labelText: "كلمة المرور",
                       prefixIcon: "assets/icon/lock_icon.png",
                       isPassword: true,
-                      paddingBottom: 9,
+                      paddingBottom: 0,
                     ),
-                    const CustomAppInput(
-                      labelText: "تأكيد كلمة المرور",
-                      prefixIcon: "assets/icon/lock_icon.png",
-                      isPassword: true,
-                      paddingBottom: 24,
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: TextButton(
+                        child: const Text(
+                          "نسيت كلمة المرور ؟",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                              height: .1,
+                              color: Colors.black),
+                        ),
+                        onPressed: () {
+                          navegateTo(toPage: const ForgetPasswordView());
+                      
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 32,
                     ),
                     CustomFillButton(
                       title: "تسجيل الدخول",
                       onPress: () {
                         FocusScope.of(context).unfocus();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ConfirmCodeView(isActive: true,),
-                          ),
-                        );
+                        // navegateTo(toPage: const RegisterView());
                       },
                     ),
                     const SizedBox(
@@ -82,14 +86,11 @@ class RegisterView extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
-              text: "لديك حساب بالفعل ؟ ",
-              buttonText: "تسجيل الدخول",
+              text: "ليس لديك حساب ؟",
+              buttonText: " تسجيل الأن",
+              paddingBottom: 22,
               onPress: () {
-                Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) =>  LoginView(),
-                ),
-              );
+                navegateTo(toPage: const RegisterView());
               },
             ),
           ),

@@ -11,7 +11,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final String text;
   final String buttonText;
   final double paddingBottom;
-  final void Function() onPress;
+  final VoidCallback onPress;
   @override
   Widget build(BuildContext context) {
     return Padding(

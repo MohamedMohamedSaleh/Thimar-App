@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/views/login/login_view.dart';
+import '../login/login_view.dart';
 
 class SplashViews extends StatefulWidget {
   const SplashViews({super.key});

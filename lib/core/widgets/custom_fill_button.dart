@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomFillButton extends StatelessWidget {
   const CustomFillButton({super.key, required this.title, required this.onPress});
   final String title;
-  final void Function() onPress;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {

@@ -3,12 +3,11 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/confirm_code/confirm_code_view.dart';
+import '../../../core/logic/helper_methods.dart';
+import '../register/register_view.dart';
 
-import '../login/login_view.dart';
-
-class ForgetPasswordView extends StatelessWidget {
-  const ForgetPasswordView({super.key});
+class ChangePasswordView extends StatelessWidget {
+  const ChangePasswordView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,43 +30,44 @@ class ForgetPasswordView extends StatelessWidget {
                   left: 16,
                 ),
                 child: ListView(
-                  padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+                  padding: const EdgeInsets.only(top: 0),
                   children: [
                     const CustomIntroduction(
                       mainText: "نسيت كلمة المرور",
-                      supText: "أدخل رقم الجوال المرتبط بحسابك",
-                      paddingHeight: 24,
+                      supText: "أدخل كلمة المرور الجديدة",
+                      paddingHeight: 17,
                     ),
                     const CustomAppInput(
-                      labelText: "رقم الجوال",
-                      prefixIcon: "assets/icon/phone_icon.png",
-                      isPhone: true,
-                      paddingBottom: 28,
+                      labelText: "كلمة المرور",
+                      prefixIcon: "assets/icon/lock_icon.png",
+                      isPassword: true,
+                    ),
+                    const CustomAppInput(
+                      labelText: "تأكيد كلمة المرور",
+                      prefixIcon: "assets/icon/lock_icon.png",
+                      isPassword: true,
+                      paddingBottom: 25,
                     ),
                     CustomFillButton(
-                      title: "تأكيد رقم الجوال",
+                      title: "تغيير كلمة المرور",
                       onPress: () {
                         FocusScope.of(context).unfocus();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ConfirmCodeView(isActive: false,),
-                          ),
-                        );
+                        // navegateTo(toPage: const ConfirmCodeView(isActive: true,),);
                       },
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                   ],
                 ),
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
-              text: "لديك حساب بالفعل ؟ ",
-              buttonText: "تسجيل الدخول",
+              text: "ليس لديك حساب ؟",
+              buttonText: " تسجيل الدخول",
+              paddingBottom: 22,
               onPress: () {
-                Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const LoginView(),
-                ),
-              );
+                navegateTo(toPage: const RegisterView());
               },
             ),
           ),
