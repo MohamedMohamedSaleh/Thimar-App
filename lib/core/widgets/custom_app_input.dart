@@ -17,7 +17,7 @@ class CustomAppInput extends StatefulWidget {
   final bool isPhone;
   final bool isPassword;
   final bool isEnabled;
-  final String? Function(String?)? validator;
+  final FormFieldValidator<String?>? validator;
 
   @override
   State<CustomAppInput> createState() => _CustomAppInputState();

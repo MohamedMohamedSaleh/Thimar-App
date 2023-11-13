@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/views/notifications/notifications_view.dart';
 
 import 'core/logic/helper_methods.dart';
-import 'views/auth/splash/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +20,18 @@ class MyApp extends StatelessWidget {
           Directionality(textDirection: TextDirection.rtl, child: child!),
       title: 'Orders App',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          elevation: 0,
+          color: Colors.white,
+          titleTextStyle: TextStyle(
+            color: getMaterialColor(),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        
+        ),
         primarySwatch: getMaterialColor(),
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
@@ -37,10 +49,8 @@ class MyApp extends StatelessWidget {
         ),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-              borderSide: BorderSide(
-
-          )),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderSide: BorderSide()),
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Color(0xffF3F3F3),
@@ -59,7 +69,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SplashViews(),
+      home: const NotificationsView(),
     );
   }
 }

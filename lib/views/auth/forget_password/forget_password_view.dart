@@ -7,14 +7,9 @@ import '../../../core/logic/helper_methods.dart';
 import '../confirm_code/confirm_code_view.dart';
 import '../login/login_view.dart';
 
-class ForgetPasswordView extends StatefulWidget {
+class ForgetPasswordView extends StatelessWidget {
   const ForgetPasswordView({super.key});
 
-  @override
-  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
-}
-
-class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,40 +24,13 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            body: SafeArea(
+            body: const SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   right: 16,
                   left: 16,
                 ),
-                child: ListView(
-                  padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
-                  children: [
-                    const CustomIntroduction(
-                      mainText: "نسيت كلمة المرور",
-                      supText: "أدخل رقم الجوال المرتبط بحسابك",
-                      paddingHeight: 24,
-                    ),
-                     CustomAppInput(
-                     
-                      labelText: "رقم الجوال",
-                      prefixIcon: "assets/icon/phone_icon.png",
-                      isPhone: true,
-                      paddingBottom: 28,
-                    ),
-                    CustomFillButton(
-                      title: "تأكيد رقم الجوال",
-                      onPress: () {
-                        FocusScope.of(context).unfocus();
-                        navegateTo(
-                          toPage: const ConfirmCodeView(
-                            isActive: false,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                child: FormForgetPassword(),
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
@@ -72,6 +40,70 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                 navegateTo(toPage: const LoginView());
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FormForgetPassword extends StatefulWidget {
+  const FormForgetPassword({
+    super.key,
+  });
+
+  @override
+  State<FormForgetPassword> createState() => _FormForgetPasswordState();
+}
+
+class _FormForgetPasswordState extends State<FormForgetPassword> {
+  final formKey = GlobalKey<FormState>();
+
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      autovalidateMode: autovalidateMode,
+      child: ListView(
+        padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+        children: [
+          const CustomIntroduction(
+            mainText: "نسيت كلمة المرور",
+            supText: "أدخل رقم الجوال المرتبط بحسابك",
+            paddingHeight: 24,
+          ),
+          CustomAppInput(
+            validator: (String? value) {
+              if (value?.isEmpty ?? true) {
+                return "رقم الجوال مطلوب";
+              } else if (value!.length < 10) {
+                return "رقم الهاتف يجب أن يكون أكبر من 10 أرقام";
+              }
+              return null;
+            },
+            labelText: "رقم الجوال",
+            prefixIcon: "assets/icon/phone_icon.png",
+            isPhone: true,
+            paddingBottom: 28,
+          ),
+          CustomFillButton(
+            title: "تأكيد رقم الجوال",
+            onPress: () {
+              FocusScope.of(context).unfocus();
+              if (formKey.currentState!.validate()) {
+                navegateTo(
+                  toPage: const ConfirmCodeView(
+                    isActive: false,
+                  ),
+                );
+              } else {
+                autovalidateMode = AutovalidateMode.always;
+
+                setState(() {});
+              }
+            },
           ),
         ],
       ),
