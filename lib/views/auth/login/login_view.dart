@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
@@ -60,12 +61,40 @@ class FormLogin extends StatefulWidget {
 
 class _FormLoginState extends State<FormLogin> {
   final formKey = GlobalKey<FormState>();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool isLoading = false;
+
+  void postData() async {
+    isLoading = true;
+    setState(() {});
+    final response = await DioHelper().sendData(
+      indPoint: "login",
+      data: {
+        "phone": phoneController.text,
+        "password": passwordController.text,
+        "type": "android",
+        "device_token": "test",
+        "user_type": "client",
+      },
+    );
+
+    if (response.isSuccess) {
+      showMessage(message: response.message, type: MessageType.success);
+    } else {
+      showMessage(message: response.message);
+    }
+
+    isLoading = false;
+    setState(() {});
+  }
+
+  // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      autovalidateMode: autovalidateMode,
+      // autovalidateMode: autovalidateMode,
       child: ListView(
         padding: const EdgeInsets.only(top: 0),
         children: [
@@ -86,6 +115,7 @@ class _FormLoginState extends State<FormLogin> {
             labelText: "رقم الجوال",
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
+            controller: phoneController,
           ),
           CustomAppInput(
             validator: (String? value) {
@@ -96,6 +126,7 @@ class _FormLoginState extends State<FormLogin> {
               }
               return null;
             },
+            controller: passwordController,
             labelText: "كلمة المرور",
             prefixIcon: "assets/icon/lock_icon.png",
             isPassword: true,
@@ -120,18 +151,23 @@ class _FormLoginState extends State<FormLogin> {
           const SizedBox(
             height: 32,
           ),
-          CustomFillButton(
-            title: "تسجيل الدخول",
-            onPress: () {
-              FocusScope.of(context).unfocus();
-              if (formKey.currentState!.validate()) {
-                // navegateTo(toPage: const RegisterView());
-              } else {
-                autovalidateMode = AutovalidateMode.always;
-                setState(() {});
-              }
-            },
-          ),
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : CustomFillButton(
+                  title: "تسجيل الدخول",
+                  onPress: () {
+                    FocusScope.of(context).unfocus();
+                    if (formKey.currentState!.validate()) {
+                      postData();
+                      // navegateTo(toPage: const RegisterView());
+                    } else {
+                      // autovalidateMode = AutovalidateMode.onUserInteraction;
+                      setState(() {});
+                    }
+                  },
+                ),
           const SizedBox(
             height: 20,
           ),

@@ -9,7 +9,7 @@ class CustomAppInput extends StatefulWidget {
     this.isPhone = false,
     this.isPassword = false,
     this.isEnabled = true,
-    this.validator,
+    this.validator, this.controller,
   });
   final String labelText;
   final String prefixIcon;
@@ -18,6 +18,7 @@ class CustomAppInput extends StatefulWidget {
   final bool isPassword;
   final bool isEnabled;
   final FormFieldValidator<String?>? validator;
+  final TextEditingController? controller;
 
   @override
   State<CustomAppInput> createState() => _CustomAppInputState();
@@ -33,6 +34,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
         bottom: widget.paddingBottom,
       ),
       child: TextFormField(
+        controller: widget.controller,
         validator: widget.validator,
         enabled: widget.isEnabled,
         keyboardType:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/views/notifications/notifications_view.dart';
+import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
+// import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 
 import 'core/logic/helper_methods.dart';
 
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const NotificationsView(),
+      home: const LoginView(),
     );
   }
 }

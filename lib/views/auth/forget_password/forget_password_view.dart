@@ -99,7 +99,7 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
                   ),
                 );
               } else {
-                autovalidateMode = AutovalidateMode.always;
+                autovalidateMode = AutovalidateMode.onUserInteraction;
 
                 setState(() {});
               }

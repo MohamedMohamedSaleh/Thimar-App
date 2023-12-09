@@ -10,3 +10,17 @@ void navegateTo({Widget? toPage}) {
     ),
   );
 }
+
+enum MessageType { faild, success }
+
+void showMessage({String? message, MessageType type = MessageType.faild}) {
+  
+  ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+    SnackBar(
+      content: Text(message!, textAlign: TextAlign.center,),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: (type == MessageType.success)? Theme.of(navigatorKey.currentContext!).primaryColor : Colors.redAccent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+    ),
+  );
+}
