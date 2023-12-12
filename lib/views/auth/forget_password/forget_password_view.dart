@@ -58,6 +58,7 @@ class FormForgetPassword extends StatefulWidget {
 
 class _FormForgetPasswordState extends State<FormForgetPassword> {
   final formKey = GlobalKey<FormState>();
+  final phoneController = TextEditingController();
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
@@ -87,15 +88,18 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
             paddingBottom: 28,
+            controller: phoneController ,
           ),
           CustomFillButton(
+          
             title: "تأكيد رقم الجوال",
             onPress: () {
               FocusScope.of(context).unfocus();
               if (formKey.currentState!.validate()) {
                 navegateTo(
-                  toPage: const ConfirmCodeView(
+                  toPage:  ConfirmCodeView(
                     isActive: false,
+                    phone: phoneController.text,
                   ),
                 );
               } else {

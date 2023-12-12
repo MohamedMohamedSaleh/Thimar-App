@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
+import 'package:flutter/services.dart';
+// import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
+import 'package:vegetable_orders_project/views/auth/register/register_view.dart';
 // import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 
 import 'core/logic/helper_methods.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(// navigation bar color
+    statusBarColor: getMaterialColor(), // status bar color 
+  ));
   runApp(const MyApp());
 }
 
@@ -31,7 +36,6 @@ class MyApp extends StatelessWidget {
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-        
         ),
         primarySwatch: getMaterialColor(),
         filledButtonTheme: FilledButtonThemeData(
@@ -70,7 +74,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LoginView(),
+      home: const RegisterView(),
     );
   }
 }

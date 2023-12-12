@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
@@ -17,6 +18,8 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  CityModel? city;
+  bool isLoading = false;
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final phoneController = TextEditingController();
@@ -24,7 +27,40 @@ class _RegisterViewState extends State<RegisterView> {
   final cityController = TextEditingController();
   final nameController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  CityModel? city;
+
+  void register() async {
+    isLoading = true;
+    setState(() {});
+    final response = await DioHelper().sendData(
+      indPoint: 'client_register',
+      data: {
+        "fullname": nameController.text,
+        "password": passwordController.text,
+        "password_confirmation": confirmPasswordController.text,
+        "phone": phoneController.text,
+        "country_id": '1',
+        "city_1": city!.id,
+      },
+    );
+
+    if (response.isSuccess) {
+      showMessage(
+        message: response.message,
+        type: MessageType.success,
+      );
+      navegateTo(
+        toPage: ConfirmCodeView(
+          isActive: true,
+          phone: phoneController.text,
+        ),
+      );
+    } else {
+      showMessage(message: response.message);
+    }
+    isLoading = false;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -167,15 +203,12 @@ class _RegisterViewState extends State<RegisterView> {
                         paddingBottom: 24,
                       ),
                       CustomFillButton(
+                        isLoading: isLoading,
                         title: "تسجيل الدخول",
                         onPress: () {
                           FocusScope.of(context).unfocus();
                           if (formKey.currentState!.validate()) {
-                            navegateTo(
-                              toPage: const ConfirmCodeView(
-                                isActive: true,
-                              ),
-                            );
+                            register();
                           } else {
                             autovalidateMode =
                                 AutovalidateMode.onUserInteraction;

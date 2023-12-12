@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_circle_or_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
@@ -8,10 +11,49 @@ import '../../../core/logic/helper_methods.dart';
 import '../change_password/change_password_view.dart';
 import '../login/login_view.dart';
 
-class ConfirmCodeView extends StatelessWidget {
-  const ConfirmCodeView({super.key, required this.isActive});
+class ConfirmCodeView extends StatefulWidget {
+  const ConfirmCodeView(
+      {super.key, required this.isActive, required this.phone});
 
   final bool isActive;
+  final String phone;
+  @override
+  State<ConfirmCodeView> createState() => _ConfirmCodeViewState();
+}
+
+class _ConfirmCodeViewState extends State<ConfirmCodeView> {
+  final confirmCodeController = TextEditingController();
+  bool isLoading = false;
+  void verify() async {
+    isLoading = true;
+    setState(() {});
+    final response = await DioHelper().sendData(
+      indPoint: 'verify',
+      data: {
+        "code": confirmCodeController.text,
+        "phone": widget.phone,
+        "type": Platform.operatingSystem,
+        "device_token": 'test',
+      },
+    );
+
+    if (response.isSuccess) {
+      showMessage(
+        message: "تم تفعيل حسابك بنجاح",
+        type: MessageType.success,
+      );
+      if (widget.isActive == false) {
+        if (!context.mounted) return;
+        FocusScope.of(context).unfocus();
+        navegateTo(toPage: const ChangePasswordView());
+      }
+    } else {
+      showMessage(message: response.message);
+    }
+    isLoading = false;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,12 +78,15 @@ class ConfirmCodeView extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 15),
                   children: [
                     CustomIntroduction(
-                      mainText: !isActive ? "نسيت كلمة المرور" : "تفعيل الحساب",
+                      mainText: !widget.isActive
+                          ? "نسيت كلمة المرور"
+                          : "تفعيل الحساب",
                       supText:
                           "أدخل الكود المكون من 4 أرقام المرسل علي رقم الجوال",
                       isRequirPhoneCheck: true,
                     ),
                     PinCodeTextField(
+                      controller: confirmCodeController,
                       appContext: context,
                       length: 4,
                       pinTheme: PinTheme(
@@ -59,12 +104,11 @@ class ConfirmCodeView extends StatelessWidget {
                       height: 30,
                     ),
                     CustomFillButton(
+                      isLoading: isLoading,
                       title: "تأكيد الكود",
                       onPress: () {
-                        if (isActive == false) {
-                          FocusScope.of(context).unfocus();
-                          navegateTo(toPage: const ChangePasswordView());
-                        }
+                        FocusScope.of(context).unfocus();
+                        verify();
                       },
                     ),
                     const SizedBox(

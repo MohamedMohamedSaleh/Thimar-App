@@ -12,10 +12,10 @@ class DioHelper {
         indPoint,
         data: data
       );
-      return ResponseData(message: "تم تسجيل الدخول بنجاح", isSuccess: true, response: response);
+      return ResponseData(message: response.data["message"], isSuccess: true, response: response);
     } on DioException catch (ex) {
       return ResponseData(
-          message: "بيانات الإدخال غير متطابقة معنا", isSuccess: false , response: ex.response );
+          message: ex.response!.data["message"], isSuccess: false , response: ex.response );
     }
   }
 

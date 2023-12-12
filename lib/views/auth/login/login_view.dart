@@ -80,7 +80,7 @@ class _FormLoginState extends State<FormLogin> {
     );
 
     if (response.isSuccess) {
-      showMessage(message: response.message, type: MessageType.success);
+      showMessage(message: "تم تسجيل الدخول بنجاح", type: MessageType.success);
     } else {
       showMessage(message: response.message);
     }
@@ -151,23 +151,20 @@ class _FormLoginState extends State<FormLogin> {
           const SizedBox(
             height: 32,
           ),
-          isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : CustomFillButton(
-                  title: "تسجيل الدخول",
-                  onPress: () {
-                    FocusScope.of(context).unfocus();
-                    if (formKey.currentState!.validate()) {
-                      postData();
-                      // navegateTo(toPage: const RegisterView());
-                    } else {
-                      // autovalidateMode = AutovalidateMode.onUserInteraction;
-                      setState(() {});
-                    }
-                  },
-                ),
+          CustomFillButton(
+            isLoading: isLoading,
+            title: "تسجيل الدخول",
+            onPress: () {
+              FocusScope.of(context).unfocus();
+              if (formKey.currentState!.validate()) {
+                postData();
+                // navegateTo(toPage: const RegisterView());
+              } else {
+                // autovalidateMode = AutovalidateMode.onUserInteraction;
+                setState(() {});
+              }
+            },
+          ),
           const SizedBox(
             height: 20,
           ),
