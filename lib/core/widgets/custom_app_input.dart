@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 
 class CustomAppInput extends StatefulWidget {
   const CustomAppInput({
@@ -9,8 +10,11 @@ class CustomAppInput extends StatefulWidget {
     this.isPhone = false,
     this.isPassword = false,
     this.isEnabled = true,
-    this.validator, this.controller,
+    this.validator,
+    this.controller,
+    this.fillColor = Colors.white
   });
+  final Color fillColor;
   final String labelText;
   final String prefixIcon;
   final double paddingBottom;
@@ -41,6 +45,8 @@ class _CustomAppInputState extends State<CustomAppInput> {
             widget.isPhone ? TextInputType.number : TextInputType.text,
         obscureText: isSecure && widget.isPassword,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: widget.fillColor,
           labelStyle: !widget.isEnabled && widget.labelText != 'المدينة'
               ? TextStyle(
                   color: Theme.of(context).primaryColor,
@@ -51,7 +57,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
             padding: const EdgeInsets.all(12),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Image.asset(
+              child: AppImage(
                 widget.prefixIcon,
                 width: 18,
                 height: 20,

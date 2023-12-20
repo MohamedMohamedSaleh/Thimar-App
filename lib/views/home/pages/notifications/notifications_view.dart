@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
-import 'package:vegetable_orders_project/views/home/notifications/notification_model.dart';
+
+import 'notification_model.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
