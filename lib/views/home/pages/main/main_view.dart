@@ -85,17 +85,20 @@ class _MainPageState extends State<MainPage> {
                         const SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                            state.model.length,
-                            (index) => Padding(
-                              padding: const EdgeInsetsDirectional.only(end: 4),
-                              child: CircleAvatar(
-                                radius: (index == currentIndex) ? 5 : 4,
-                                backgroundColor: (index == currentIndex)
-                                    ? Theme.of(context).primaryColor
-                                    : const Color(0xff61880c).withOpacity(.5),
+                        SizedBox(
+                          height: 10,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              state.model.length,
+                              (index) => Padding(
+                                padding: const EdgeInsetsDirectional.only(end: 4),
+                                child: CircleAvatar(
+                                  radius: (index == currentIndex) ? 5 : 4,
+                                  backgroundColor: (index == currentIndex)
+                                      ? Theme.of(context).primaryColor
+                                      : const Color(0xff61880c).withOpacity(.5),
+                                ),
                               ),
                             ),
                           ),

@@ -44,34 +44,35 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       body: pages[currentIndex],
       bottomNavigationBar: SafeArea(
-        child: BottomNavigationBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          unselectedItemColor: const Color(0xffAED489),
-          selectedItemColor: Colors.white,
-          currentIndex: currentIndex,
-          onTap: (value) {
-            currentIndex = value;
-            setState(() {});
-          },
-          // the best way is List generator
-          items: List.generate(
-            pages.length,
-            (index) => BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icon/svg/${icons[index]}.svg',
-                color: currentIndex == index
-                    ? Colors.white
-                    : const Color(0xffAED489),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: BottomNavigationBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            unselectedItemColor: const Color(0xffAED489),
+            selectedItemColor: Colors.white,
+            currentIndex: currentIndex,
+            onTap: (value) {
+              currentIndex = value;
+              setState(() {});
+            },
+            // the best way is List generator
+            items: List.generate(
+              pages.length,
+              (index) => BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icon/svg/${icons[index]}.svg',
+                  color: currentIndex == index
+                      ? Colors.white
+                      : const Color(0xffAED489),
+                ),
+                label: label[index],
               ),
-              label: label[index],
             ),
+            type: BottomNavigationBarType.fixed,
           ),
-          type: BottomNavigationBarType.fixed,
         ),
       ),
     );
   }
 }
-
-
-

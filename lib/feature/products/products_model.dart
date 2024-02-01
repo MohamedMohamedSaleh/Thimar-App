@@ -28,7 +28,9 @@ class ProductModel {
   late final String code;
   late final int priceBeforeDiscount;
   late final double? price;
-  late  double discount;
+  late double dis;
+  late final int discount;
+
   late final int amount;
   late final int isActive;
   late final bool isFavorite;
@@ -45,8 +47,9 @@ class ProductModel {
     code = json['code'];
     priceBeforeDiscount = json['price_before_discount'];
     price = double.tryParse((json['price'] ?? 0).toString());
-    discount = json['discount']*100;
-    
+    dis = json['discount'] * 100;
+    discount = dis.truncate();
+
     amount = json['amount'];
     isActive = json['is_active'];
     isFavorite = json['is_favorite'];
