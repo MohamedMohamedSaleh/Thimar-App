@@ -1,14 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_circle_or_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/views/auth/confirm_code/cubit/confirm_cubit.dart';
 import '../../../core/logic/helper_methods.dart';
-import '../change_password/change_password_view.dart';
 import '../login/login_view.dart';
 
 class ConfirmCodeView extends StatefulWidget {
@@ -22,36 +20,12 @@ class ConfirmCodeView extends StatefulWidget {
 }
 
 class _ConfirmCodeViewState extends State<ConfirmCodeView> {
-  final confirmCodeController = TextEditingController();
-  bool isLoading = false;
-  void verify() async {
-    isLoading = true;
-    setState(() {});
-    final response = await DioHelper().sendData(
-      indPoint: 'verify',
-      data: {
-        "code": confirmCodeController.text,
-        "phone": widget.phone,
-        "type": Platform.operatingSystem,
-        "device_token": 'test',
-      },
-    );
+  late ConfirmCubit cubit;
 
-    if (response.isSuccess) {
-      showMessage(
-        message: "تم تفعيل حسابك بنجاح",
-        type: MessageType.success,
-      );
-      if (widget.isActive == false) {
-        if (!context.mounted) return;
-        FocusScope.of(context).unfocus();
-        navegateTo(toPage: const ChangePasswordView());
-      }
-    } else {
-      showMessage(message: response.message);
-    }
-    isLoading = false;
-    setState(() {});
+  @override
+  void initState() {
+    super.initState();
+    cubit = BlocProvider.of(context);
   }
 
   @override
@@ -86,7 +60,7 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                       isRequirPhoneCheck: true,
                     ),
                     PinCodeTextField(
-                      controller: confirmCodeController,
+                      controller: cubit.confirmCodeController,
                       appContext: context,
                       length: 4,
                       pinTheme: PinTheme(
@@ -103,12 +77,17 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                     const SizedBox(
                       height: 30,
                     ),
-                    CustomFillButton(
-                      isLoading: isLoading,
-                      title: "تأكيد الكود",
-                      onPress: () {
-                        FocusScope.of(context).unfocus();
-                        verify();
+                    BlocBuilder<ConfirmCubit, ConfirmStates>(
+                      builder: (context, state) {
+                        return CustomFillButton(
+                          isLoading: state is ConfirmloadingState,
+                          title: "تأكيد الكود",
+                          onPress: () {
+                            FocusScope.of(context).unfocus();
+                            cubit.verify(
+                                isActive: widget.isActive, phone: widget.phone);
+                          },
+                        );
                       },
                     ),
                     const SizedBox(

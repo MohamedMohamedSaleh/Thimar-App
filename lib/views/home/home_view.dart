@@ -25,9 +25,9 @@ class _HomeViewState extends State<HomeView> {
 
   List<String> icons = [
     'main',
-    'favorites',
     'my_orders',
     'notifications',
+    'favorites',
     'my_account',
   ];
 

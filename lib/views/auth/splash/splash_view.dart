@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
+import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
+import 'package:vegetable_orders_project/views/home/home_view.dart';
 import '../login/login_view.dart';
 
 class SplashViews extends StatefulWidget {
@@ -19,10 +22,8 @@ class _SplashViewsState extends State<SplashViews> {
 
   void navigate() async {
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const LoginView(),
-        ),
+      navegateReplace(
+        toPage: CacheHelper.isAuth() ? const HomeView() : const LoginView(),
       );
     });
   }
@@ -37,7 +38,11 @@ class _SplashViewsState extends State<SplashViews> {
               textDirection: TextDirection.ltr,
               bottom: -53,
               start: 27,
-              child: Image.asset("assets/images/splash_ib.png", width: 448, height: 298,)),
+              child: Image.asset(
+                "assets/images/splash_ib.png",
+                width: 448,
+                height: 298,
+              )),
           Image.asset(
             "assets/images/splash_bg.png",
             width: double.infinity,
@@ -50,8 +55,7 @@ class _SplashViewsState extends State<SplashViews> {
               duration: const Duration(seconds: 2),
               child: ZoomIn(
                 delay: const Duration(seconds: 1),
-              duration: const Duration(seconds: 1),
-              
+                duration: const Duration(seconds: 1),
                 child: Image.asset(
                   "assets/images/vegetable_basket.png",
                   width: 160,

@@ -1,6 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/models/cities_model.dart';
+
+import '../../features/get_cities/cubit/get_cities_cubit.dart';
 
 class CitiesSheet extends StatefulWidget {
   const CitiesSheet({super.key});
@@ -10,59 +12,62 @@ class CitiesSheet extends StatefulWidget {
 }
 
 class _CitiesSheetState extends State<CitiesSheet> {
-  late CitiesDataModel model;
-  bool isLoading = true;
-  @override
-  void initState() {
-    super.initState();
-    getCityData();
-  }
+  late GetCitiesCubit cubit;
 
-  void getCityData() async {
-    var response =
-        await Dio().get("https://thimar.amr.aait-d.com/api/cities/1");
-    model = CitiesDataModel.fromJson(response.data);
-    isLoading = false;
-    setState(() {});
+  @override
+  initState() {
+    super.initState();
+    cubit = BlocProvider.of(context)..getCityData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Text(
-              "اختر مدينتك",
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12,),
-            isLoading
-                ? const Expanded(
-                    child: Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(),
-                      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Text(
+            "اختر مدينتك",
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          BlocBuilder<GetCitiesCubit, GetCitiesStates>(
+            builder: (context, state) {
+              if (state is GetCitiesLoadingState) {
+                return const Expanded(
+                  child: Center(
+                    child: SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: CircularProgressIndicator(),
                     ),
-                  )
-                : Expanded(
+                  ),
+                );
+              } else if (state is GetCitieSuccessState) {
+                return Expanded(
                   child: Container(
-                      color: Colors.white,
-                      child: ListView.builder(
-                        itemBuilder: (context, index) => _Item(
-                          city: model.cityData[index],
-                        ),
-                        itemCount: model.cityData.length,
+                    color: Colors.white,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) => _Item(
+                        city: state.cityData[index],
                       ),
+                      itemCount: state.cityData.length,
                     ),
-                ),
-          ],
-        ));
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 

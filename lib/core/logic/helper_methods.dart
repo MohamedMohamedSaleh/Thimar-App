@@ -11,6 +11,15 @@ void navegateTo({Widget? toPage}) {
   );
 }
 
+void navegateReplace({Widget? toPage}) {
+  Navigator.pushReplacement(
+    navigatorKey.currentContext!,
+    MaterialPageRoute(
+      builder: (context) => toPage!,
+    ),
+  );
+}
+
 enum MessageType { faild, success }
 
 void showMessage({String? message, MessageType type = MessageType.faild}) {

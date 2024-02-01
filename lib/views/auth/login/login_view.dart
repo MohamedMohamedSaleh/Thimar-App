@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/views/auth/login/cubit/login_cubit.dart';
 
 import '../../../core/logic/helper_methods.dart';
 import '../forget_password/forget_password_view.dart';
@@ -60,116 +61,91 @@ class FormLogin extends StatefulWidget {
 }
 
 class _FormLoginState extends State<FormLogin> {
-  final formKey = GlobalKey<FormState>();
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
-  bool isLoading = false;
+late  LoginCubit cubit;
 
-  void postData() async {
-    isLoading = true;
-    setState(() {});
-    final response = await DioHelper().sendData(
-      indPoint: "login",
-      data: {
-        "phone": phoneController.text,
-        "password": passwordController.text,
-        "type": "android",
-        "device_token": "test",
-        "user_type": "client",
-      },
-    );
-
-    if (response.isSuccess) {
-      showMessage(message: "تم تسجيل الدخول بنجاح", type: MessageType.success);
-    } else {
-      showMessage(message: response.message);
-    }
-
-    isLoading = false;
-    setState(() {});
+  @override
+  void initState() {
+    super.initState();
+    cubit = BlocProvider.of(context);
   }
 
-  // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      // autovalidateMode: autovalidateMode,
-      child: ListView(
-        padding: const EdgeInsets.only(top: 0),
-        children: [
-          const CustomIntroduction(
-            mainText: "مرحبا بك مرة أخرى",
-            supText: "يمكنك تسجيل الدخول الأن",
-            paddingHeight: 28,
-          ),
-          CustomAppInput(
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return "رقم الجوال مطلوب";
-              } else if (value!.length < 10) {
-                return "رقم الهاتف يجب أن يكون أكبر من 10 أرقام";
-              }
-              return null;
-            },
-            labelText: "رقم الجوال",
-            prefixIcon: "assets/icon/phone_icon.png",
-            isPhone: true,
-            controller: phoneController,
-          ),
-          CustomAppInput(
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return "كلمة المرور مطلوبه";
-              } else if (value!.length <= 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 6 أحرف";
-              }
-              return null;
-            },
-            controller: passwordController,
-            labelText: "كلمة المرور",
-            prefixIcon: "assets/icon/lock_icon.png",
-            isPassword: true,
-            paddingBottom: 0,
-          ),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              child: const Text(
-                "نسيت كلمة المرور ؟",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                    height: .1,
-                    color: Colors.black),
+      return Form(
+        key: cubit.formKey,
+        autovalidateMode: cubit.autovalidateMode,
+        child: ListView(
+          padding: const EdgeInsets.only(top: 0),
+          children: [
+            const CustomIntroduction(
+              mainText: "مرحبا بك مرة أخرى",
+              supText: "يمكنك تسجيل الدخول الأن",
+              paddingHeight: 28,
+            ),
+            CustomAppInput(
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return "رقم الجوال مطلوب";
+                } else if (value!.length < 10) {
+                  return "رقم الهاتف يجب أن يكون أكبر من 10 أرقام";
+                }
+                return null;
+              },
+              labelText: "رقم الجوال",
+              prefixIcon: "assets/icon/phone_icon.png",
+              isPhone: true,
+              controller: cubit.phoneController,
+            ),
+            CustomAppInput(
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return "كلمة المرور مطلوبه";
+                } else if (value!.length <= 6) {
+                  return "كلمة المرور يجب أن تكون أكبر من 6 أحرف";
+                }
+                return null;
+              },
+              controller: cubit.passwordController,
+              labelText: "كلمة المرور",
+              prefixIcon: "assets/icon/lock_icon.png",
+              isPassword: true,
+              paddingBottom: 0,
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(
+                child: const Text(
+                  "نسيت كلمة المرور ؟",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                      height: .1,
+                      color: Colors.black),
+                ),
+                onPressed: () {
+                  navegateTo(toPage: const ForgetPasswordView());
+                },
               ),
-              onPressed: () {
-                navegateTo(toPage: const ForgetPasswordView());
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            BlocBuilder<LoginCubit, LoginStates>(
+              builder: (context, state) {
+                return CustomFillButton(
+                  isLoading: state is LoginLoadingState,
+                  title: "تسجيل الدخول",
+                  onPress: () {
+                    cubit.login();
+                  },
+                );
               },
             ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          CustomFillButton(
-            isLoading: isLoading,
-            title: "تسجيل الدخول",
-            onPress: () {
-              FocusScope.of(context).unfocus();
-              if (formKey.currentState!.validate()) {
-                postData();
-                // navegateTo(toPage: const RegisterView());
-              } else {
-                // autovalidateMode = AutovalidateMode.onUserInteraction;
-                setState(() {});
-              }
-            },
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    );
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      );
+    }
   }
-}
