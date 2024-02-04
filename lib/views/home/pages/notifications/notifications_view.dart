@@ -93,7 +93,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   void getData() async {
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     isLoading = false;
     setState(() {});
   }
@@ -101,11 +101,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(55),
-        child: CustomAppBar(
-          title: "الإشعارات",
-        ),
+      appBar: const CustomAppBar(
+        title: "الإشعارات",
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 26, right: 16),

@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
-import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/feature/products/cubit/get_products_cubit.dart';
-import 'package:vegetable_orders_project/feature/products/products_model.dart';
 import 'package:vegetable_orders_project/feature/slider/cubit/get_slider_cubit.dart';
 import '../../../../feature/categoris/category_model.dart';
 import '../../../../feature/categoris/cubit/get_category_cubit.dart';
+import '../../widgets/custom_item_product.dart';
 import 'widgets/main_app_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -189,7 +188,7 @@ class _MainPageState extends State<MainPage> {
                       childAspectRatio: 163 / 250,
                       mainAxisSpacing: 16,
                     ),
-                    itemBuilder: (context, index) => _ItemProduct(
+                    itemBuilder: (context, index) => ItemProduct(
                       model: state.model[index],
                     ),
                   );
@@ -204,114 +203,6 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
-class _ItemProduct extends StatefulWidget {
-  const _ItemProduct({required this.model});
-  final ProductModel model;
-
-  @override
-  State<_ItemProduct> createState() => _ItemProductState();
-}
-
-class _ItemProductState extends State<_ItemProduct> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(11),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.network(
-                  widget.model.mainImage,
-                  fit: BoxFit.cover,
-                ),
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: Container(
-                    height: 18,
-                    width: 55,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(11),
-                          bottomRight: Radius.circular(11)),
-                    ),
-                    child: Text(
-                      '${widget.model.discount}%',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Text(
-          widget.model.title,
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor),
-        ),
-        Text(
-          'السعر / ${widget.model.unit.name}',
-          style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w300,
-              color: Color(0Xff808080)),
-        ),
-        Row(
-          children: [
-            Text(
-              '${widget.model.price} ر.س',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            Text(
-              '${widget.model.priceBeforeDiscount} ر.س',
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300,
-                  color: Theme.of(context).primaryColor,
-                  decoration: TextDecoration.lineThrough),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: SizedBox(
-            height: 30,
-            width: 115,
-            child: CustomFillButton(
-              radius: 9,
-              title: 'أضف للسلة',
-              onPress: () {},
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
 class _ItemCategory extends StatefulWidget {
   const _ItemCategory({required this.model});
   final CategoryModel model;

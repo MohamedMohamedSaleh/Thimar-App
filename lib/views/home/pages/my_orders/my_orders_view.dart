@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 
-class MyOrdersPage extends StatelessWidget {
+import 'widgets/custom_orders_item.dart';
+import 'widgets/custom_tab_bar.dart';
+
+class MyOrdersPage extends StatefulWidget {
   const MyOrdersPage({super.key});
 
   @override
+  State<MyOrdersPage> createState() => _MyOrdersPageState();
+}
+
+class _MyOrdersPageState extends State<MyOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          appBar: AppBar(
-            title: const Text("طلباتي"),
-            bottom:  TabBar(tabs: [Text("الحاليه", style: TextStyle(color: Theme.of(context).primaryColor),), Text("المنتهية", style: TextStyle(color: Theme.of(context).primaryColor),)]),
-          ),
-          body: const TabBarView(
-            children: [
-              // Content of Tab 1
-              Center(
-                child: Text('Tab 1 Content'),
-              ),
+        appBar: const CustomAppBar(
+          height: 105,
+          title: 'طلباتي',
+          bottom: CustomTabBar(),
+        ),
+        body: TabBarView(
+          children: [
+            // Content of Tab 1
+            ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              itemBuilder: (context, index) => const OrdersItem(),
+              itemCount: 7,
+            ),
 
-              // Content of Tab 2
-              Center(
-                child: Text('Tab 2 Content'),
-              ),
-            ],
-          )),
+            // Content of Tab 2
+           ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              itemBuilder: (context, index) => const OrdersItem(),
+              itemCount: 7,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

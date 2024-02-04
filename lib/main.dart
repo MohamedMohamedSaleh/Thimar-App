@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/feature/categoris/cubit/get_category_cubit.dart';
@@ -12,9 +13,13 @@ import 'feature/products/cubit/get_products_cubit.dart';
 import 'features/get_cities/cubit/get_cities_cubit.dart';
 
 void main() async {
-/*   SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(// navigation bar color
-    statusBarColor: getMaterialColor(), // status bar color 
-  )); */
+    SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      // navigation bar color
+      statusBarColor: getMaterialColor(),
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   runApp(const MyApp());
