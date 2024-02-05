@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'custom_app_bar_icon.dart';
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    this.isOrders = false,
+    this.thereIsIcon = true,
     this.bottom,
-    this.height = 55,
+    this.height = 50,
   });
   final String title;
-  final bool isOrders;
+  final bool thereIsIcon;
   final PreferredSizeWidget? bottom;
   final double height;
   @override
@@ -17,9 +19,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: AppBar(
-          title: Text(title),
-          bottom: bottom,
+        child: Stack(
+          children: [
+            AppBar(
+              title: Padding(
+                padding: const EdgeInsets.only(top: 18),
+                child: Text(title),
+              ),
+              bottom: bottom,
+            ),
+            thereIsIcon
+                ? const Positioned(
+                    top: 15,
+                    child: CustomAppBarIcon(),
+                  )
+                : const SizedBox(),
+          ],
         ),
       ),
     );

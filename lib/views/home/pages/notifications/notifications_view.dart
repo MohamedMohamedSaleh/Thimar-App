@@ -102,6 +102,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
+        thereIsIcon: false,
         title: "الإشعارات",
       ),
       body: Padding(

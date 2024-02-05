@@ -18,7 +18,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
       length: 2,
       child: Scaffold(
         appBar: const CustomAppBar(
-          height: 105,
+          height: 120,
+          thereIsIcon: false,
           title: 'طلباتي',
           bottom: CustomTabBar(),
         ),

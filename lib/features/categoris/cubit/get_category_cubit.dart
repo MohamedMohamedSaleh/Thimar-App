@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
-import 'package:vegetable_orders_project/feature/categoris/category_model.dart';
+
+import '../category_model.dart';
 
 part 'get_category_state.dart';
 

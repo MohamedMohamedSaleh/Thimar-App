@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
-import 'package:vegetable_orders_project/feature/categoris/cubit/get_category_cubit.dart';
-import 'package:vegetable_orders_project/feature/slider/cubit/get_slider_cubit.dart';
+import 'package:vegetable_orders_project/features/products/cubit/get_products_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/confirm_code/cubit/confirm_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/login/cubit/login_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/register/cubit/register_cubit.dart';
 import 'package:vegetable_orders_project/views/home/home_view.dart';
 import 'core/logic/helper_methods.dart';
-import 'feature/products/cubit/get_products_cubit.dart';
+import 'features/categoris/cubit/get_category_cubit.dart';
 import 'features/get_cities/cubit/get_cities_cubit.dart';
+import 'features/slider/cubit/get_slider_cubit.dart';
 
 void main() async {
     SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      // navigation bar color
       statusBarColor: getMaterialColor(),
       statusBarIconBrightness: Brightness.light,
     ),

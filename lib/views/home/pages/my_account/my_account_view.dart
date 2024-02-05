@@ -25,61 +25,27 @@ class MyAccountPage extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                        ],
-                      ),
-                    )),
-                const SizedBox(
-                  height: 18,
-                ),
-                DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: const Color(0xffF6F6F6),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
-                      child: Column(
-                        children: [
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                        ],
-                      ),
-                    )),
-                const SizedBox(
-                  height: 18,
-                ),
-                DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: const Color(0xffF6F6F6),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
-                      child: Column(
-                        children: [
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          _ItemMyAccount(),
-                          SizedBox(
-                            height: 18,
+                          _ItemMyAccount(
+                            icon: 'account_details',
+                            title: 'البيانات الشخصية',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'Wallet',
+                            title: 'المحفظة',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'Location',
+                            title: 'العناوين',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'send_mony',
+                            title: 'الدفع',
                           ),
                         ],
                       ),
                     )),
                 const SizedBox(
-                  height: 16,
+                  height: 18,
                 ),
                 DecoratedBox(
                     decoration: BoxDecoration(
@@ -92,8 +58,81 @@ class MyAccountPage extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          _ItemMyAccount(),
-
+                          _ItemMyAccount(
+                            icon: 'Questions',
+                            title: 'أسئلة متكررة',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'privacy_policy',
+                            title: 'سياسة الخصوصية',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'Call_Calling',
+                            title: 'تواصل معنا',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'Edit',
+                            title: 'الشكاوي والأقتراحات',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'share',
+                            title: 'مشاركة التطبيق',
+                          ),
+                        ],
+                      ),
+                    )),
+                const SizedBox(
+                  height: 18,
+                ),
+                DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: const Color(0xffF6F6F6),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14),
+                      child: Column(
+                        children: [
+                          _ItemMyAccount(
+                            icon: 'application',
+                            title: 'عن التطبيق',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'language',
+                            title: 'تغيير اللغة',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'Note',
+                            title: 'الشروط والأحكام',
+                          ),
+                          _ItemMyAccount(
+                            icon: 'Star',
+                            title: 'تقييم التطبيق',
+                          ),
+                        ],
+                      ),
+                    )),
+                const SizedBox(
+                  height: 18,
+                ),
+                DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: const Color(0xffF6F6F6),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14),
+                      child: Column(
+                        children: [
+                          _ItemMyAccount(
+                            title: 'تسجيل الخروج',
+                            icon: 'Turn_off',
+                            isLogout: true,
+                          ),
                         ],
                       ),
                     )),
@@ -107,33 +146,42 @@ class MyAccountPage extends StatelessWidget {
 }
 
 class _ItemMyAccount extends StatelessWidget {
-  const _ItemMyAccount();
-
+  const _ItemMyAccount(
+      {required this.title, required this.icon, this.isLogout = false});
+  final String title;
+  final String icon;
+  final bool isLogout;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
         children: [
-          const AppImage(
-            'assets/icon/phone_icon.png',
-            height: 18,
-            width: 18,
-            fit: BoxFit.scaleDown,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
+          !isLogout
+              ? AppImage(
+                  'assets/icon/svg/account/$icon.svg',
+                  height: 18,
+                  width: 18,
+                  fit: BoxFit.scaleDown,
+                )
+              : const SizedBox(),
+          !isLogout
+              ? const SizedBox(
+                  width: 8,
+                )
+              : const SizedBox(),
           Text(
-            "البيانات الشخصية",
+            title,
             style: TextStyle(
                 fontSize: 13,
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.bold),
           ),
           const Spacer(),
-          const AppImage(
-            'assets/icon/phone_icon.png',
+          AppImage(
+            !isLogout
+                ? 'assets/icon/svg/line_arrow_acount.svg'
+                : 'assets/icon/svg/account/$icon.svg',
             height: 18,
             width: 18,
             fit: BoxFit.scaleDown,

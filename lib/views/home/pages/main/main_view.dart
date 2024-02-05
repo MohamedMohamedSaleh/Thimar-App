@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
-import 'package:vegetable_orders_project/feature/products/cubit/get_products_cubit.dart';
-import 'package:vegetable_orders_project/feature/slider/cubit/get_slider_cubit.dart';
-import '../../../../feature/categoris/category_model.dart';
-import '../../../../feature/categoris/cubit/get_category_cubit.dart';
+import '../../../../features/categoris/category_model.dart';
+import '../../../../features/categoris/cubit/get_category_cubit.dart';
+import '../../../../features/products/cubit/get_products_cubit.dart';
+import '../../../../features/slider/cubit/get_slider_cubit.dart';
 import '../../widgets/custom_item_product.dart';
 import 'widgets/main_app_bar.dart';
 
@@ -168,35 +168,34 @@ class _MainPageState extends State<MainPage> {
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16, right: 16, left: 16),
-            child: BlocBuilder<GetProductCubit, GetProductStates>(
-              builder: (context, state) {
-                if (state is GetProductLoadingState) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is GetProductSuccrssState) {
-                  return GridView.builder(
-                    itemCount: 10,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 17,
-                      childAspectRatio: 163 / 250,
-                      mainAxisSpacing: 16,
-                    ),
-                    itemBuilder: (context, index) => ItemProduct(
-                      model: state.model[index],
-                    ),
-                  );
-                } else {
-                  return const Text('failed');
-                }
-              },
-            ),
+          BlocBuilder<GetProductCubit, GetProductStates>(
+            builder: (context, state) {
+              if (state is GetProductLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is GetProductSuccrssState) {
+                return GridView.builder(
+                  padding: const EdgeInsets.only(bottom: 16, right: 16, left: 16),
+                  itemCount: state.model.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 163 / 250,
+                    mainAxisSpacing: 12,
+                  ),
+                  itemBuilder: (context, index) => ItemProduct(
+                    model: state.model[index],
+                    isMainPage: true,
+                  ),
+                );
+              } else {
+                return const Text('failed');
+              }
+            },
           ),
         ],
       ),
