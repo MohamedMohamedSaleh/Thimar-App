@@ -2,10 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 
+import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
+import '../widgets/custom_list_comment.dart';
+import '../widgets/custom_list_similar_products.dart';
 
-class ProductDetailsView extends StatelessWidget {
-  const ProductDetailsView({super.key});
+class ProductDetailsView extends StatefulWidget {
+  const ProductDetailsView({super.key, required this.model});
+  final ProductModel model;
+
+  @override
+  State<ProductDetailsView> createState() => _ProductDetailsViewState();
+}
+
+class _ProductDetailsViewState extends State<ProductDetailsView> {
+  @override
+  initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +28,7 @@ class ProductDetailsView extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+              padding: EdgeInsets.only(left: 22, right: 22, top: 16, bottom: 8),
               child: Row(
                 children: [
                   CustomAppBarIcon(),
@@ -29,36 +43,40 @@ class ProductDetailsView extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      child: AppImage(
-                        'https://thimar.amr.aait-d.com/storage/images/product/hUndq46mGZBRIw7Ryal5FQBAB9S95mwtuNinWs4L.jpg',
-                        width: double.infinity,
-                        height: 250,
-                        fit: BoxFit.cover,
+                      borderRadius: const BorderRadius.all(Radius.circular(25)),
+                      child: Hero(
+                        tag: 1,
+                        child: AppImage(
+                          widget.model.mainImage,
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        right: 16, left: 16, top: 5, bottom: 4),
+                        right: 16, left: 16, top: 5, bottom: 2),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Text(
-                              'طماطم',
+                              widget.model.title,
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 20,
+                                  fontSize: 21,
                                   fontWeight: FontWeight.bold),
                             ),
                             const Spacer(),
-                            const Text(
-                              '40%',
-                              style: TextStyle(
+                            Text(
+                              '${widget.model.discount}%',
+                              style: const TextStyle(
                                   color: Color(0xffFF0000),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w300),
@@ -67,7 +85,7 @@ class ProductDetailsView extends StatelessWidget {
                               width: 6,
                             ),
                             Text(
-                              '45ر.س',
+                              '${widget.model.price}ر.س',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 16,
@@ -77,7 +95,7 @@ class ProductDetailsView extends StatelessWidget {
                               width: 2,
                             ),
                             Text(
-                              '56ر.س',
+                              '${widget.model.priceBeforeDiscount}ر.س',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 12,
@@ -92,27 +110,147 @@ class ProductDetailsView extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              'السعر / 1كجم',
-                              style: TextStyle(
+                              'السعر /  ${widget.model.unit.name}',
+                              style: const TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.w300,
                                 color: Color(0xff808080),
                               ),
                             ),
-                            Spacer(),
-                            CustomPlusOrMinusProduct(),
+                            const Spacer(),
+                            const CustomPlusOrMinusProduct(),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
+                  const Divider(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "كود المنتج  ",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const TextSpan(
+                            text: "56638",
+                            style: TextStyle(
+                              color: Color(0xff808080),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 16, bottom: 5, top: 4),
+                    child: Text(
+                      'تفاصيل المنتج',
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      widget.model.description,
+                      style: const TextStyle(
+                        color: Color(0xff808080),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                    child: Text(
+                      'التقييمات',
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const CustomListComments(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 16, top: 10, bottom: 5),
+                    child: Text(
+                      'منتجات مشابهة',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const CustomListSimilarPrduct(),
+                  const SizedBox(
+                    height: 20,
+                  )
                 ],
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Theme.of(context).primaryColor,
+        height: 60,
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 19),
+          child: Row(
+            children: [
+              SizedBox(
+                height: 32,
+                width: 32,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: const Color(0xff6AA431),
+                  ),
+                  child: const AppImage('assets/icon/svg/Shopping.svg'),
+                ),
+              ),
+              const SizedBox(
+                width: 9,
+              ),
+              const Text(
+                'إضافة إلي السلة',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(),
+              const Text(
+                '225ر.س',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
