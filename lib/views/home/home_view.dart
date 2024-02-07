@@ -62,6 +62,7 @@ class _HomeViewState extends State<HomeView> {
               (index) => BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icon/svg/${icons[index]}.svg',
+                  // ignore: deprecated_member_use
                   color: currentIndex == index
                       ? Colors.white
                       : const Color(0xffAED489),

@@ -49,12 +49,9 @@ class ItemProductState extends State<ItemProduct> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Hero(
-                              tag: 1,
-                              child: AppImage(
-                                widget.model.mainImage,
-                                fit: BoxFit.cover,
-                              ),
+                            AppImage(
+                              widget.model.mainImage,
+                              fit: BoxFit.cover,
                             ),
                             Align(
                               alignment: AlignmentDirectional.topEnd,

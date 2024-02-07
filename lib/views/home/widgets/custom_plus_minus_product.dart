@@ -1,27 +1,26 @@
-
 import 'package:flutter/material.dart';
 
 class CustomPlusOrMinusProduct extends StatelessWidget {
-  const CustomPlusOrMinusProduct({super.key});
-
+  const CustomPlusOrMinusProduct({super.key, this.isProductDetails = true});
+  final bool isProductDetails;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 33,
+      height:isProductDetails? 33 : 26,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
           color: const Color(0xff4C8613).withOpacity(0.11),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+          padding:  EdgeInsets.symmetric(horizontal:isProductDetails? 5 : 2, vertical:isProductDetails? 3 : 2),
           child: Row(children: [
             SizedBox(
-              height: 27,
-              width: 27,
+              height:isProductDetails? 27 : 21,
+              width: isProductDetails? 27 : 21,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
+                    borderRadius: BorderRadius.circular(isProductDetails? 9: 6),
                     color: Colors.white),
                 child: Icon(
                   Icons.add,
@@ -31,22 +30,22 @@ class CustomPlusOrMinusProduct extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding:  EdgeInsets.symmetric(horizontal:isProductDetails? 15 : 8),
               child: Text(
                 '5',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
-                  fontSize: 15,
+                  fontSize:isProductDetails? 15 : 11,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
             SizedBox(
-              height: 27,
-              width: 27,
+              height: isProductDetails? 27 : 21,
+              width: isProductDetails? 27 : 21,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
+                    borderRadius: BorderRadius.circular(isProductDetails? 9: 6),
                     color: Colors.white),
                 child: Icon(
                   Icons.remove,

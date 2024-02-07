@@ -8,7 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.thereIsIcon = true,
     this.bottom,
-    this.height = 50,
+    this.height = 55,
   });
   final String title;
   final bool thereIsIcon;
@@ -22,15 +22,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Stack(
           children: [
             AppBar(
+              automaticallyImplyLeading: false,
               title: Padding(
-                padding: const EdgeInsets.only(top: 18),
+                padding: const EdgeInsets.only(top: 14),
                 child: Text(title),
               ),
               bottom: bottom,
             ),
             thereIsIcon
                 ? const Positioned(
-                    top: 15,
+                    top: 22,
                     child: CustomAppBarIcon(),
                   )
                 : const SizedBox(),

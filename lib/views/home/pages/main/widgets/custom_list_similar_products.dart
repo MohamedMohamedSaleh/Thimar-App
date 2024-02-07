@@ -33,7 +33,7 @@ class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
             return SizedBox(
               height: 180,
               child: ListView.separated(
-                padding: EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.only(right: 16),
                 separatorBuilder: (context, index) {
                   return const SizedBox(
                     width: 18,
@@ -62,7 +62,7 @@ class CustomTraining extends StatelessWidget {
     return SizedBox(
         height: 110,
         child: ListView.separated(
-          scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => const Containerrrd(),
             separatorBuilder: (context, index) => const SizedBox(
                   width: 18,

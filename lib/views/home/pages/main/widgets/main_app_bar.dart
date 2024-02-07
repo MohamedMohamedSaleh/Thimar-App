@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/views/home/basket_and_orders/basket_view.dart';
 
-import '../../../../../core/logic/cache_helper.dart';
 import '../../../../../core/logic/helper_methods.dart';
-import '../../../../auth/login/login_view.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
@@ -58,8 +57,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  CacheHelper.clear();
-                  navegateReplace(toPage: const LoginView());
+                  // CacheHelper.clear();
+                  // navegateReplace(toPage: const LoginView());
+                  navegateTo(toPage: const BasketView());
                 },
                 child: Badge(
                   offset: const Offset(5, -5),
