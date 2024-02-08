@@ -115,7 +115,7 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
               text: "لديك حساب بالفعل ؟ ",
               buttonText: "تسجيل الدخول",
               onPress: () {
-                navegateTo(toPage: const LoginView());
+                navigateTo(toPage: const LoginView());
               },
             ),
           ),

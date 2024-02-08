@@ -5,7 +5,8 @@ class CustomFillButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPress,
-    this.isLoading = false, this.radius = 15,
+    this.isLoading = false,
+    this.radius = 15,
   });
   final String title;
   final VoidCallback onPress;
@@ -23,8 +24,8 @@ class CustomFillButton extends StatelessWidget {
       height: 55,
       child: FilledButton(
         style: FilledButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius))),
         onPressed: onPress,
         child: Text(
           title,

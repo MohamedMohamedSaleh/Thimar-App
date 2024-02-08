@@ -14,14 +14,18 @@ class BasketView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0.0;
+
     return Scaffold(
+      extendBody: true,
       appBar: const CustomAppBar(title: 'السلة', thereIsIcon: true),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           ListView.builder(
+            padding: const EdgeInsets.all(0),
             itemBuilder: (context, index) => const _ItemOrder(),
-            itemCount: 3,
+            itemCount: 4,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
           ),
@@ -82,24 +86,28 @@ class BasketView extends StatelessWidget {
             height: 12,
           ),
           const CustomOrdersMony(),
-          const SizedBox(
-            height: 70,
-          ),
+          !isKeyboardOpen
+              ? const SizedBox(
+                  height: 70,
+                )
+              : const SizedBox(),
         ],
       ),
-      floatingActionButton: ColoredBox(
+      bottomNavigationBar: ColoredBox(
         color: Colors.transparent,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(right: 32, bottom: 0, top: 5),
+            padding:
+                const EdgeInsets.only(right: 16, bottom: 20, top: 5, left: 16),
             child: SizedBox(
-                width: double.infinity,
-                child: CustomFillButton(
-                  title: 'الانتقال لإتمام الطلب',
-                  onPress: () {
-                    navegateTo(toPage: const CompletOrderView());
-                  },
-                )),
+              width: double.infinity,
+              child: CustomFillButton(
+                title: 'الانتقال لإتمام الطلب',
+                onPress: () {
+                  navigateTo(toPage: const CompletOrderView());
+                },
+              ),
+            ),
           ),
         ),
       ),

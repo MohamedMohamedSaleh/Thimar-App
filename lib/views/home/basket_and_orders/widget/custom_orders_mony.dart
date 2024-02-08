@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 
 class CustomOrdersMony extends StatelessWidget {
   const CustomOrdersMony({
     super.key,
     this.isCompletOrder = false,
+    this.isDetailsOrder = false,
   });
 
   final bool isCompletOrder;
+  final bool isDetailsOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +120,26 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
               ],
             ),
+            isDetailsOrder ? const Divider() : const SizedBox(),
+            isDetailsOrder
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'تم الدفع بواسطة',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      const AppImage('assets/icon/svg/blue_visa.svg'),
+                    ],
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

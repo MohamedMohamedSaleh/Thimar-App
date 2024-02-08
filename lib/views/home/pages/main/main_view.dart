@@ -36,7 +36,6 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: const MainAppBar(),
       body: ListView(
-        // padding: const EdgeInsets.all(16),
         children: [
           const SizedBox(
             height: 4,

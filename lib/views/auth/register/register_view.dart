@@ -167,7 +167,6 @@ class _RegisterViewState extends State<RegisterView> {
                         paddingBottom: 24,
                       ),
                       BlocBuilder<RegisterCubit, RegisterStates>(
-                        
                         builder: (context, state) {
                           return CustomFillButton(
                             isLoading: state is RegisterLoadingState,
@@ -191,7 +190,7 @@ class _RegisterViewState extends State<RegisterView> {
               text: "لديك حساب بالفعل ؟ ",
               buttonText: "تسجيل الدخول",
               onPress: () {
-                navegateTo(toPage: const LoginView());
+                navigateTo(toPage: const LoginView());
               },
             ),
           ),

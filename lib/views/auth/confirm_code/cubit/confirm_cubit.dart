@@ -18,7 +18,7 @@ class ConfirmCubit extends Cubit<ConfirmStates> {
   void verify({required String phone, required bool isActive}) async {
     emit(ConfirmloadingState());
     final response = await DioHelper().sendData(
-      endPoint:isActive? 'verify' : 'check_code',
+      endPoint: isActive ? 'verify' : 'check_code',
       data: {
         "code": confirmCodeController.text,
         "phone": phone,
@@ -35,9 +35,9 @@ class ConfirmCubit extends Cubit<ConfirmStates> {
         type: MessageType.success,
       );
       if (!isActive) {
-        navegateTo(toPage: const ChangePasswordView());
+        navigateTo(toPage: const ChangePasswordView());
       } else {
-        navegateTo(toPage: const LoginView());
+        navigateTo(toPage: const LoginView());
         showMessage(message: response.message);
       }
       emit(ConfirmSuccessState());

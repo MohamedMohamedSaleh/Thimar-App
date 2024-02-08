@@ -59,7 +59,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onTap: () {
                   // CacheHelper.clear();
                   // navegateReplace(toPage: const LoginView());
-                  navegateTo(toPage: const BasketView());
+                  navigateTo(toPage: const BasketView());
                 },
                 child: Badge(
                   offset: const Offset(5, -5),

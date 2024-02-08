@@ -19,7 +19,7 @@ class ItemProductState extends State<ItemProduct> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navegateTo(
+        navigateTo(
             toPage: ProductDetailsView(
           model: widget.model,
         ));

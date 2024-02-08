@@ -41,7 +41,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
           message: response.message,
           type: MessageType.success,
         );
-        navegateTo(
+        navigateTo(
           toPage: ConfirmCodeView(
             isActive: true,
             phone: phoneController.text,
@@ -53,7 +53,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
       }
     } else {
       autovalidateMode = AutovalidateMode.always;
-      
     }
   }
 }

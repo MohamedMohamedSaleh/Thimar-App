@@ -22,7 +22,8 @@ class _SplashViewsState extends State<SplashViews> {
 
   void navigate() async {
     Timer(const Duration(seconds: 3), () {
-      navegateReplace(
+      navigateTo(
+        isRemove: true,
         toPage: CacheHelper.isAuth() ? const HomeView() : const LoginView(),
       );
     });

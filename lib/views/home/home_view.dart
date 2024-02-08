@@ -7,13 +7,17 @@ import 'package:vegetable_orders_project/views/home/pages/notifications/notifica
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
-
+  const HomeView({
+    super.key,
+    this.isNavigatToOrder = false,
+  });
+  final bool isNavigatToOrder;
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
+  bool isNavigate = true;
   int currentIndex = 0;
   List<Widget> pages = [
     const MainPage(),
@@ -41,12 +45,19 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    if (isNavigate && widget.isNavigatToOrder) {
+      currentIndex = 1;
+    }
     return Scaffold(
-      body: pages[currentIndex],
+      body: isNavigate && widget.isNavigatToOrder
+          ? pages[1]
+          : pages[currentIndex],
       bottomNavigationBar: SafeArea(
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
           child: BottomNavigationBar(
             backgroundColor: Theme.of(context).primaryColor,
             unselectedItemColor: const Color(0xffAED489),
@@ -54,6 +65,7 @@ class _HomeViewState extends State<HomeView> {
             currentIndex: currentIndex,
             onTap: (value) {
               currentIndex = value;
+              isNavigate = false;
               setState(() {});
             },
             // the best way is List generator

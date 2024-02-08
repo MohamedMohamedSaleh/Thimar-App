@@ -37,7 +37,7 @@ class ChangePasswordView extends StatelessWidget {
               buttonText: " تسجيل الدخول",
               paddingBottom: 22,
               onPress: () {
-                navegateTo(toPage: const RegisterView());
+                navigateTo(toPage: const RegisterView());
               },
             ),
           ),
@@ -109,13 +109,11 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             onPress: () {
               FocusScope.of(context).unfocus();
               if (formKey.currentState!.validate()) {
-              // navegateTo(toPage: const ConfirmCodeView(isActive: true,),);
+                // navegateTo(toPage: const ConfirmCodeView(isActive: true,),);
               } else {
                 autovalidateMode = AutovalidateMode.onUserInteraction;
                 setState(() {});
               }
-              
-
             },
           ),
           const SizedBox(

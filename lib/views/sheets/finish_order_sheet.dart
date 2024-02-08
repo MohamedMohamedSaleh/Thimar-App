@@ -3,6 +3,7 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
+import 'package:vegetable_orders_project/views/sheets/thank_you_sheet.dart';
 
 class FinishOrderSheet extends StatelessWidget {
   const FinishOrderSheet({super.key});
@@ -61,6 +62,7 @@ class FinishOrderSheet extends StatelessWidget {
                     width: 16,
                   ),
                   CustomAppBarIcon(
+                    isBack: false,
                     height: 26,
                     width: 26,
                     child: Icon(
@@ -85,12 +87,29 @@ class FinishOrderSheet extends StatelessWidget {
                 height: 21,
               ),
               SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: CustomFillButton(
-                        title: 'تأكيد الأختيار', onPress: () {}),
-                  ))
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: CustomFillButton(
+                    title: 'تأكيد الأختيار',
+                    onPress: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(28),
+                            topLeft: Radius.circular(28),
+                          ),
+                        ),
+                        context: context,
+                        builder: (context) => const ThankYouSheet(),
+                      );
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),

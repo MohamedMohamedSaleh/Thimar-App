@@ -37,7 +37,7 @@ class ForgetPasswordView extends StatelessWidget {
               text: "لديك حساب بالفعل ؟ ",
               buttonText: "تسجيل الدخول",
               onPress: () {
-                navegateTo(toPage: const LoginView());
+                navigateTo(toPage: const LoginView());
               },
             ),
           ),
@@ -88,16 +88,15 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
             paddingBottom: 28,
-            controller: phoneController ,
+            controller: phoneController,
           ),
           CustomFillButton(
-          
             title: "تأكيد رقم الجوال",
             onPress: () {
               FocusScope.of(context).unfocus();
               if (formKey.currentState!.validate()) {
-                navegateTo(
-                  toPage:  ConfirmCodeView(
+                navigateTo(
+                  toPage: ConfirmCodeView(
                     isActive: false,
                     phone: phoneController.text,
                   ),

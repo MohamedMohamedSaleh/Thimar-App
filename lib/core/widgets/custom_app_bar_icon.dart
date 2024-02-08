@@ -27,7 +27,7 @@ class CustomAppBarIcon extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9),
+          borderRadius: BorderRadius.circular(isBack? 9: 7),
           color: color ?? const Color(0xff4C8613).withOpacity(0.13),
         ),
         height: height,
