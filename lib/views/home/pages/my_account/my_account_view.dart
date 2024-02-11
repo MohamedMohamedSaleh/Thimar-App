@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/privacy_policy_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/suggestions_complaints_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
 class MyAccountPage extends StatelessWidget {
   const MyAccountPage({super.key});
@@ -21,23 +28,30 @@ class MyAccountPage extends StatelessWidget {
                         color: const Color(0xffF6F6F6),
                       ),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          _ItemMyAccount(
-                            icon: 'account_details',
-                            title: 'البيانات الشخصية',
+                          InkWell(
+                            onTap: () =>
+                                navigateTo(toPage: const PersonalDataView()),
+                            child: const _ItemMyAccount(
+                              icon: 'account_details',
+                              title: 'البيانات الشخصية',
+                            ),
                           ),
-                          _ItemMyAccount(
-                            icon: 'Wallet',
-                            title: 'المحفظة',
+                          InkWell(
+                            onTap: () => navigateTo(toPage: const WalletView()),
+                            child: const _ItemMyAccount(
+                              icon: 'Wallet',
+                              title: 'المحفظة',
+                            ),
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'Location',
                             title: 'العناوين',
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'send_mony',
                             title: 'الدفع',
                           ),
@@ -54,27 +68,35 @@ class MyAccountPage extends StatelessWidget {
                         color: const Color(0xffF6F6F6),
                       ),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'Questions',
                             title: 'أسئلة متكررة',
                           ),
-                          _ItemMyAccount(
-                            icon: 'privacy_policy',
-                            title: 'سياسة الخصوصية',
+                          InkWell(
+                            onTap: () =>
+                                navigateTo(toPage: const PrivacyPolicyView()),
+                            child: const _ItemMyAccount(
+                              icon: 'privacy_policy',
+                              title: 'سياسة الخصوصية',
+                            ),
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'Call_Calling',
                             title: 'تواصل معنا',
                           ),
-                          _ItemMyAccount(
-                            icon: 'Edit',
-                            title: 'الشكاوي والأقتراحات',
+                          InkWell(
+                            onTap: () => navigateTo(
+                                toPage: const SuggestionsComplaintsView()),
+                            child: const _ItemMyAccount(
+                              icon: 'Edit',
+                              title: 'الشكاوي والأقتراحات',
+                            ),
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'share',
                             title: 'مشاركة التطبيق',
                           ),
@@ -91,23 +113,27 @@ class MyAccountPage extends StatelessWidget {
                         color: const Color(0xffF6F6F6),
                       ),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          _ItemMyAccount(
-                            icon: 'application',
-                            title: 'عن التطبيق',
+                          InkWell(
+                            onTap: () => navigateTo(
+                                toPage: const AboutApplicationView()),
+                            child: const _ItemMyAccount(
+                              icon: 'application',
+                              title: 'عن التطبيق',
+                            ),
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'language',
                             title: 'تغيير اللغة',
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'Note',
                             title: 'الشروط والأحكام',
                           ),
-                          _ItemMyAccount(
+                          const _ItemMyAccount(
                             icon: 'Star',
                             title: 'تقييم التطبيق',
                           ),
@@ -223,36 +249,7 @@ class _CustomAppBarAccount extends StatelessWidget
                   SizedBox(
                     height: 20,
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    child: AppImage(
-                      'https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1706918400&semt=sph',
-                      height: 70,
-                      width: 75,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    'محمد صالح',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    '+96654787856',
-                    style: TextStyle(
-                      color: Color(0xffA2D273),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                  CustomMyData(),
                 ],
               ),
             ),

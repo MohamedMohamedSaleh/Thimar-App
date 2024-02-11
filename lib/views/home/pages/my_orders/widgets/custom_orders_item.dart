@@ -4,7 +4,7 @@ import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/screens/order_details_view.dart';
 
-import '../../../../../core/widgets/app_image.dart';
+import '../../../widgets/custom_decorated_box.dart';
 
 class CustomOrdersItem extends StatelessWidget {
   const CustomOrdersItem(
@@ -119,10 +119,10 @@ class CustomOrdersItem extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16, right: 10),
                 child: Row(
                   children: [
-                    const _CustomDecoratedBox(),
-                    const _CustomDecoratedBox(),
-                    const _CustomDecoratedBox(),
-                    const _CustomDecoratedBox(
+                    const CustomDecoratedBox(),
+                    const CustomDecoratedBox(),
+                    const CustomDecoratedBox(),
+                    const CustomDecoratedBox(
                       isText: true,
                     ),
                     const Spacer(),
@@ -151,47 +151,6 @@ class CustomOrdersItem extends StatelessWidget {
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomDecoratedBox extends StatelessWidget {
-  const _CustomDecoratedBox({this.isText = false});
-  final bool isText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 2),
-      child: SizedBox(
-        height: 25,
-        width: 25,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-              border: !isText
-                  ? Border.all(color: const Color(0xff61B80C).withOpacity(0.06))
-                  : null,
-              borderRadius: BorderRadius.circular(7),
-              color: const Color(0xffEDF5E6)),
-          child: isText
-              ? Center(
-                  child: Text(
-                    "2+",
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                )
-              : const AppImage(
-                  'https://previews.123rf.com/images/spamas/spamas1909/spamas190900328/130747578-tomato-isolated-on-white-background-full-depth-of-field.jpg',
-                  height: 20,
-                  width: 20,
-                  fit: BoxFit.fill,
-                ),
         ),
       ),
     );

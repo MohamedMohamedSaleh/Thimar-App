@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 
 class CustomAppInput extends StatefulWidget {
@@ -12,7 +13,8 @@ class CustomAppInput extends StatefulWidget {
     this.isEnabled = true,
     this.validator,
     this.controller,
-    this.fillColor = Colors.white
+    this.fillColor = Colors.white,
+    this.isData = false,
   });
   final Color fillColor;
   final String labelText;
@@ -23,7 +25,7 @@ class CustomAppInput extends StatefulWidget {
   final bool isEnabled;
   final FormFieldValidator<String?>? validator;
   final TextEditingController? controller;
-
+  final bool isData;
   @override
   State<CustomAppInput> createState() => _CustomAppInputState();
 }
@@ -38,6 +40,11 @@ class _CustomAppInputState extends State<CustomAppInput> {
         bottom: widget.paddingBottom,
       ),
       child: TextFormField(
+        cursorHeight: widget.isData ? 17 : null,
+        style: widget.isData
+            ? const TextStyle(
+                color: mainColor, fontSize: 15, fontWeight: FontWeight.bold)
+            : null,
         controller: widget.controller,
         validator: widget.validator,
         enabled: widget.isEnabled,
@@ -45,13 +52,41 @@ class _CustomAppInputState extends State<CustomAppInput> {
             widget.isPhone ? TextInputType.number : TextInputType.text,
         obscureText: isSecure && widget.isPassword,
         decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: widget.isData
+                    ? const Color(0xff8AC253)
+                    : const Color(0xffF3F3F3),
+              ),
+              borderRadius: BorderRadius.circular(15)),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: widget.isData
+                  ? const Color(0xff8AC253)
+                  : const Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: widget.isData
+                  ? const Color(0xff8AC253)
+                  : const Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
           filled: true,
           fillColor: widget.fillColor,
           labelStyle: !widget.isEnabled && widget.labelText != 'المدينة'
               ? TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w400)
-              : null,
+              : widget.isData
+                  ? const TextStyle(
+                      color: Color(0xffAFAFAF),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400)
+                  : null,
           labelText: widget.labelText,
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12),
@@ -77,8 +112,11 @@ class _CustomAppInputState extends State<CustomAppInput> {
           icon: widget.isPhone
               ? Container(
                   decoration: BoxDecoration(
+                    color: widget.isData ? const Color(0xffFAFFF5) : null,
                     border: Border.all(
-                      color: const Color(0xffF3F3F3),
+                      color: widget.isData
+                          ? const Color(0xff8AC253)
+                          : const Color(0xffF3F3F3),
                     ),
                     borderRadius: BorderRadius.circular(
                       15,

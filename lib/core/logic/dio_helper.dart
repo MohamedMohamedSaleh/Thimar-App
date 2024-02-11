@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class DioHelper {
- final Dio _dio = Dio(BaseOptions(baseUrl: "https://thimar.amr.aait-d.com/api/"));
+  final Dio _dio = Dio(BaseOptions(baseUrl: "https://thimar.amr.aait-d.com/api/"));
 
   Future<ResponseData> sendData({
     required String endPoint,

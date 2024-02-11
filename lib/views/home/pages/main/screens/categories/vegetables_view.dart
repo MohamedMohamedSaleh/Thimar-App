@@ -31,7 +31,8 @@ class _VegetablesViewState extends State<VegetablesView> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 10),
             child: Stack(
               children: [
                 CustomAppInput(
@@ -66,12 +67,19 @@ class _VegetablesViewState extends State<VegetablesView> {
                   return GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 163/215, crossAxisSpacing: 10, mainAxisSpacing: 10),
-
-                      padding: EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 20),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 163 / 215,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                      padding: const EdgeInsets.only(
+                          right: 16, left: 16, top: 10, bottom: 20),
                       itemCount: state.model.length,
                       itemBuilder: (BuildContext context, int index) =>
-                          ItemProduct(model: state.model[index], ),
+                          ItemProduct(
+                        model: state.model[index],
+                      ),
                     ),
                   );
                 } else {

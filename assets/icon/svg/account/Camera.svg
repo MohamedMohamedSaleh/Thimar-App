@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.514" height="19.504" viewBox="0 0 19.514 19.504">
+  <g id="COCO_Line_Camera" data-name="COCO/Line/Camera" transform="translate(-2.243 -2.25)">
+    <path id="Vector" d="M5.441,2.762a3.674,3.674,0,0,1,7.118,0l.156.032a6.368,6.368,0,0,1,4.906,4.545,10.905,10.905,0,0,1,0,5.7,6.368,6.368,0,0,1-4.906,4.545l-.456.093a16.35,16.35,0,0,1-6.519,0l-.456-.093A6.368,6.368,0,0,1,.379,13.034a10.905,10.905,0,0,1,0-5.7A6.368,6.368,0,0,1,5.285,2.793Z" transform="translate(3 3)" fill="none" stroke="#fff" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Vector-2" data-name="Vector" d="M0,2.5A2.5,2.5,0,1,1,2.5,5,2.5,2.5,0,0,1,0,2.5Z" transform="translate(9.5 10.5)" fill="none" stroke="#fff" stroke-width="1.5"/>
+  </g>
+</svg>
