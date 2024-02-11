@@ -5,6 +5,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/abo
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/privacy_policy_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/suggestions_complaints_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/titles_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
@@ -47,9 +48,12 @@ class MyAccountPage extends StatelessWidget {
                               title: 'المحفظة',
                             ),
                           ),
-                          const _ItemMyAccount(
-                            icon: 'Location',
-                            title: 'العناوين',
+                          InkWell(
+                            onTap: () => navigateTo(toPage: const TitlesView()),
+                            child: const _ItemMyAccount(
+                              icon: 'Location',
+                              title: 'العناوين',
+                            ),
                           ),
                           const _ItemMyAccount(
                             icon: 'send_mony',

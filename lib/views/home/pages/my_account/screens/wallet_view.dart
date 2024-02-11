@@ -6,6 +6,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/cur
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_charge_now_view.dart';
 
 import '../widgets/currency_history_item.dart';
+import '../widgets/custom_outline_button.dart';
 
 class WalletView extends StatelessWidget {
   const WalletView({super.key});
@@ -61,23 +62,11 @@ class WalletView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: OutlinedButton(
-                  onPressed: () {
-                    navigateTo(toPage: const WalletChargeNowView());
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: const Color(0xffF9FCF5),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                  ),
-                  child: const Text(
-                    'اشحن الآن',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
+              child: CustomOutlineButton(
+                title: 'اشحن الآن',
+                onTap: () {
+                  navigateTo(toPage: const WalletChargeNowView());
+                },
               ),
             ),
             const SizedBox(
