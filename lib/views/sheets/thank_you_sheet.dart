@@ -50,7 +50,11 @@ class ThankYouSheet extends StatelessWidget {
                   child: CustomFillButton(
                     title: 'طلباتي',
                     onPress: () {
-                      navigateTo(toPage: const HomeView(isNavigatToOrder: true,), isRemove: true);
+                      navigateTo(
+                          toPage: const HomeView(
+                            isNavigatToOrder: true,
+                          ),
+                          isRemove: true);
                     },
                   ),
                 ),

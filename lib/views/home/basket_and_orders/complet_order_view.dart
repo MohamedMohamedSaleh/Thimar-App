@@ -5,17 +5,18 @@ import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/views/home/basket_and_orders/widget/custom_orders_mony.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/sheets/finish_order_sheet.dart';
+import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
 
 import '../../../core/widgets/custom_fill_button.dart';
-
 
 class CompletOrderView extends StatelessWidget {
   const CompletOrderView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    isKeyboardOpen =  MediaQuery.of(context).viewInsets.bottom > 0.0;
+    isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0.0;
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'إتمام الطلب',
@@ -49,6 +50,8 @@ class CompletOrderView extends StatelessWidget {
                 ),
                 const Spacer(),
                 CustomAppBarIcon(
+                  onTap: () => navigateTo(toPage: const AddTitleView()),
+                  isBack: false,
                   height: 25,
                   width: 25,
                   child: Icon(
@@ -61,26 +64,42 @@ class CompletOrderView extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    color: mainColor,
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                child: Row(
-                  children: [
-                    Text(
-                      'المنزل : 119 طريق الملك عبدالعزيز',
-                      style: _textStyle.copyWith(fontWeight: FontWeight.w500),
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  clipBehavior: Clip.antiAlias,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35),
+                      topRight: Radius.circular(35),
                     ),
-                    const Spacer(),
-                    const Icon(
-                      Icons.keyboard_arrow_up_rounded,
+                  ),
+                  context: context,
+                  builder: (context) => const TitlesSheet(),
+                );
+              },
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
                       color: mainColor,
-                    ),
-                  ],
+                    )),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                  child: Row(
+                    children: [
+                      Text(
+                        'المنزل : 119 طريق الملك عبدالعزيز',
+                        style: _textStyle.copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.keyboard_arrow_up_rounded,
+                        color: mainColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -300,6 +319,7 @@ class CompletOrderView extends StatelessWidget {
                 title: 'إنهاء الطلب',
                 onPress: () {
                   showModalBottomSheet(
+                    clipBehavior: Clip.antiAlias,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(28),

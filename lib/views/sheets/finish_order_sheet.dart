@@ -97,10 +97,11 @@ class FinishOrderSheet extends StatelessWidget {
                       Navigator.pop(context);
                       Navigator.pop(context);
                       showModalBottomSheet(
+                        clipBehavior: Clip.antiAlias,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(28),
-                            topLeft: Radius.circular(28),
+                            topRight: Radius.circular(35),
+                            topLeft: Radius.circular(35),
                           ),
                         ),
                         context: context,

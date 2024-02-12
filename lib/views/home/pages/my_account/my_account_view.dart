@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/connect_with_us_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/privacy_policy_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/suggestions_complaints_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/titles_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
+
+import 'screens/payment_view.dart';
 
 class MyAccountPage extends StatelessWidget {
   const MyAccountPage({super.key});
@@ -55,9 +58,13 @@ class MyAccountPage extends StatelessWidget {
                               title: 'العناوين',
                             ),
                           ),
-                          const _ItemMyAccount(
-                            icon: 'send_mony',
-                            title: 'الدفع',
+                          InkWell(
+                            onTap: () =>
+                                navigateTo(toPage: const PaymentView()),
+                            child: const _ItemMyAccount(
+                              icon: 'send_mony',
+                              title: 'الدفع',
+                            ),
                           ),
                         ],
                       ),
@@ -88,9 +95,13 @@ class MyAccountPage extends StatelessWidget {
                               title: 'سياسة الخصوصية',
                             ),
                           ),
-                          const _ItemMyAccount(
-                            icon: 'Call_Calling',
-                            title: 'تواصل معنا',
+                          InkWell(
+                            onTap: () =>
+                                navigateTo(toPage: const ConnectWithUsView()),
+                            child: const _ItemMyAccount(
+                              icon: 'Call_Calling',
+                              title: 'تواصل معنا',
+                            ),
                           ),
                           InkWell(
                             onTap: () => navigateTo(

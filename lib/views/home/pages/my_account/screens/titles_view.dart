@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
 import '../widgets/title_item.dart';
@@ -22,17 +24,19 @@ class TitlesView extends StatelessWidget {
               shrinkWrap: true,
               padding: const EdgeInsets.only(top: 26, right: 16, left: 16),
               itemBuilder: (context, index) => const TitleItem(),
-              itemCount: 6,
+              itemCount: 4,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child:
-                  CustomOutlineButton(onTap: () {}, title: 'إضافة عنوان'),
+              child: CustomOutlineButton(
+                  onTap: () {
+                    navigateTo(toPage: const AddTitleView());
+                  },
+                  title: 'إضافة عنوان'),
             ),
             const SizedBox(
               height: 32,
             ),
-
           ],
         ),
       ),

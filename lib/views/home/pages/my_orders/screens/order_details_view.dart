@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
+import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/views/home/basket_and_orders/widget/custom_orders_mony.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_orders/screens/product_evaluation_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/widgets/custom_orders_item.dart';
 
 import '../../../../../core/widgets/custom_fill_button.dart';
@@ -20,9 +22,9 @@ class OrderDetailsView extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-           CustomOrdersItem(
+          CustomOrdersItem(
             isDetailsOrder: true,
-            isFinished:isFinished? true : false,
+            isFinished: isFinished ? true : false,
           ),
           const SizedBox(
             height: 16,
@@ -86,7 +88,7 @@ class OrderDetailsView extends StatelessWidget {
         ],
       ),
       extendBody: true,
-      bottomNavigationBar: !isFinished
+      bottomNavigationBar: isFinished
           ? ColoredBox(
               color: Colors.transparent,
               child: SafeArea(
@@ -96,8 +98,10 @@ class OrderDetailsView extends StatelessWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: CustomFillButton(
-                      title: 'الانتقال لإتمام الطلب',
-                      onPress: () {},
+                      title: 'تقييم المنتجات',
+                      onPress: () {
+                        navigateTo(toPage: const ProductEvaluationView());
+                      },
                     ),
                   ),
                 ),

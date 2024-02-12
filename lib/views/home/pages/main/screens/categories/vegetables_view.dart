@@ -4,6 +4,7 @@ import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/features/products/cubit/get_products_cubit.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
+import 'package:vegetable_orders_project/views/sheets/filtter_sheet.dart';
 
 import '../../../../../../core/widgets/custom_app_input.dart';
 
@@ -45,7 +46,19 @@ class _VegetablesViewState extends State<VegetablesView> {
                   top: 9.5,
                   left: 8,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                        clipBehavior: Clip.antiAlias,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(28),
+                            topRight: Radius.circular(28),
+                          ),
+                        ),
+                        context: context,
+                        builder: (context) => const FiltterSheet(),
+                      );
+                    },
                     child: const AppImage(
                       'assets/icon/svg/filtter.svg',
                       height: 40,

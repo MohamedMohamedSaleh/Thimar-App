@@ -6,7 +6,7 @@ import 'package:vegetable_orders_project/features/products/cubit/get_products_cu
 import 'package:vegetable_orders_project/views/auth/confirm_code/cubit/confirm_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/login/cubit/login_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/register/cubit/register_cubit.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/my_account_view.dart';
+import 'package:vegetable_orders_project/views/home/home_view.dart';
 import 'core/logic/helper_methods.dart';
 import 'features/categoris/cubit/get_category_cubit.dart';
 import 'features/get_cities/cubit/get_cities_cubit.dart';
@@ -103,7 +103,7 @@ class MyApp extends StatelessWidget {
           //   ),
           // ),
         ),
-        home: const MyAccountPage(),
+        home: const HomeView(),
       ),
     );
   }

@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
+import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/vegetables_view.dart';
 import '../../../../features/categoris/category_model.dart';
 import '../../../../features/categoris/cubit/get_category_cubit.dart';
 import '../../../../features/products/cubit/get_products_cubit.dart';
@@ -90,7 +92,8 @@ class _MainPageState extends State<MainPage> {
                             children: List.generate(
                               state.model.length,
                               (index) => Padding(
-                                padding: const EdgeInsetsDirectional.only(end: 4),
+                                padding:
+                                    const EdgeInsetsDirectional.only(end: 4),
                                 child: CircleAvatar(
                                   radius: (index == currentIndex) ? 5 : 4,
                                   backgroundColor: (index == currentIndex)
@@ -175,12 +178,12 @@ class _MainPageState extends State<MainPage> {
                 );
               } else if (state is GetProductSuccrssState) {
                 return GridView.builder(
-                  padding: const EdgeInsets.only(bottom: 16, right: 16, left: 16),
+                  padding:
+                      const EdgeInsets.only(bottom: 16, right: 16, left: 16),
                   itemCount: state.model.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     childAspectRatio: 163 / 250,
@@ -201,6 +204,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
 class _ItemCategory extends StatefulWidget {
   const _ItemCategory({required this.model});
   final CategoryModel model;
@@ -211,30 +215,35 @@ class _ItemCategory extends StatefulWidget {
 class _ItemCategoryState extends State<_ItemCategory> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 70,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(11),
-            color: const Color(0xffc0c0c0).withOpacity(.2),
+    return InkWell(
+      onTap: () {
+        navigateTo(toPage: const VegetablesView());
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 70,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(11),
+              color: const Color(0xffc0c0c0).withOpacity(.2),
+            ),
+            child: AppImage(
+              widget.model.media,
+              height: 37,
+              width: 37,
+              fit: BoxFit.scaleDown,
+            ),
           ),
-          child: AppImage(
-            widget.model.media,
-            height: 37,
-            width: 37,
-            fit: BoxFit.scaleDown,
+          const SizedBox(
+            height: 5,
           ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          widget.model.name,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-        ),
-      ],
+          Text(
+            widget.model.name,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
     );
   }
 }
