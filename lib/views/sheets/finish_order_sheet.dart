@@ -3,7 +3,6 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
-import 'package:vegetable_orders_project/views/sheets/thank_you_sheet.dart';
 
 class FinishOrderSheet extends StatelessWidget {
   const FinishOrderSheet({super.key});
@@ -94,19 +93,7 @@ class FinishOrderSheet extends StatelessWidget {
                     title: 'تأكيد الأختيار',
                     onPress: () {
                       Navigator.pop(context);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      showModalBottomSheet(
-                        clipBehavior: Clip.antiAlias,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(35),
-                            topLeft: Radius.circular(35),
-                          ),
-                        ),
-                        context: context,
-                        builder: (context) => const ThankYouSheet(),
-                      );
+                     
                     },
                   ),
                 ),

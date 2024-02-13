@@ -10,6 +10,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/tit
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
+import 'screens/frequently_questions_view.dart';
 import 'screens/payment_view.dart';
 
 class MyAccountPage extends StatelessWidget {
@@ -83,9 +84,13 @@ class MyAccountPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          const _ItemMyAccount(
-                            icon: 'Questions',
-                            title: 'أسئلة متكررة',
+                          InkWell(
+                            onTap: () => navigateTo(
+                                toPage: const FrequentlyQuestionsView()),
+                            child: const _ItemMyAccount(
+                              icon: 'Questions',
+                              title: 'أسئلة متكررة',
+                            ),
                           ),
                           InkWell(
                             onTap: () =>

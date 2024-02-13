@@ -13,7 +13,7 @@ class PaymentView extends StatefulWidget {
 }
 
 class _PaymentViewState extends State<PaymentView> {
-  bool isCheck = true;
+  bool isBlackCheck = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +38,10 @@ class _PaymentViewState extends State<PaymentView> {
                       ),
                       fillColor: const MaterialStatePropertyAll(Colors.white),
                       checkColor: mainColor,
-                      value: isCheck,
+                      value: isBlackCheck,
                       onChanged: (value) {
                         setState(() {
-                          isCheck = !isCheck;
+                          isBlackCheck = true;
                           value = true;
                         });
                       },
@@ -75,9 +75,9 @@ class _PaymentViewState extends State<PaymentView> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       fillColor: const MaterialStatePropertyAll(Colors.white),
-                      value: !isCheck,
+                      value: !isBlackCheck,
                       onChanged: (value) {
-                        isCheck = !isCheck;
+                        isBlackCheck = false;
                         setState(() {});
                       },
                     ),

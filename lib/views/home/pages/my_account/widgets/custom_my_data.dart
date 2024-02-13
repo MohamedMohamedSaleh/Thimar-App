@@ -11,22 +11,24 @@ class CustomMyData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           child: Stack(
             children: [
-              AppImage(
-                'assets/images/vegetable_basket.png',
+              const AppImage(
+                'https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.87170709.1707782400&semt=sph',
                 height: 70,
                 width: 75,
                 fit: BoxFit.cover,
               ),
-              Positioned(
-                  top: 35,
-                  right: 35,
-                  child: AppImage(
-                    'assets/icon/svg/account/Camera.svg',
-                  )),
+              isMain
+                  ? const SizedBox()
+                  : const Positioned(
+                      top: 30,
+                      right: 28,
+                      child: AppImage(
+                        'assets/icon/svg/account/Camera.svg',
+                      )),
             ],
           ),
         ),

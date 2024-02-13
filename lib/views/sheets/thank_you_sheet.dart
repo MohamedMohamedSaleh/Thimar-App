@@ -66,7 +66,10 @@ class ThankYouSheet extends StatelessWidget {
                     height: 55,
                     child: OutlinedButton(
                       onPressed: () {
-                        navigateTo(toPage: const HomeView(), isRemove: true);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        // navigateTo(toPage: const HomeView(), isRemove: true);
                       },
                       child: const Text(
                         'الرئيسية',

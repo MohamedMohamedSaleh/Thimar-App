@@ -10,6 +10,7 @@ import 'package:vegetable_orders_project/views/sheets/finish_order_sheet.dart';
 import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
 
 import '../../../core/widgets/custom_fill_button.dart';
+import '../../sheets/thank_you_sheet.dart';
 
 class CompletOrderView extends StatelessWidget {
   const CompletOrderView({super.key});
@@ -249,16 +250,31 @@ class CompletOrderView extends StatelessWidget {
                         width: 15,
                       ),
                       Expanded(
-                        child: SizedBox(
-                          height: 48,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(11),
-                              border: Border.all(
-                                color: mainColor.withOpacity(.1),
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              clipBehavior: Clip.antiAlias,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(28),
+                                  topRight: Radius.circular(28),
+                                ),
                               ),
+                              context: context,
+                              builder: (context) => const FinishOrderSheet(),
+                            );
+                          },
+                          child: SizedBox(
+                            height: 48,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(11),
+                                border: Border.all(
+                                  color: mainColor.withOpacity(.1),
+                                ),
+                              ),
+                              child: const AppImage('assets/icon/svg/visa.svg'),
                             ),
-                            child: const AppImage('assets/icon/svg/visa.svg'),
                           ),
                         ),
                       ),
@@ -266,17 +282,32 @@ class CompletOrderView extends StatelessWidget {
                         width: 15,
                       ),
                       Expanded(
-                        child: SizedBox(
-                          height: 48,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(11),
-                              border: Border.all(
-                                color: mainColor.withOpacity(.1),
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              clipBehavior: Clip.antiAlias,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(28),
+                                  topRight: Radius.circular(28),
+                                ),
                               ),
+                              context: context,
+                              builder: (context) => const FinishOrderSheet(),
+                            );
+                          },
+                          child: SizedBox(
+                            height: 48,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(11),
+                                border: Border.all(
+                                  color: mainColor.withOpacity(.1),
+                                ),
+                              ),
+                              child: const AppImage(
+                                  'assets/icon/svg/mostercard.svg'),
                             ),
-                            child: const AppImage(
-                                'assets/icon/svg/mostercard.svg'),
                           ),
                         ),
                       ),
@@ -322,12 +353,12 @@ class CompletOrderView extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(28),
-                        topRight: Radius.circular(28),
+                        topLeft: Radius.circular(35),
+                        topRight: Radius.circular(35),
                       ),
                     ),
                     context: context,
-                    builder: (context) => const FinishOrderSheet(),
+                    builder: (context) => const ThankYouSheet(),
                   );
                 },
               ),

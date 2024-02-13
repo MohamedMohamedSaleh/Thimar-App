@@ -5,12 +5,13 @@ class CustomAppBarIcon extends StatelessWidget {
     super.key,
     this.child = const Icon(
       Icons.arrow_back_ios_rounded,
+      size: 20,
       textDirection: TextDirection.rtl,
       color: Color(0xff4C8613),
     ),
     this.isBack = true,
-    this.height = 32,
-    this.width = 32,
+    this.height = 30,
+    this.width = 30,
     this.color,
     this.onTap,
   });
