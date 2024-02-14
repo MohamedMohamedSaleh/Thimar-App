@@ -100,8 +100,8 @@ class _FormLoginState extends State<FormLogin> {
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
                 return "كلمة المرور مطلوبه";
-              } else if (value!.length <= 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 6 أحرف";
+              } else if (value!.length < 6) {
+                return "كلمة المرور يجب أن تكون أكبر من 5 أحرف";
               }
               return null;
             },

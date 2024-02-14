@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
-import 'package:vegetable_orders_project/features/products/cubit/get_products_cubit.dart';
+import 'package:vegetable_orders_project/features/products/add_remove_favorite_cubit/add_remove_favorite_cubit.dart';
+import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/confirm_code/cubit/confirm_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/login/cubit/login_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/register/cubit/register_cubit.dart';
-import 'package:vegetable_orders_project/views/home/home_view.dart';
+import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 import 'core/logic/helper_methods.dart';
 import 'features/categoris/cubit/get_category_cubit.dart';
 import 'features/get_cities/cubit/get_cities_cubit.dart';
+import 'features/products/get_products_cubit/get_products_cubit.dart';
 import 'features/slider/cubit/get_slider_cubit.dart';
 
 void main() async {
-    SystemChrome.setSystemUIOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: getMaterialColor(),
       statusBarIconBrightness: Brightness.light,
@@ -53,6 +55,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => GetProductCubit(),
         ),
+        BlocProvider(
+          create: (BuildContext context) => AddRemoveFavoriteCubit(),
+        ),
+        // BlocProvider(
+        //   create: (BuildContext context) => GetFavoriteProductCubit(),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -103,7 +111,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const HomeView(),
+        home: const SplashView(),
       ),
     );
   }

@@ -7,7 +7,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/vegetables_view.dart';
 import '../../../../features/categoris/category_model.dart';
 import '../../../../features/categoris/cubit/get_category_cubit.dart';
-import '../../../../features/products/cubit/get_products_cubit.dart';
+import '../../../../features/products/get_products_cubit/get_products_cubit.dart';
 import '../../../../features/slider/cubit/get_slider_cubit.dart';
 import '../../widgets/custom_item_product.dart';
 import 'widgets/main_app_bar.dart';
@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     sliderCubit = BlocProvider.of(context)..getData();
     categoryCubit = BlocProvider.of(context)..getData();
-    productCubit = BlocProvider.of(context)..getData();
+    productCubit = BlocProvider.of(context)..getData(type: ProductsType.mainProducts);
   }
 
   int currentIndex = 0;

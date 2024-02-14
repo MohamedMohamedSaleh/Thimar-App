@@ -26,7 +26,7 @@ class CustomAppBarIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: isBack ?() {
-         Navigator.pop(context) ;
+         Navigator.pop(context, true) ;
       }: onTap,
       child: Container(
         decoration: BoxDecoration(

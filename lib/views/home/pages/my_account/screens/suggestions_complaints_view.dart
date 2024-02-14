@@ -21,7 +21,7 @@ class SuggestionsComplaintsView extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const CustomFormInput(isFillColor: false ,labelText: 'رقم الموبايل'),
+              const CustomFormInput(isFillColor: false ,labelText: 'رقم الموبايل', isPhone: true,),
               const SizedBox(
                 height: 10,
               ),

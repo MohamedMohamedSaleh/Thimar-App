@@ -8,8 +8,16 @@ class CacheHelper {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  static Future<bool> clear() async {
+  static Future<bool> clearUserData() async {
     return _prefs.clear();
+  }
+
+  static Future<void> setIsFavorite(bool value) async {
+    await _prefs.setBool('isFavorite', value);
+  }
+
+  static String? getUserToken() {
+    return _prefs.getString('token');
   }
 
   static Future<void> saveUserData(Model model) async {
@@ -28,6 +36,6 @@ class CacheHelper {
 
   static bool isAuth() {
     String? token = _prefs.getString("token");
-    return token != null || (token?? "").isNotEmpty;
+    return token != null || (token ?? "").isNotEmpty;
   }
 }

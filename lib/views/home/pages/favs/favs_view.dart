@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
-import 'package:vegetable_orders_project/features/products/cubit/get_products_cubit.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
+
+import '../../../../features/products/get_products_cubit/get_products_cubit.dart';
 
 
 class FavsPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _FavsPageState extends State<FavsPage> {
   @override
   initState() {
     super.initState();
-    cubit = BlocProvider.of(context)..getData();
+    cubit = BlocProvider.of(context)..getData(type: ProductsType.favoritesProducts);
   }
 
   @override

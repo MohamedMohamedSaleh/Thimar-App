@@ -76,7 +76,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 24),
+        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
         child: SafeArea(
             child: CustomFillButton(title: 'تعديل البيانات', onPress: () {})),
       ),

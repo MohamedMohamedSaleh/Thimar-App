@@ -6,14 +6,14 @@ import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/views/home/home_view.dart';
 import '../login/login_view.dart';
 
-class SplashViews extends StatefulWidget {
-  const SplashViews({super.key});
+class SplashView extends StatefulWidget {
+  const SplashView({super.key});
 
   @override
-  State<SplashViews> createState() => _SplashViewsState();
+  State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewsState extends State<SplashViews> {
+class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();

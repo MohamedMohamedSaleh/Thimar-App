@@ -28,7 +28,7 @@ class AddCardSheet extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          const CustomFormInput(isFillColor: false, labelText: 'رقم البطاقة'),
+          const CustomFormInput(isFillColor: false, labelText: 'رقم البطاقة', isPhone: true,),
           const SizedBox(
             height: 16,
           ),
@@ -37,13 +37,13 @@ class AddCardSheet extends StatelessWidget {
               Expanded(
                   child: CustomFormInput(
                       isFillColor: false,
-                      labelText: 'تاريخ الإنتهاء (شهر / سنة)')),
+                      labelText: 'تاريخ الإنتهاء (شهر / سنة)', isPhone: true,)),
               SizedBox(
                 width: 16,
               ),
               Expanded(
                   child: CustomFormInput(
-                      isFillColor: false, labelText: '(Cvv) الرقم السري ')),
+                      isFillColor: false, labelText: '(Cvv) الرقم السري ', isPhone: true,)),
             ],
           ),
           const SizedBox(

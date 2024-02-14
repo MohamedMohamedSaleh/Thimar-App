@@ -172,6 +172,7 @@ class ConnectWithUsView extends StatelessWidget {
                           child: CustomFormInput(
                             labelText: 'رقم الموبايل',
                             isFillColor: false,
+                            isPhone: true,
                           ),
                         ),
                         const SizedBox(

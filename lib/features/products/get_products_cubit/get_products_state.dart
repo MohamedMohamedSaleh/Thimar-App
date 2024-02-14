@@ -15,3 +15,16 @@ final class GetProductSuccrssState extends GetProductStates {
 
   GetProductSuccrssState({required this.model});
 }
+final class GetFasProductLoadingState extends GetProductStates {}
+
+final class GetFasProductfailedState extends GetProductStates {
+  final String msg;
+
+  GetFasProductfailedState({required this.msg});
+}
+
+final class GetFasProductSuccrssState extends GetProductStates {
+  final List<ProductModel> model;
+
+  GetFasProductSuccrssState({required this.model});
+}

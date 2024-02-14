@@ -131,6 +131,7 @@ class _AddTitleViewState extends State<AddTitleView> {
                             height: 50,
                             child: CustomFormInput(
                               labelText: 'أدخل رقم الجوال',
+                               isPhone: true,
                               isTitl: true,
                             )),
                       ),

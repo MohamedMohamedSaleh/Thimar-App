@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
+import 'package:vegetable_orders_project/features/products/add_remove_favorite_cubit/add_remove_favorite_cubit.dart';
 
 import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
@@ -16,26 +19,57 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
+
+  late AddRemoveFavoriteCubit addRemoveCubit;
   @override
   initState() {
     super.initState();
+    addRemoveCubit = BlocProvider.of(context);
   }
 
   @override
   Widget build(BuildContext context) {
+  bool isFavorit = widget.model.isFavorite;
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 22, right: 22, top: 16, bottom: 8),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 22, right: 22, top: 16, bottom: 8),
               child: Row(
                 children: [
-                  CustomAppBarIcon(),
-                  Spacer(),
-                  CustomAppBarIcon(
-                    isBack: false,
-                    child: AppImage('assets/icon/svg/heart.svg'),
+                  const CustomAppBarIcon(),
+                  const Spacer(),
+                  BlocConsumer<AddRemoveFavoriteCubit, AddRemoveFavoriteStates>(
+                    listener: (context, state) {
+                      if (state is AddFavoriteSuccessState) {
+                        isFavorit = true;
+                      } else if (state is RemoveFavoriteSuccessState) {
+                        isFavorit = false;
+                      }
+                    },
+                    builder: (context, state) {
+                      return CustomAppBarIcon(
+                        onTap: () {
+                          if (isFavorit) {
+                            addRemoveCubit.removeProduct(id: widget.model.id);
+                          } else {
+                            addRemoveCubit.addProduct(id: widget.model.id);
+                          }
+                        },
+                        isBack: false,
+                        child: !isFavorit
+                            ? const AppImage(
+                                'assets/icon/svg/heart.svg',
+                              )
+                            : const Icon(
+                                Icons.favorite,
+                                color: mainColor,
+                                size: 20,
+                              ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -200,7 +234,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ),
                     ),
                   ),
-                  const CustomListSimilarPrduct(),
+                  // const CustomListSimilarPrduct(),
                   const SizedBox(
                     height: 20,
                   )

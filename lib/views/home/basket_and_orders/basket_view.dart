@@ -177,6 +177,8 @@ class _ItemOrder extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: CustomAppBarIcon(
+                  isBack: false,
+                  onTap: (){},
                   height: 26,
                   width: 26,
                   color: const Color(0xffFF0000).withOpacity(0.13),

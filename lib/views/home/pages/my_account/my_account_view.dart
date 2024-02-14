@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/connect_with_us_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
@@ -170,14 +172,20 @@ class MyAccountPage extends StatelessWidget {
                         color: const Color(0xffF6F6F6),
                       ),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         children: [
-                          _ItemMyAccount(
-                            title: 'تسجيل الخروج',
-                            icon: 'Turn_off',
-                            isLogout: true,
+                          InkWell(
+                            onTap: () {
+                              CacheHelper.clearUserData();
+                              navigateTo(toPage: const LoginView());
+                            },
+                            child: const _ItemMyAccount(
+                              title: 'تسجيل الخروج',
+                              icon: 'Turn_off',
+                              isLogout: true,
+                            ),
                           ),
                         ],
                       ),

@@ -27,7 +27,7 @@ class WalletChargeNowView extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            const CustomFormInput(labelText: 'المبلغ الخاص بك'),
+            const CustomFormInput(labelText: 'المبلغ الخاص بك', isPhone: true,),
             const SizedBox(
               height: 38,
             ),
@@ -42,20 +42,20 @@ class WalletChargeNowView extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            const CustomFormInput(labelText: 'رقم البطاقة الائتمانية'),
+            const CustomFormInput(labelText: 'رقم البطاقة الائتمانية', isPhone: true,),
             const SizedBox(
               height: 18,
             ),
             const Row(
               children: [
                 Expanded(
-                  child: CustomFormInput(labelText: 'تاريخ الانتهاء'),
+                  child: CustomFormInput(labelText: 'تاريخ الانتهاء', isPhone: true,),
                 ),
                 SizedBox(
                   width: 18,
                 ),
                 Expanded(
-                  child: CustomFormInput(labelText: 'الرقم المتسلسل'),
+                  child: CustomFormInput(labelText: 'الرقم المتسلسل', isPhone: true,),
                 ),
               ],
             ),
