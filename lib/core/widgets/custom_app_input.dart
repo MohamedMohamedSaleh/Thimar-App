@@ -15,6 +15,7 @@ class CustomAppInput extends StatefulWidget {
     this.controller,
     this.fillColor = Colors.white,
     this.isData = false,
+    this.onChange,
   });
   final Color fillColor;
   final String labelText;
@@ -26,6 +27,8 @@ class CustomAppInput extends StatefulWidget {
   final FormFieldValidator<String?>? validator;
   final TextEditingController? controller;
   final bool isData;
+  final void Function(String)? onChange;
+
   @override
   State<CustomAppInput> createState() => _CustomAppInputState();
 }
@@ -40,6 +43,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
         bottom: widget.paddingBottom,
       ),
       child: TextFormField(
+        onChanged: widget.onChange,
         cursorHeight: widget.isData ? 17 : null,
         style: widget.isData
             ? const TextStyle(

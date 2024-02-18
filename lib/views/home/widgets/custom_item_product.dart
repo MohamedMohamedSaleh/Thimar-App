@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/product_details_view.dart';
 import '../../../core/widgets/custom_fill_button.dart';
 import '../../../features/products/products_model.dart';
 
 class ItemProduct extends StatefulWidget {
-  const ItemProduct({super.key, required this.model, this.isMainPage = false});
-  final ProductModel model;
+  const ItemProduct(
+      {super.key, this.model, this.isMainPage = false, this.searchModel,  this.isSearch = false});
+  final ProductModel? model;
   final bool isMainPage;
+  final SearchResult? searchModel;
+  final bool isSearch;
 
   @override
   State<ItemProduct> createState() => ItemProductState();
@@ -21,7 +25,7 @@ class ItemProductState extends State<ItemProduct> {
       onTap: () {
         navigateTo(
             toPage: ProductDetailsView(
-          model: widget.model,
+          model: widget.model!,
         ));
       },
       child: SizedBox(
@@ -50,7 +54,7 @@ class ItemProductState extends State<ItemProduct> {
                           fit: StackFit.expand,
                           children: [
                             AppImage(
-                              widget.model.mainImage,
+                              widget.isSearch? widget.searchModel!.mainImage: widget.model!.mainImage,
                               fit: BoxFit.cover,
                             ),
                             Align(
@@ -68,7 +72,7 @@ class ItemProductState extends State<ItemProduct> {
                                       bottomRight: Radius.circular(11)),
                                 ),
                                 child: Text(
-                                  '${widget.model.discount}%',
+                                  '${widget.isSearch? widget.searchModel!.discount: widget.model!.discount}%',
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -81,14 +85,14 @@ class ItemProductState extends State<ItemProduct> {
                       ),
                     ),
                     Text(
-                      widget.model.title,
+                      widget.isSearch? widget.searchModel!.title: widget.model!.title,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor),
                     ),
                     Text(
-                      'السعر / ${widget.model.unit.name}',
+                      'السعر / ${widget.isSearch? widget.searchModel!.unit.name: widget.model!.unit.name}',
                       style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
@@ -97,7 +101,7 @@ class ItemProductState extends State<ItemProduct> {
                     Row(
                       children: [
                         Text(
-                          '${widget.model.price} ر.س',
+                          '${widget.isSearch? widget.searchModel!.price: widget.model!.price} ر.س',
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -107,7 +111,7 @@ class ItemProductState extends State<ItemProduct> {
                           width: 3,
                         ),
                         Text(
-                          '${widget.model.priceBeforeDiscount} ر.س',
+                          '${widget.isSearch? widget.searchModel!.priceBeforeDiscount: widget.model!.priceBeforeDiscount} ر.س',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w300,
@@ -135,12 +139,12 @@ class ItemProductState extends State<ItemProduct> {
                         )
                       ],
                     ),
-                    widget.isMainPage
+                     widget.isMainPage
                         ? const SizedBox(
                             height: 12,
                           )
                         : const SizedBox(),
-                    widget.isMainPage
+                     widget.isMainPage
                         ? Align(
                             alignment: Alignment.center,
                             child: SizedBox(

@@ -1,17 +1,47 @@
-// part of 'get_favorite_products_cubit.dart';
+part of 'get_favorite_products_cubit.dart';
 
-// class GetFavoriteProductStates {}
+class GetFavoriteProductStates {}
 
-// final class GetFavoriteProductLoadingState extends GetFavoriteProductStates {}
 
-// final class GetFavoriteProductfailedState extends GetFavoriteProductStates {
-//   final String msg;
+final class GetFavoriteProductLoadingState extends GetFavoriteProductStates {}
 
-//   GetFavoriteProductfailedState({required this.msg});
-// }
+final class GetFavoriteProductfailedState extends GetFavoriteProductStates {
+  final String msg;
 
-// final class GetFavoriteProductSuccrssState extends GetFavoriteProductStates {
-//   final List<FavoriteProductModel> model;
+  GetFavoriteProductfailedState({required this.msg});
+}
 
-//   GetFavoriteProductSuccrssState({required this.model});
-// }
+final class GetFavoriteProductSuccrssState extends GetFavoriteProductStates {
+  // final List<ProductModel> model;
+
+  // GetFavoriteProductSuccrssState({required this.model});
+}
+
+///////////////////////////////////
+class StartAddSuccessState extends GetFavoriteProductStates {}
+
+class StartRemoveSuccessState extends GetFavoriteProductStates {}
+
+class AddFavoriteSuccessState extends GetFavoriteProductStates {}
+
+class AddFavoriteFailedState extends GetFavoriteProductStates {}
+
+class RemoveFavoriteSuccessState extends GetFavoriteProductStates {}
+
+class RemoveFavoriteFailedState extends GetFavoriteProductStates {}
+
+///////////////////////////////
+
+final class GetProductLoadingState extends GetFavoriteProductStates {}
+
+final class GetProductfailedState extends GetFavoriteProductStates {
+  final String msg;
+
+  GetProductfailedState({required this.msg});
+}
+
+final class GetProductSuccrssState extends GetFavoriteProductStates {
+  final List<ProductModel> model;
+
+  GetProductSuccrssState({required this.model});
+}

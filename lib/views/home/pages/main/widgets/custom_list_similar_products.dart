@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 
-import '../../../../../features/products/get_products_cubit/get_products_cubit.dart';
+import '../../../../../features/products/similar_products/similar_products_cubit.dart';
 
 class CustomListSimilarPrduct extends StatefulWidget {
-  const CustomListSimilarPrduct({super.key});
+  const CustomListSimilarPrduct({
+    super.key,
+    required this.id,
+  });
+  final int id;
 
   @override
   State<CustomListSimilarPrduct> createState() =>
@@ -13,24 +17,24 @@ class CustomListSimilarPrduct extends StatefulWidget {
 }
 
 class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
-  late GetProductCubit cubit;
+  late GetSimilarProductCubit cubit;
   @override
   void initState() {
     super.initState();
-    cubit = BlocProvider.of(context)..getData(type: ProductsType.mainProducts);
+    cubit = BlocProvider.of(context)..getSimilarProductData(id: widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      child: BlocBuilder<GetProductCubit, GetProductStates>(
+      child: BlocBuilder<GetSimilarProductCubit, GetSimilarProductStates>(
         builder: (context, state) {
-          if (state is GetProductLoadingState) {
+          if (state is GetSimilarProductLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is GetProductSuccrssState) {
+          } else if (state is GetSimilarProductSuccrssState) {
             return SizedBox(
               height: 180,
               child: ListView.separated(
@@ -51,36 +55,6 @@ class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
           }
         },
       ),
-    );
-  }
-}
-
-class CustomTraining extends StatelessWidget {
-  const CustomTraining({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 110,
-        child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => const Containerrrd(),
-            separatorBuilder: (context, index) => const SizedBox(
-                  width: 18,
-                ),
-            itemCount: 10));
-  }
-}
-
-class Containerrrd extends StatelessWidget {
-  const Containerrrd({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 100,
-      color: Colors.red,
     );
   }
 }

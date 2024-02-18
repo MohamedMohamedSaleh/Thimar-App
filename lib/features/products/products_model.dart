@@ -8,19 +8,21 @@ class ProductsData {
   late final double minPrice;
 
   ProductsData.fromJson(Map<String, dynamic> json) {
-    list = List.from(json['data'] ?? [])
+    list = List.from(json['data'])
         .map((e) => ProductModel.fromJson(e))
         .toList();
 
     status = json['status'];
     message = json['message'];
-    userCartCount = json['user_cart_count']?? 0;
-    maxPrice = json['max_price']?? 0;
-    minPrice = json['min_price']?? 0;
+    userCartCount = json['user_cart_count'] ?? 0;
+    maxPrice = json['max_price'] ?? 0;
+    minPrice = json['min_price'] ?? 0;
   }
 }
 
 class ProductModel {
+  
+
   late final int categoryId;
   late final int id;
   late final String title;
@@ -33,12 +35,11 @@ class ProductModel {
 
   late final int amount;
   late final int isActive;
-  late  bool isFavorite;
+  late bool isFavorite;
   late final Unit unit;
   late final List<Images> images;
   late final String mainImage;
   late final String createdAt;
-  
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     categoryId = json['category_id'];
@@ -54,7 +55,7 @@ class ProductModel {
     amount = json['amount'];
     isActive = json['is_active'];
     isFavorite = json['is_favorite'];
-    
+
     unit = Unit.fromJson(json['unit']);
     images = List.from(json['images']).map((e) => Images.fromJson(e)).toList();
     mainImage = json['main_image'];

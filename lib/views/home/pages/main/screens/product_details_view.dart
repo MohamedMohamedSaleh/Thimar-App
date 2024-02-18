@@ -3,24 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
-import 'package:vegetable_orders_project/features/products/add_remove_favorite_cubit/add_remove_favorite_cubit.dart';
-
+import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
 import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
 import '../widgets/custom_list_comment.dart';
 import '../widgets/custom_list_similar_products.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({super.key, required this.model});
+  const ProductDetailsView({super.key, required this.model, this.isMainView = true});
   final ProductModel model;
+  final bool isMainView;
 
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
-
-  late AddRemoveFavoriteCubit addRemoveCubit;
+  late GetFavoriteProductCubit addRemoveCubit;
   @override
   initState() {
     super.initState();
@@ -29,7 +28,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-  bool isFavorit = widget.model.isFavorite;
+    bool isFavorit = widget.model.isFavorite;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -41,11 +40,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 children: [
                   const CustomAppBarIcon(),
                   const Spacer(),
-                  BlocConsumer<AddRemoveFavoriteCubit, AddRemoveFavoriteStates>(
+                  BlocConsumer<GetFavoriteProductCubit,
+                      GetFavoriteProductStates>(
                     listener: (context, state) {
-                      if (state is AddFavoriteSuccessState) {
+                      if (state is StartAddSuccessState) {
                         isFavorit = true;
-                      } else if (state is RemoveFavoriteSuccessState) {
+                      } else if (state is StartRemoveSuccessState) {
                         isFavorit = false;
                       }
                     },
@@ -234,7 +234,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ),
                     ),
                   ),
-                  // const CustomListSimilarPrduct(),
+                  CustomListSimilarPrduct(
+                    id: widget.model.categoryId,
+                  ),
                   const SizedBox(
                     height: 20,
                   )

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 
-import '../../../../features/products/get_products_cubit/get_products_cubit.dart';
+import '../../../../features/products/get_favorite_product/get_favorite_products_cubit.dart';
 
 
 class FavsPage extends StatefulWidget {
@@ -14,11 +14,11 @@ class FavsPage extends StatefulWidget {
 }
 
 class _FavsPageState extends State<FavsPage> {
-  late GetProductCubit cubit;
+  late GetFavoriteProductCubit cubit;
   @override
   initState() {
     super.initState();
-    cubit = BlocProvider.of(context)..getData(type: ProductsType.favoritesProducts);
+    cubit = BlocProvider.of(context);
   }
 
   @override
@@ -28,23 +28,25 @@ class _FavsPageState extends State<FavsPage> {
         title: 'المفضلة',
         thereIsIcon: false,
       ),
-      body: BlocBuilder<GetProductCubit, GetProductStates>(
+      body: BlocBuilder<GetFavoriteProductCubit, GetFavoriteProductStates>(
         builder: (context, state) {
-          if (state is GetProductLoadingState) {
+          if (state is GetFavoriteProductLoadingState || state is AddFavoriteSuccessState || state is RemoveFavoriteSuccessState || state is StartAddSuccessState || state is StartRemoveSuccessState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is GetProductSuccrssState) {
+          } else if (cubit.favsModel != null) {
             return GridView.builder(
                       padding: const EdgeInsets.all(16),
 
-              itemCount: state.model.length,
+              itemCount: cubit.favsModel!.list.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 163/215, crossAxisSpacing: 10,mainAxisSpacing: 10),
               itemBuilder: (context, index) =>
-                  ItemProduct(model: state.model[index]),
+                  ItemProduct(model: cubit.favsModel!.list[index]),
             );
-          } else {
+          }
+          
+           else {
             return const Center(
               child: Text("Failed!"),
             );
