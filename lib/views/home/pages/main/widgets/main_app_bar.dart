@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/views/home/basket_and_orders/basket_view.dart';
+import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
 import '../../../../../core/logic/helper_methods.dart';
 
@@ -59,7 +59,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onTap: () {
                   // CacheHelper.clear();
                   // navegateReplace(toPage: const LoginView());
-                  navigateTo(toPage: const BasketView());
+                  navigateTo(toPage: const CartView());
                 },
                 child: Badge(
                   offset: const Offset(5, -5),

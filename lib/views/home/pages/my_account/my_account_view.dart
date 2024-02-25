@@ -259,6 +259,7 @@ class _CustomAppBarAccount extends StatelessWidget
         child: Stack(
           children: [
             AppBar(
+              automaticallyImplyLeading: false,
               toolbarHeight: 210,
               backgroundColor: Theme.of(context).primaryColor,
               centerTitle: true,

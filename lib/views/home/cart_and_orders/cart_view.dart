@@ -4,13 +4,13 @@ import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
-import 'package:vegetable_orders_project/views/home/basket_and_orders/complet_order_view.dart';
+import 'package:vegetable_orders_project/views/home/cart_and_orders/complet_order_view.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_plus_minus_product.dart';
 
 import 'widget/custom_orders_mony.dart';
 
-class BasketView extends StatelessWidget {
-  const BasketView({super.key});
+class CartView extends StatelessWidget {
+  const CartView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class _ItemOrder extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: CustomAppBarIcon(
                   isBack: false,
-                  onTap: (){},
+                  onTap: () {},
                   height: 26,
                   width: 26,
                   color: const Color(0xffFF0000).withOpacity(0.13),

@@ -4,7 +4,7 @@ import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
-import 'package:vegetable_orders_project/views/home/basket_and_orders/widget/custom_orders_mony.dart';
+import 'package:vegetable_orders_project/views/home/cart_and_orders/widget/custom_orders_mony.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/sheets/finish_order_sheet.dart';
 import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
