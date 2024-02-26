@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
@@ -61,13 +62,15 @@ class FormLogin extends StatefulWidget {
 }
 
 class _FormLoginState extends State<FormLogin> {
-  late LoginCubit cubit;
+  final cubit = KiwiContainer().resolve<LoginCubit>();
 
-  @override
-  void initState() {
-    super.initState();
-    cubit = BlocProvider.of(context);
-  }
+  // late LoginCubit cubit;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   cubit = BlocProvider.of(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +133,8 @@ class _FormLoginState extends State<FormLogin> {
           const SizedBox(
             height: 32,
           ),
-          BlocBuilder<LoginCubit, LoginStates>(
+          BlocBuilder(
+            bloc: cubit,
             builder: (context, state) {
               return CustomFillButton(
                 isLoading: state is LoginLoadingState,

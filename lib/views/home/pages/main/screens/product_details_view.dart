@@ -155,7 +155,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               ),
                             ),
                             const Spacer(),
-                            const CustomPlusOrMinusProduct(),
+                            const CustomPlusOrMinusProduct(amount: 5,),
                           ],
                         ),
                       ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/product_details_view.dart';
 import '../../../core/widgets/custom_fill_button.dart';
@@ -8,7 +10,11 @@ import '../../../features/products/products_model.dart';
 
 class ItemProduct extends StatefulWidget {
   const ItemProduct(
-      {super.key, this.model, this.isMainPage = false, this.searchModel,  this.isSearch = false});
+      {super.key,
+      this.model,
+      this.isMainPage = false,
+      this.searchModel,
+      this.isSearch = false});
   final ProductModel? model;
   final bool isMainPage;
   final SearchResult? searchModel;
@@ -19,6 +25,7 @@ class ItemProduct extends StatefulWidget {
 }
 
 class ItemProductState extends State<ItemProduct> {
+  final cubit = KiwiContainer().resolve<CartCubit>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -54,7 +61,9 @@ class ItemProductState extends State<ItemProduct> {
                           fit: StackFit.expand,
                           children: [
                             AppImage(
-                              widget.isSearch? widget.searchModel!.mainImage: widget.model!.mainImage,
+                              widget.isSearch
+                                  ? widget.searchModel!.mainImage
+                                  : widget.model!.mainImage,
                               fit: BoxFit.cover,
                             ),
                             Align(
@@ -72,7 +81,7 @@ class ItemProductState extends State<ItemProduct> {
                                       bottomRight: Radius.circular(11)),
                                 ),
                                 child: Text(
-                                  '${widget.isSearch? widget.searchModel!.discount: widget.model!.discount}%',
+                                  '${widget.isSearch ? widget.searchModel!.discount : widget.model!.discount}%',
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -85,14 +94,16 @@ class ItemProductState extends State<ItemProduct> {
                       ),
                     ),
                     Text(
-                      widget.isSearch? widget.searchModel!.title: widget.model!.title,
+                      widget.isSearch
+                          ? widget.searchModel!.title
+                          : widget.model!.title,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor),
                     ),
                     Text(
-                      'السعر / ${widget.isSearch? widget.searchModel!.unit.name: widget.model!.unit.name}',
+                      'السعر / ${widget.isSearch ? widget.searchModel!.unit.name : widget.model!.unit.name}',
                       style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
@@ -101,7 +112,7 @@ class ItemProductState extends State<ItemProduct> {
                     Row(
                       children: [
                         Text(
-                          '${widget.isSearch? widget.searchModel!.price: widget.model!.price} ر.س',
+                          '${widget.isSearch ? widget.searchModel!.price : widget.model!.price} ر.س',
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -111,7 +122,7 @@ class ItemProductState extends State<ItemProduct> {
                           width: 3,
                         ),
                         Text(
-                          '${widget.isSearch? widget.searchModel!.priceBeforeDiscount: widget.model!.priceBeforeDiscount} ر.س',
+                          '${widget.isSearch ? widget.searchModel!.priceBeforeDiscount : widget.model!.priceBeforeDiscount} ر.س',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w300,
@@ -139,12 +150,12 @@ class ItemProductState extends State<ItemProduct> {
                         )
                       ],
                     ),
-                     widget.isMainPage
+                    widget.isMainPage
                         ? const SizedBox(
                             height: 12,
                           )
                         : const SizedBox(),
-                     widget.isMainPage
+                    widget.isMainPage
                         ? Align(
                             alignment: Alignment.center,
                             child: SizedBox(
@@ -153,7 +164,11 @@ class ItemProductState extends State<ItemProduct> {
                               child: CustomFillButton(
                                 radius: 9,
                                 title: 'أضف للسلة',
-                                onPress: () {},
+                                onPress: () {
+                                  KiwiContainer()
+                                      .resolve<CartCubit>()
+                                      .storeProduct(id: widget.model!.id);
+                                },
                               ),
                             ),
                           )

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/cubit/profile_cubit.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
 class PersonalDataView extends StatefulWidget {
@@ -12,6 +14,7 @@ class PersonalDataView extends StatefulWidget {
 }
 
 class _PersonalDataViewState extends State<PersonalDataView> {
+  final cubit = KiwiContainer().resolve<ProfileCubit>()..getData();
   TextEditingController nameController =
       TextEditingController(text: "محمد علي");
   TextEditingController numberController =

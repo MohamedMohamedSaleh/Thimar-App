@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/features/cart/cart_model.dart';
 
 class CustomOrdersMony extends StatelessWidget {
   const CustomOrdersMony({
     super.key,
     this.isCompletOrder = false,
-    this.isDetailsOrder = false,
+    this.isDetailsOrder = false, this.model,
   });
 
   final bool isCompletOrder;
   final bool isDetailsOrder;
+  final CartData? model;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '180ر.س',
+                  model?.totalPriceBeforeDiscount.toString()?? '',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,
@@ -58,7 +60,7 @@ class CustomOrdersMony extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        '40ر.س',
+                        model?.deliveryCost.toString()?? '',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 15,
@@ -83,7 +85,7 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '-40ر.س',
+                  '-${model?.totalDiscount}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,
@@ -111,7 +113,7 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '140ر.س',
+                  '${model?.totalPriceWithVat}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,

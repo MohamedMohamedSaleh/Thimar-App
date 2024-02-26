@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/models/cities_model.dart';
 
 import '../../features/get_cities/cubit/get_cities_cubit.dart';
@@ -12,12 +13,17 @@ class CitiesSheet extends StatefulWidget {
 }
 
 class _CitiesSheetState extends State<CitiesSheet> {
-  late GetCitiesCubit cubit;
+  final cubit = KiwiContainer().resolve<GetCitiesCubit>();
+  @override
+  void initState() {
+    cubit.getCityData();
+    super.initState();
+  }
 
   @override
-  initState() {
-    super.initState();
-    cubit = BlocProvider.of(context)..getCityData();
+  void dispose() {
+    super.dispose();
+    cubit.close();
   }
 
   @override
@@ -36,7 +42,8 @@ class _CitiesSheetState extends State<CitiesSheet> {
           const SizedBox(
             height: 12,
           ),
-          BlocBuilder<GetCitiesCubit, GetCitiesStates>(
+          BlocBuilder(
+            bloc: cubit,
             builder: (context, state) {
               if (state is GetCitiesLoadingState) {
                 return const Expanded(

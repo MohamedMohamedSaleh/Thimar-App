@@ -15,7 +15,9 @@ class DioHelper {
     try {
       var response = await _dio.post(endPoint, data: data);
       return ResponseData(
-          message:(response.data.toString()).isNotEmpty? response.data['message'] : '',
+          message: (response.data.toString()).isNotEmpty
+              ? response.data['message']
+              : '',
           isSuccess: true,
           response: response);
     } on DioException catch (ex) {
@@ -24,6 +26,22 @@ class DioHelper {
           isSuccess: false,
           response: ex.response);
     }
+  }
+
+  Future<ResponseData> deleteData({
+    required String endPoint,
+     Map<String, dynamic>? data,
+  }) async {
+    try{
+    var response = await _dio.delete(endPoint, data: data);
+    return ResponseData(message: response.data['message'], isSuccess: true, response: response);
+    }on DioException catch(ex){
+      return ResponseData(
+          message: ex.response!.data["message"],
+          isSuccess: false,
+          response: ex.response);
+    }
+
   }
 
   Future<ResponseData> getData({

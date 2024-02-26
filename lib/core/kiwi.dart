@@ -1,5 +1,7 @@
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
+import 'package:vegetable_orders_project/features/slider/cubit/get_slider_cubit.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/cubit/profile_cubit.dart';
 
 import '../features/categori_products/category_products_cubit.dart';
 import '../features/categoris/cubit/get_category_cubit.dart';
@@ -18,13 +20,12 @@ void initKiwi() {
   container.registerFactory((container) => RegisterCubit());
   container.registerFactory((container) => GetCitiesCubit());
   container.registerFactory((container) => ConfirmCubit());
-  container.registerFactory((container) => GetCategoryCubit()..getData());
+
   container.registerFactory((container) => GetCategoryProductsCubit());
   container.registerFactory((container) => GetSearchProductsCubit());
-  container.registerFactory((container) => GetFavoriteProductCubit()
-    ..getData()
-    ..getFavoriteData());
-  container.registerFactory((container) => GetSimilarProductCubit());
-  container.registerFactory((container) => GetSearchCategoryCubit());
+
+  // container.registerFactory((container) => GetSimilarProductCubit());
+  // container.registerFactory((container) => GetSearchCategoryCubit());
   container.registerFactory((container) => CartCubit());
+  container.registerFactory((container) => ProfileCubit());
 }

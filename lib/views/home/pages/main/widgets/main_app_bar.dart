@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegetable_orders_project/features/cart/cart_states.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
 import '../../../../../core/logic/helper_methods.dart';
+import '../../../../../features/cart/cart_cubit.dart';
 
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainAppBar({super.key});
+class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const MainAppBar({super.key, required this.num});
+  final int num;
+
+  @override
+  State<MainAppBar> createState() => _MainAppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(60);
+}
+
+class _MainAppBarState extends State<MainAppBar> {
+  late CartCubit cartCubit;
+  @override
+  void initState() {
+    super.initState();
+    cartCubit = BlocProvider.of(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +83,21 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Badge(
                   offset: const Offset(5, -5),
                   alignment: AlignmentDirectional.topStart,
-                  label: const Text(
-                    "3",
-                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+                  label: BlocBuilder<CartCubit, CartStates>(
+                    builder: (context, state) {
+                      if(state is AddToCartSuccessState){
+                        return Text(
+                        "${cartCubit.cartModel.length}",
+                        style: const TextStyle(
+                            fontSize: 9, fontWeight: FontWeight.bold),
+                      );
+                      }
+                      return Text(
+                        "${cartCubit.cartModel.length}",
+                        style: const TextStyle(
+                            fontSize: 9, fontWeight: FontWeight.bold),
+                      );
+                    },
                   ),
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Container(
@@ -89,7 +120,4 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
 }

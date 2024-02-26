@@ -1,8 +1,8 @@
 class CartData {
 
-  late final List<Data> data;
+  late final List<CartModel> list;
   late final int totalPriceBeforeDiscount;
-  late final double totalDiscount;
+  late final int totalDiscount;
   late final int totalPriceWithVat;
   late final int deliveryCost;
   late final int freeDeliveryPrice;
@@ -15,10 +15,10 @@ class CartData {
   late final String message;
   
   CartData.fromJson(Map<String, dynamic> json){
-    data = List.from(json['data']).map((e)=>Data.fromJson(e)).toList();
+    list = List.from(json['data']).map((e)=>CartModel.fromJson(e)).toList();
     totalPriceBeforeDiscount = json['total_price_before_discount'];
-    totalDiscount = json['total_discount'];
-    totalPriceWithVat = json['total_price_with_vat'];
+    totalDiscount = int.tryParse((json['total_discount']).toString())?.truncate()?? 0;
+    totalPriceWithVat = int.tryParse(json['total_price_with_vat'].toString())?? 0;
     deliveryCost = json['delivery_cost'];
     freeDeliveryPrice = json['free_delivery_price'];
     vat = json['vat'];
@@ -32,7 +32,7 @@ class CartData {
 
 }
 
-class Data {
+class CartModel {
 
   late final int id;
   late final String title;
@@ -43,15 +43,49 @@ class Data {
   late final int price;
   late final int remainingAmount;
   
-  Data.fromJson(Map<String, dynamic> json){
+  CartModel.fromJson(Map<String, dynamic> json){
     id = json['id'];
     title = json['title'];
     image = json['image'];
     amount = json['amount'];
     priceBeforeDiscount = json['price_before_discount'];
     discount = json['discount'];
-    price = json['price'];
+    price = int.tryParse(json['price'].toString())?.truncate()?? 0;
     remainingAmount = json['remaining_amount'];
   }
+
+}
+
+class AddProductData {
+
+  late final String status;
+  late final String message;
+  late final Data data;
+  
+  AddProductData.fromJson(Map<String, dynamic> json){
+    status = json['status'];
+    message = json['message'];
+    data = Data.fromJson(json['data']);
+  }
+
+
+}
+
+class Data {
+
+  late final String title;
+  late final String image;
+  late final int amount;
+  late final int deliveryCost;
+  late final int price;
+  
+  Data.fromJson(Map<String, dynamic> json){
+    title = json['title'];
+    image = json['image'];
+    amount = json['amount'];
+    deliveryCost = json['delivery_cost'];
+    price = int.tryParse(json['price'].toString())?? 0;
+  }
+
 
 }

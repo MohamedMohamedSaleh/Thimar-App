@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_circle_or_button.dart';
@@ -20,12 +21,11 @@ class ConfirmCodeView extends StatefulWidget {
 }
 
 class _ConfirmCodeViewState extends State<ConfirmCodeView> {
-  late ConfirmCubit cubit;
+  final cubit = KiwiContainer().resolve<ConfirmCubit>();
 
   @override
   void initState() {
     super.initState();
-    cubit = BlocProvider.of(context);
   }
 
   @override
@@ -77,7 +77,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                     const SizedBox(
                       height: 30,
                     ),
-                    BlocBuilder<ConfirmCubit, ConfirmStates>(
+                    BlocBuilder(
+                      bloc: cubit,
                       builder: (context, state) {
                         return CustomFillButton(
                           isLoading: state is ConfirmloadingState,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
+import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
 import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_cubit.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/categorie_view.dart';
@@ -25,6 +26,7 @@ class _MainPageState extends State<MainPage> {
   late GetCategoryCubit categoryCubit;
   late GetFavoriteProductCubit productCubit;
   late GetSearchProductsCubit searchProducts;
+  late CartCubit cartCubit;
   bool isNotFound = false;
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _MainPageState extends State<MainPage> {
     categoryCubit = BlocProvider.of(context);
     productCubit = BlocProvider.of(context);
     searchProducts = BlocProvider.of(context);
+    cartCubit = BlocProvider.of(context);
   }
 
   int currentIndex = 0;
@@ -48,7 +51,7 @@ class _MainPageState extends State<MainPage> {
         }
       },
       child: Scaffold(
-        appBar: const MainAppBar(),
+        appBar:  MainAppBar(num: cartCubit.cartModel.length,),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();

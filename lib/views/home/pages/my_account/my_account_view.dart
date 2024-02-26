@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/cubit/profile_cubit.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/connect_with_us_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
@@ -246,10 +248,19 @@ class _ItemMyAccount extends StatelessWidget {
   }
 }
 
-class _CustomAppBarAccount extends StatelessWidget
+class _CustomAppBarAccount extends StatefulWidget
     implements PreferredSizeWidget {
   const _CustomAppBarAccount();
 
+  @override
+  State<_CustomAppBarAccount> createState() => _CustomAppBarAccountState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(210);
+}
+
+class _CustomAppBarAccountState extends State<_CustomAppBarAccount> {
+  final cubit = KiwiContainer().resolve<ProfileCubit>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -319,7 +330,4 @@ class _CustomAppBarAccount extends StatelessWidget
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(210);
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegetable_orders_project/core/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
+import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
 import 'package:vegetable_orders_project/features/categori_products/category_products_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_cubit.dart';
@@ -23,8 +25,11 @@ void main() async {
       statusBarIconBrightness: Brightness.light,
     ),
   );
+
   WidgetsFlutterBinding.ensureInitialized();
+
   await CacheHelper.init();
+  initKiwi();
   runApp(const MyApp());
 }
 
@@ -36,18 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (BuildContext context) => LoginCubit(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => RegisterCubit(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => GetCitiesCubit(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => ConfirmCubit(),
-        ),
+
         BlocProvider(
           create: (BuildContext context) => GetSliderCubit()..getData(),
         ),
@@ -61,13 +55,18 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => GetSearchProductsCubit(),
         ),
         BlocProvider(
-          create: (BuildContext context) => GetFavoriteProductCubit()..getData()..getFavoriteData(),
+          create: (BuildContext context) => GetFavoriteProductCubit()
+            ..getData()
+            ..getFavoriteData(),
         ),
         BlocProvider(
           create: (BuildContext context) => GetSimilarProductCubit(),
         ),
         BlocProvider(
           create: (BuildContext context) => GetSearchCategoryCubit(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => CartCubit(),
         ),
       ],
       child: MaterialApp(

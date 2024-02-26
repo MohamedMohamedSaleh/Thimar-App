@@ -11,6 +11,7 @@ class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
   GetFavoriteProductCubit() : super(GetFavoriteProductStates());
 
   static Map<int, bool> favorites = {};
+  static List<ProductModel> list = [];
   Future<void> getData() async {
     emit(GetProductLoadingState());
     final response = await DioHelper().getData(endPoint: 'products');
@@ -19,11 +20,10 @@ class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
       for (var element in model.list) {
         favorites.addAll({element.id: element.isFavorite});
       }
+      list = model.list;
 
-      emit(GetProductSuccrssState(model: model.list));
+      emit(GetProductSuccrssState(model: list));
     } else {
-     
-
       emit(GetProductfailedState(msg: response.message));
     }
   }
@@ -37,7 +37,6 @@ class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
     if (response.isSuccess) {
       favsModel = ProductsData.fromJson(response.response!.data);
       emit(GetFavoriteProductSuccrssState());
-     
     } else {
       emit(GetFavoriteProductfailedState(msg: response.message));
     }

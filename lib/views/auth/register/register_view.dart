@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
@@ -17,13 +18,8 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  late RegisterCubit cubit;
 
-  @override
-  void initState() {
-    super.initState();
-    cubit = BlocProvider.of(context);
-  }
+  final cubit = KiwiContainer().resolve<RegisterCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +169,8 @@ class _RegisterViewState extends State<RegisterView> {
                         isPassword: true,
                         paddingBottom: 24,
                       ),
-                      BlocBuilder<RegisterCubit, RegisterStates>(
+                      BlocBuilder(
+                        bloc: cubit,
                         builder: (context, state) {
                           return CustomFillButton(
                             isLoading: state is RegisterLoadingState,
