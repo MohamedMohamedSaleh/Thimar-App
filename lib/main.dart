@@ -8,13 +8,10 @@ import 'package:vegetable_orders_project/features/categori_products/category_pro
 import 'package:vegetable_orders_project/features/products/search_category/search_category_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_cubit.dart';
 import 'package:vegetable_orders_project/features/products/similar_products/similar_products_cubit.dart';
-import 'package:vegetable_orders_project/views/auth/confirm_code/cubit/confirm_cubit.dart';
-import 'package:vegetable_orders_project/views/auth/login/cubit/login_cubit.dart';
-import 'package:vegetable_orders_project/views/auth/register/cubit/register_cubit.dart';
+import 'package:vegetable_orders_project/features/products/update_amount/update_amount_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 import 'core/logic/helper_methods.dart';
 import 'features/categoris/cubit/get_category_cubit.dart';
-import 'features/get_cities/cubit/get_cities_cubit.dart';
 import 'features/products/get_favorite_product/get_favorite_products_cubit.dart';
 import 'features/slider/cubit/get_slider_cubit.dart';
 
@@ -67,6 +64,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (BuildContext context) => CartCubit(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => UpdateAmountCubit(),
         ),
       ],
       child: MaterialApp(

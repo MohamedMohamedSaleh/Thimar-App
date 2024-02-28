@@ -39,6 +39,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   int currentIndex = 0;
+  // bool isNotEmpty = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -51,7 +52,7 @@ class _MainPageState extends State<MainPage> {
         }
       },
       child: Scaffold(
-        appBar:  MainAppBar(num: cartCubit.cartModel.length,),
+        appBar: const MainAppBar(),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -63,26 +64,35 @@ class _MainPageState extends State<MainPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: CustomAppInput(
-                  controller: searchProducts.textController,
-                  onChange: (value) {
-                    if (value.isNotEmpty) {
-                      searchProducts.getSearch(text: value);
-                      if (searchProducts.search.isEmpty) {
-                        isNotFound = true;
-                      }
-                    } else {
-                      isNotFound = false;
-
-                      searchProducts.getSearch(text: value);
-                      searchProducts.search.clear();
-                    }
-                  },
-                  // controller: searchProducts.textController,
-                  labelText: "ابحث عن ماتريد؟",
-                  prefixIcon: "assets/icon/svg/search.svg",
-                  fillColor: const Color(0xff4C8613).withOpacity(.03),
-                  paddingBottom: 0,
+                child: Stack(
+                  children: [
+                    CustomAppInput(
+                      controller: searchProducts.textController,
+                      onChange: (value) {
+                        if (value.isNotEmpty) {
+                          searchProducts.getSearch(text: value);
+                          if (searchProducts.search.isEmpty) {
+                            isNotFound = true;
+                          }
+                        } else {
+                          isNotFound = false;
+                          searchProducts.getSearch(text: value);
+                          searchProducts.search.clear();
+                        }
+                      },
+                      // controller: searchProducts.textController,
+                      labelText: "ابحث عن ماتريد؟",
+                      prefixIcon: "assets/icon/svg/search.svg",
+                      fillColor: const Color(0xff4C8613).withOpacity(.03),
+                      paddingBottom: 0,
+                    ),
+                    // isNotEmpty
+                    //     ? const Icon(
+                    //         Icons.clear,
+                    //         color: Colors.red,
+                    //       )
+                    //     : const SizedBox(),
+                  ],
                 ),
               ),
               BlocBuilder<GetSearchProductsCubit, GetSearchProductsStates>(

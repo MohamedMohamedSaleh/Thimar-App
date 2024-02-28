@@ -8,7 +8,7 @@ class ProductsData {
   late final double minPrice;
 
   ProductsData.fromJson(Map<String, dynamic> json) {
-    list = List.from(json['data'])
+    list = List.from(json['data'] ?? [])
         .map((e) => ProductModel.fromJson(e))
         .toList();
 

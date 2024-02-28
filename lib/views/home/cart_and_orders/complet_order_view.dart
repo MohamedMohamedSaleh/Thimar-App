@@ -117,34 +117,46 @@ class CompletOrderView extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: mainColor.withOpacity(0.1),
+                  child: InkWell(
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2025),
+                        cancelText: 'إلغاء',
+                        confirmText: 'حسنا',
+                      );
+                    },
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: mainColor.withOpacity(0.1),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 19),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Text(
-                            'اختر اليوم والتاريخ',
-                            style: _textStyle.copyWith(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 19),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 12,
                             ),
-                          ),
-                          const Spacer(),
-                          const AppImage('assets/icon/svg/date.svg'),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                        ],
+                            Text(
+                              'اختر اليوم والتاريخ',
+                              style: _textStyle.copyWith(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const Spacer(),
+                            const AppImage('assets/icon/svg/date.svg'),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -153,34 +165,44 @@ class CompletOrderView extends StatelessWidget {
                   width: 15,
                 ),
                 Expanded(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: mainColor.withOpacity(0.1),
+                  child: InkWell(
+                    onTap: () {
+                      showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                        cancelText: 'إلغاء',
+                        confirmText: 'حسنا',
+                      );
+                    },
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: mainColor.withOpacity(0.1),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 19),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Text(
-                            'اختر الوقت',
-                            style: _textStyle.copyWith(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 19),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 12,
                             ),
-                          ),
-                          const Spacer(),
-                          const AppImage('assets/icon/svg/time.svg'),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                        ],
+                            Text(
+                              'اختر الوقت',
+                              style: _textStyle.copyWith(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const Spacer(),
+                            const AppImage('assets/icon/svg/time.svg'),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

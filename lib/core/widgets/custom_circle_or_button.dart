@@ -61,10 +61,17 @@ class _CustomCircleOrButtonState extends State<CustomCircleOrButton> {
               ),
             ),
           )
-        : CustomOutlineButton(
-            onPress: () {
-              startCounting();
-            },
-          );
+        : Center(
+          child: SizedBox(
+            height: 47,
+            child: CustomOutlineButton(
+              title: 'إعادة الإرسال',
+                onPress: () {
+                  startCounting();
+                  
+                },
+              ),
+          ),
+        );
   }
 }

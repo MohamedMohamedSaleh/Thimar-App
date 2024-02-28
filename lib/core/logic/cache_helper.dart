@@ -15,7 +15,13 @@ class CacheHelper {
   static Future<void> setIsFavorite(bool value) async {
     await _prefs.setBool('isFavorite', value);
   }
+  static Future<void> setInCart(int value) async {
+    await _prefs.setInt('inCart', value);
+  }
 
+  static int? getInCart() {
+    return _prefs.getInt('inCart');
+  }
   static String? getUserToken() {
     return _prefs.getString('token');
   }

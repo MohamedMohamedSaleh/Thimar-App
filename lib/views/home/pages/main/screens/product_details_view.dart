@@ -4,13 +4,17 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
+import 'package:vegetable_orders_project/features/products/update_amount/update_amount_cubit.dart';
+import 'package:vegetable_orders_project/features/products/update_amount/update_amount_states.dart';
+import 'package:vegetable_orders_project/views/sheets/success_add_to_cart._sheet.dart';
 import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
 import '../widgets/custom_list_comment.dart';
 import '../widgets/custom_list_similar_products.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({super.key, required this.model, this.isMainView = true});
+  const ProductDetailsView(
+      {super.key, required this.model, this.isMainView = true});
   final ProductModel model;
   final bool isMainView;
 
@@ -20,10 +24,12 @@ class ProductDetailsView extends StatefulWidget {
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   late GetFavoriteProductCubit addRemoveCubit;
+  late UpdateAmountCubit updateCubit;
   @override
   initState() {
     super.initState();
     addRemoveCubit = BlocProvider.of(context);
+    updateCubit = BlocProvider.of(context);
   }
 
   @override
@@ -155,7 +161,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               ),
                             ),
                             const Spacer(),
-                            const CustomPlusOrMinusProduct(amount: 5,),
+                            CustomPlusOrMinusProduct(
+                              id: widget.model.id,
+                            ),
                           ],
                         ),
                       ],
@@ -246,46 +254,60 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        color: Theme.of(context).primaryColor,
-        height: 60,
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 19),
-          child: Row(
-            children: [
-              SizedBox(
-                height: 32,
-                width: 32,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                    color: const Color(0xff6AA431),
+      bottomNavigationBar: InkWell(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => SuccessAddToCartSheet(
+              model: widget.model,
+            ),
+          );
+        },
+        child: Container(
+          color: mainColor,
+          height: 60,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 19),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 32,
+                  width: 32,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      color: const Color(0xff6AA431),
+                    ),
+                    child: const AppImage('assets/icon/svg/Shopping.svg'),
                   ),
-                  child: const AppImage('assets/icon/svg/Shopping.svg'),
                 ),
-              ),
-              const SizedBox(
-                width: 9,
-              ),
-              const Text(
-                'إضافة إلي السلة',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(
+                  width: 9,
                 ),
-              ),
-              const Spacer(),
-              const Text(
-                '225ر.س',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                const Text(
+                  'إضافة إلي السلة',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+                const Spacer(),
+                BlocBuilder<UpdateAmountCubit, UpdateAmountStates>(
+                  builder: (context, state) {
+                    return Text(
+                      '${widget.model.price! * updateCubit.amount}ر.س',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

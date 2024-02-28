@@ -1,6 +1,6 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
@@ -44,7 +44,7 @@ class _CartViewState extends State<CartView> {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is GetCartStuccessState) {
+          } else {
             return Scaffold(
               extendBody: true,
               appBar: const CustomAppBar(title: 'السلة', thereIsIcon: true),
@@ -55,10 +55,9 @@ class _CartViewState extends State<CartView> {
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (context, index) => _ItemOrder(
                       index: index,
-                      model: cubit.cartModel[index],
-                      isLoading: state is DeleteFromCartLoadingState,
+                      model: cubit.cartData!.list[index],
                     ),
-                    itemCount: cubit.cartModel.length,
+                    itemCount: cubit.cartData!.list.length,
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                   ),
@@ -119,7 +118,7 @@ class _CartViewState extends State<CartView> {
                     height: 12,
                   ),
                   CustomOrdersMony(
-                    model: state.model,
+                    model: cubit.cartData,
                   ),
                   !isKeyboardOpen
                       ? const SizedBox(
@@ -147,8 +146,7 @@ class _CartViewState extends State<CartView> {
                 ),
               ),
             );
-          } else
-            return const SizedBox();
+          }
         },
       ),
     );
@@ -156,10 +154,8 @@ class _CartViewState extends State<CartView> {
 }
 
 class _ItemOrder extends StatefulWidget {
-  const _ItemOrder(
-      {required this.model, this.isLoading = false, required this.index});
+  const _ItemOrder({required this.model, required this.index});
   final CartModel model;
-  final bool isLoading;
   final int index;
 
   @override
@@ -228,7 +224,7 @@ class _ItemOrderState extends State<_ItemOrder> {
                   ),
                   CustomPlusOrMinusProduct(
                     isProductDetails: false,
-                    amount: widget.model.amount,
+                    id: widget.model.id,
                   ),
                 ],
               ),
@@ -237,21 +233,67 @@ class _ItemOrderState extends State<_ItemOrder> {
                 padding: const EdgeInsets.only(left: 16),
                 child: CustomAppBarIcon(
                   isBack: false,
-                  onTap: () async {
-                    cubit.deleteProduct(id: widget.model.id);
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return BlocBuilder<CartCubit, CartStates>(
+                          builder: (context, state) {
+                            return ZoomIn(
+                              duration: const Duration(milliseconds: 500),
+                              child: AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                title: state is DeleteFromCartLoadingState
+                                    ? const Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : const Text(
+                                        'هل متأكد من حذف الطلب؟',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                actionsAlignment: MainAxisAlignment.center,
+                                actions: [
+                                  FilledButton(
+                                    style: FilledButton.styleFrom(
+                                        backgroundColor: Colors.red,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15))),
+                                    child: const Text('حذف'),
+                                    onPressed: () async {
+                                      await cubit.deleteProduct(
+                                          id: widget.model.id);
+                                      if (!context.mounted) return;
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  FilledButton(
+                                    style: FilledButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15))),
+                                    child: const Text('إلغاء'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                    //
                   },
                   height: 26,
                   width: 26,
                   color: const Color(0xffFF0000).withOpacity(0.13),
-                  child: widget.isLoading
-                      ? const SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : const AppImage('assets/icon/svg/Trash.svg'),
+                  child: const AppImage('assets/icon/svg/Trash.svg'),
                 ),
               ),
             ],

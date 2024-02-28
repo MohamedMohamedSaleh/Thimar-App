@@ -20,7 +20,7 @@ class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
       for (var element in model.list) {
         favorites.addAll({element.id: element.isFavorite});
       }
-      list = model.list;
+      list.addAll(model.list);
 
       emit(GetProductSuccrssState(model: list));
     } else {

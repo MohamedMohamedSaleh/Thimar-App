@@ -7,9 +7,9 @@ import 'package:vegetable_orders_project/features/cart/cart_states.dart';
 class CartCubit extends Cubit<CartStates> {
   CartCubit() : super(CartStates());
 
-  List<CartModel> cartModel = [];
+  CartData? cartData;
   Future<void> storeProduct({required int id}) async {
-    emit(AddToCartLoadingState());
+    emit(AddToCartLoadingState(id: id));
     final response = await DioHelper().sendData(endPoint: "client/cart", data: {
       "product_id": "$id",
       "amount": "1",
@@ -40,8 +40,8 @@ class CartCubit extends Cubit<CartStates> {
         type: MessageType.success,
       );
       final model = CartData.fromJson(response.response!.data);
-      cartModel = model.list;
-      emit(GetCartStuccessState(model: model));
+      cartData = model;
+      emit(GetCartStuccessState(model: cartData!));
     } else {
       emit(GetCartFailedState());
       showMessage(message: 'Failed');
@@ -54,9 +54,8 @@ class CartCubit extends Cubit<CartStates> {
         await DioHelper().deleteData(endPoint: 'client/cart/delete_item/$id');
 
     if (response.isSuccess) {
-      showCart();
 
-      cartModel.removeWhere((element) => element.id == id);
+      cartData!.list.removeWhere((element) => element.id == id);
 
       emit(DeleteFromCartSuccessState());
       showMessage(message: 'success', type: MessageType.success);

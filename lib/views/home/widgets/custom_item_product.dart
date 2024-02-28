@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
+import 'package:vegetable_orders_project/features/cart/cart_states.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/product_details_view.dart';
-import '../../../core/widgets/custom_fill_button.dart';
 import '../../../features/products/products_model.dart';
 
 class ItemProduct extends StatefulWidget {
-  const ItemProduct(
-      {super.key,
-      this.model,
-      this.isMainPage = false,
-      this.searchModel,
-      this.isSearch = false});
+  const ItemProduct({
+    super.key,
+    this.model,
+    this.isMainPage = false,
+    this.searchModel,
+    this.isSearch = false,
+  });
   final ProductModel? model;
   final bool isMainPage;
   final SearchResult? searchModel;
@@ -25,7 +27,14 @@ class ItemProduct extends StatefulWidget {
 }
 
 class ItemProductState extends State<ItemProduct> {
-  final cubit = KiwiContainer().resolve<CartCubit>();
+  // final cubit = KiwiContainer().resolve<CartCubit>();
+  late CartCubit cubit;
+  @override
+  initState() {
+    super.initState();
+    cubit = BlocProvider.of(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -136,7 +145,7 @@ class ItemProductState extends State<ItemProduct> {
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: Theme.of(context).primaryColor,
+                              color: const Color(0xff61B80C),
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(0),
@@ -161,13 +170,28 @@ class ItemProductState extends State<ItemProduct> {
                             child: SizedBox(
                               height: 30,
                               width: 115,
-                              child: CustomFillButton(
-                                radius: 9,
-                                title: 'أضف للسلة',
-                                onPress: () {
-                                  KiwiContainer()
-                                      .resolve<CartCubit>()
-                                      .storeProduct(id: widget.model!.id);
+                              child: BlocBuilder<CartCubit, CartStates>(
+                                builder: (context, state) {
+                                  return FilledButton(
+                                    style: FilledButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(11)),
+                                        backgroundColor:
+                                            const Color(0xff61B80C)),
+                                    child: state is AddToCartLoadingState &&
+                                            (widget.isSearch?widget.searchModel!.id == state.id : widget.model!.id == state.id)
+                                        ? const Center(
+                                            child: LinearProgressIndicator(),
+                                          )
+                                        : const Text('أضف للسلة'),
+                                    onPressed: () {
+                                      cubit.storeProduct(
+                                          id: widget.isSearch
+                                              ? widget.searchModel!.id
+                                              : widget.model!.id);
+                                    },
+                                  );
                                 },
                               ),
                             ),

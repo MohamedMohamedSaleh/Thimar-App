@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/features/cart/cart_states.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
@@ -7,8 +8,8 @@ import '../../../../../core/logic/helper_methods.dart';
 import '../../../../../features/cart/cart_cubit.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const MainAppBar({super.key, required this.num});
-  final int num;
+  const MainAppBar({super.key});
+
 
   @override
   State<MainAppBar> createState() => _MainAppBarState();
@@ -22,9 +23,10 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   void initState() {
     super.initState();
-    cartCubit = BlocProvider.of(context);
+    cartCubit = BlocProvider.of(context)..showCart();
   }
 
+  late int num = CacheHelper.getInCart() ?? 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,28 +78,40 @@ class _MainAppBarState extends State<MainAppBar> {
               ),
               GestureDetector(
                 onTap: () {
-                  // CacheHelper.clear();
-                  // navegateReplace(toPage: const LoginView());
                   navigateTo(toPage: const CartView());
                 },
                 child: Badge(
                   offset: const Offset(5, -5),
                   alignment: AlignmentDirectional.topStart,
-                  label: BlocBuilder<CartCubit, CartStates>(
-                    builder: (context, state) {
-                      if(state is AddToCartSuccessState){
-                        return Text(
-                        "${cartCubit.cartModel.length}",
-                        style: const TextStyle(
-                            fontSize: 9, fontWeight: FontWeight.bold),
-                      );
+                  label: BlocListener<CartCubit, CartStates>(
+                    listener: (context, state) {
+                      if (state is AddToCartSuccessState ||
+                          state is GetCartStuccessState ||
+                          state is DeleteFromCartSuccessState) {
+                        num = cartCubit.cartData!.list.length;
+                        CacheHelper.setInCart(num);
                       }
-                      return Text(
-                        "${cartCubit.cartModel.length}",
-                        style: const TextStyle(
-                            fontSize: 9, fontWeight: FontWeight.bold),
-                      );
                     },
+                    child: BlocBuilder<CartCubit, CartStates>(
+                      builder: (context, state) {
+                        if (state is AddToCartSuccessState ||
+                          state is GetCartStuccessState ||
+                          state is DeleteFromCartSuccessState) {
+
+                        return Text(
+                          "$num",
+                          style: const TextStyle(
+                              fontSize: 9, fontWeight: FontWeight.bold),
+                        );
+                          }else {
+                            return Text(
+                          "$num",
+                          style: const TextStyle(
+                              fontSize: 9, fontWeight: FontWeight.bold),
+                        );
+                          }
+                      },
+                    ),
                   ),
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Container(
