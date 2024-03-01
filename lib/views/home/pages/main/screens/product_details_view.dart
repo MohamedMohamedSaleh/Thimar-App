@@ -163,6 +163,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             const Spacer(),
                             CustomPlusOrMinusProduct(
                               id: widget.model.id,
+                              amount: widget.model.amount,
                             ),
                           ],
                         ),
@@ -297,7 +298,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 BlocBuilder<UpdateAmountCubit, UpdateAmountStates>(
                   builder: (context, state) {
                     return Text(
-                      '${widget.model.price! * updateCubit.amount}ر.س',
+                      '${widget.model.price! * widget.model.amount}ر.س',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,

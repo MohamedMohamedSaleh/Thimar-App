@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
@@ -22,7 +23,6 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
-  // final cubit = KiwiContainer().resolve<CartCubit>()..showCart();
   late CartCubit cubit;
   @override
   initState() {
@@ -81,15 +81,29 @@ class _CartViewState extends State<CartView> {
                           right: 17, top: 7, left: 7, bottom: 7),
                       child: Row(
                         children: [
-                          const Text(
-                            'عندك كوبون ؟ ادخل رقم الكوبون',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xffB9C9A8),
-                              fontWeight: FontWeight.w300,
+                          Expanded(
+                            child: SizedBox(
+                              height: 40,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(9),
+                                    borderSide:
+                                        const BorderSide(color: mainColor),
+                                  ),
+                                  labelText: 'عندك كوبون ؟ ادخل رقم الكوبون',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xffB9C9A8),
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          const Spacer(),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           SizedBox(
                             height: 37,
                             child: CustomFillButton(
@@ -225,6 +239,7 @@ class _ItemOrderState extends State<_ItemOrder> {
                   CustomPlusOrMinusProduct(
                     isProductDetails: false,
                     id: widget.model.id,
+                    amount: widget.model.amount,
                   ),
                 ],
               ),

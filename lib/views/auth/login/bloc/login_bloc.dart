@@ -7,16 +7,20 @@ import '../../../../core/logic/helper_methods.dart';
 import '../../../home/home_view.dart';
 import '../login_model.dart';
 part 'login_states.dart';
+part 'login_events.dart';
 
-class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit() : super(LoginStates());
+class LoginBloc extends Bloc<LoginEvents, LoginStates> {
+  LoginBloc() : super(LoginStates()) {
+    on<LoginEvent>(_login);
+  }
+
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController(text: "966132847241864");
   final passwordController = TextEditingController(text: "123456789");
   // bool isLoading = false;
 
-  void login() async {
+  void _login(LoginEvent event,Emitter<LoginStates> emit) async {
     if (formKey.currentState!.validate()) {
       emit(LoginLoadingState());
       final response = await DioHelper().sendData(
@@ -44,7 +48,6 @@ class LoginCubit extends Cubit<LoginStates> {
             message: "تم تسجيل الدخول بنجاح", type: MessageType.success);
         emit(LoginSuccessState());
       } else {
-
         showMessage(message: response.message);
         emit(LoginFailedState());
       }

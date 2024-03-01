@@ -61,6 +61,24 @@ class DioHelper {
           response: ex.response);
     }
   }
+
+  Future<ResponseData> updateData({
+    required String endPoint,
+    Map<String, dynamic>? data,
+  }) async {
+    try {
+      var response = await _dio.put(endPoint, data: data);
+      return ResponseData(
+          message: response.data["message"],
+          isSuccess: true,
+          response: response);
+    } on DioException catch (ex) {
+      return ResponseData(
+          message: ex.response!.data["message"],
+          isSuccess: false,
+          response: ex.response);
+    }
+  }
 }
 
 class ResponseData {

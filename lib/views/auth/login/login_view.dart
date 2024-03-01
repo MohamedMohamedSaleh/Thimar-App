@@ -5,7 +5,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/auth/login/cubit/login_cubit.dart';
+import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
 
 import '../../../core/logic/helper_methods.dart';
 import '../forget_password/forget_password_view.dart';
@@ -62,21 +62,26 @@ class FormLogin extends StatefulWidget {
 }
 
 class _FormLoginState extends State<FormLogin> {
-  final cubit = KiwiContainer().resolve<LoginCubit>();
+  final bloc = KiwiContainer().resolve<LoginBloc>();
 
-  // late LoginCubit cubit;
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
+  }
+  // late Loginbloc bloc;
 
   // @override
   // void initState() {
   //   super.initState();
-  //   cubit = BlocProvider.of(context);
+  //   bloc = BlocProvider.of(context);
   // }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: cubit.formKey,
-      autovalidateMode: cubit.autovalidateMode,
+      key: bloc.formKey,
+      autovalidateMode: bloc.autovalidateMode,
       child: ListView(
         padding: const EdgeInsets.only(top: 0),
         children: [
@@ -97,7 +102,7 @@ class _FormLoginState extends State<FormLogin> {
             labelText: "رقم الجوال",
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
-            controller: cubit.phoneController,
+            controller: bloc.phoneController,
           ),
           CustomAppInput(
             validator: (String? value) {
@@ -108,7 +113,7 @@ class _FormLoginState extends State<FormLogin> {
               }
               return null;
             },
-            controller: cubit.passwordController,
+            controller: bloc.passwordController,
             labelText: "كلمة المرور",
             prefixIcon: "assets/icon/lock_icon.png",
             isPassword: true,
@@ -134,13 +139,13 @@ class _FormLoginState extends State<FormLogin> {
             height: 32,
           ),
           BlocBuilder(
-            bloc: cubit,
+            bloc: bloc,
             builder: (context, state) {
               return CustomFillButton(
                 isLoading: state is LoginLoadingState,
                 title: "تسجيل الدخول",
                 onPress: () {
-                  cubit.login();
+                  bloc.add(LoginEvent());
                 },
               );
             },

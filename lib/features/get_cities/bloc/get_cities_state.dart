@@ -1,4 +1,4 @@
-part of 'get_cities_cubit.dart';
+part of 'get_cities_bloc.dart';
 
 class GetCitiesStates {}
 

@@ -29,15 +29,12 @@ class GetSearchCategoryCubit extends Cubit<GetSearchCategryStates> {
           .data
           .searchResult
           .toList();
-      print('$minPrice');
       if (text?.isEmpty ?? true) {
         search.clear();
       }
 
       emit(GetSearchCategrySuccessState());
     } else {
-      print(response.message);
-      print(response.response!.statusCode);
       emit(GetSearchCategoryFailedState());
     }
   }

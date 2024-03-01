@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
@@ -54,7 +53,9 @@ class SuccessAddToCartSheet extends StatelessWidget {
             _Item(
               model: model,
             ),
-            SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             Row(
               children: [
                 Expanded(
@@ -67,13 +68,18 @@ class SuccessAddToCartSheet extends StatelessWidget {
                         }),
                   ),
                 ),
-                SizedBox(width: 16,),
-                    Expanded(child: SizedBox(
-                      width: double.infinity,
-
-                      child: SizedBox(
-                        height: 47,
-                        child: CustomOutlineButton(onPress: (){}, title: 'تصفح العروض',))))
+                const SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: SizedBox(
+                            height: 47,
+                            child: CustomOutlineButton(
+                              onPress: () {},
+                              title: 'تصفح العروض',
+                            ))))
               ],
             ),
           ],
@@ -103,31 +109,31 @@ class _Item extends StatelessWidget {
         const SizedBox(
           width: 11,
         ),
-         Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               model.title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 12, fontWeight: FontWeight.w500, color: mainColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Text(
+            const Text(
               'الكمية : 1',
               style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w300,
                   color: Color(0xff7E7E7E)),
             ),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text(
               '${model.price} ر.س',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16, fontWeight: FontWeight.w500, color: mainColor),
             ),
           ],

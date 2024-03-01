@@ -30,8 +30,10 @@ class CartCubit extends Cubit<CartStates> {
     }
   }
 
-  Future<void> showCart() async {
+  Future<void> showCart({bool isLoading = true}) async {
+    if(isLoading){
     emit(GetCartLoadingState());
+    } 
     final response = await DioHelper().getData(endPoint: "client/cart");
 
     if (response.isSuccess) {
@@ -44,7 +46,7 @@ class CartCubit extends Cubit<CartStates> {
       emit(GetCartStuccessState(model: cartData!));
     } else {
       emit(GetCartFailedState());
-      showMessage(message: 'Failed');
+      showMessage(message: response.message);
     }
   }
 
@@ -63,4 +65,6 @@ class CartCubit extends Cubit<CartStates> {
       emit(DeleteFromCartFailedState());
     }
   }
+
+  
 }

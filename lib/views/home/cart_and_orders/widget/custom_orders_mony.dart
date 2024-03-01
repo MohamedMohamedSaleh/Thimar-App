@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
 
-class CustomOrdersMony extends StatelessWidget {
+class CustomOrdersMony extends StatefulWidget {
   const CustomOrdersMony({
     super.key,
     this.isCompletOrder = false,
@@ -13,6 +13,11 @@ class CustomOrdersMony extends StatelessWidget {
   final bool isDetailsOrder;
   final CartData? model;
 
+  @override
+  State<CustomOrdersMony> createState() => _CustomOrdersMonyState();
+}
+
+class _CustomOrdersMonyState extends State<CustomOrdersMony> {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -35,7 +40,7 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  model?.totalPriceBeforeDiscount.toString()?? '',
+                  widget.model?.totalPriceBeforeDiscount.toString()?? '',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,
@@ -47,7 +52,7 @@ class CustomOrdersMony extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            isCompletOrder
+            widget.isCompletOrder
                 ? Row(
                     children: [
                       Text(
@@ -60,7 +65,7 @@ class CustomOrdersMony extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        model?.deliveryCost.toString()?? '',
+                        widget.model?.deliveryCost.toString()?? '',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 15,
@@ -85,7 +90,7 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '-${model?.totalDiscount}ر.س',
+                  '-${widget.model?.totalDiscount}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,
@@ -113,7 +118,7 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '${model?.totalPriceWithVat}ر.س',
+                  '${widget.model?.totalPriceWithVat}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,
@@ -122,8 +127,8 @@ class CustomOrdersMony extends StatelessWidget {
                 ),
               ],
             ),
-            isDetailsOrder ? const Divider() : const SizedBox(),
-            isDetailsOrder
+            widget.isDetailsOrder ? const Divider() : const SizedBox(),
+            widget.isDetailsOrder
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

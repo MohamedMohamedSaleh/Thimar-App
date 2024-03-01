@@ -5,11 +5,13 @@ import '../../../../core/logic/dio_helper.dart';
 import '../../../../core/logic/helper_methods.dart';
 import '../../../../models/cities_model.dart';
 import '../../confirm_code/confirm_code_view.dart';
-
+part 'register_events.dart';
 part 'register_state.dart';
 
-class RegisterCubit extends Cubit<RegisterStates> {
-  RegisterCubit() : super(RegisterStates());
+class RegisterBloc extends Bloc<RegisterEvents, RegisterStates> {
+  RegisterBloc() : super(RegisterStates()) {
+    on<RegisterEvent>(_register);
+  }
 
   CityModel? city;
   final formKey = GlobalKey<FormState>();
@@ -20,7 +22,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
   final nameController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  void register() async {
+  void _register(RegisterEvent event, Emitter<RegisterStates> emit) async {
     if (formKey.currentState!.validate()) {
       emit(RegisterLoadingState());
       final response = await DioHelper().sendData(

@@ -1,4 +1,4 @@
-part of 'register_cubit.dart';
+part of 'register_bloc.dart';
 
 class RegisterStates {}
 

@@ -5,7 +5,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/auth/register/cubit/register_cubit.dart';
+import 'package:vegetable_orders_project/views/auth/register/bloc/register_bloc.dart';
 import '../../../core/logic/helper_methods.dart';
 import '../../sheets/cities_sheet.dart';
 import '../login/login_view.dart';
@@ -19,7 +19,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
 
-  final cubit = KiwiContainer().resolve<RegisterCubit>();
+  final bloc = KiwiContainer().resolve<RegisterBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class _RegisterViewState extends State<RegisterView> {
                   left: 16,
                 ),
                 child: Form(
-                  autovalidateMode: cubit.autovalidateMode,
-                  key: cubit.formKey,
+                  autovalidateMode: bloc.autovalidateMode,
+                  key: bloc.formKey,
                   child: ListView(
                     children: [
                       const CustomIntroduction(
@@ -58,7 +58,7 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                        controller: cubit.nameController,
+                        controller: bloc.nameController,
                         labelText: "اسم المستخدم",
                         prefixIcon: "assets/icon/name_icon.png",
                       ),
@@ -71,7 +71,7 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                        controller: cubit.phoneController,
+                        controller: bloc.phoneController,
                         labelText: "رقم الجوال",
                         prefixIcon: "assets/icon/phone_icon.png",
                         isPhone: true,
@@ -82,7 +82,7 @@ class _RegisterViewState extends State<RegisterView> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () async {
-                                  cubit.city = await showModalBottomSheet(
+                                  bloc.city = await showModalBottomSheet(
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(28),
@@ -93,7 +93,7 @@ class _RegisterViewState extends State<RegisterView> {
                                     context: context,
                                     builder: (context) => const CitiesSheet(),
                                   );
-                                  if (cubit.city != null) {
+                                  if (bloc.city != null) {
                                     setState(
                                       () {},
                                     );
@@ -103,23 +103,23 @@ class _RegisterViewState extends State<RegisterView> {
                                   absorbing: true,
                                   child: CustomAppInput(
                                     validator: (value) {
-                                      if (cubit.city?.name.isEmpty ?? true) {
+                                      if (bloc.city?.name.isEmpty ?? true) {
                                         return "أدخل مدينتك";
                                       }
                                       return null;
                                     },
-                                    controller: cubit.cityController,
-                                    labelText: cubit.city?.name ?? "المدينة",
+                                    controller: bloc.cityController,
+                                    labelText: bloc.city?.name ?? "المدينة",
                                     prefixIcon: "assets/icon/city_icon.png",
                                     paddingBottom: 0,
                                   ),
                                 ),
                               ),
                             ),
-                            (cubit.city != null)
+                            (bloc.city != null)
                                 ? IconButton(
                                     onPressed: () {
-                                      cubit.city = null;
+                                      bloc.city = null;
                                       setState(
                                         () {},
                                       );
@@ -145,7 +145,7 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                        controller: cubit.passwordController,
+                        controller: bloc.passwordController,
                         labelText: "كلمة المرور",
                         prefixIcon: "assets/icon/lock_icon.png",
                         isPassword: true,
@@ -157,27 +157,27 @@ class _RegisterViewState extends State<RegisterView> {
                             return "تأكيد كلمة المرور مطلوبه";
                           } else if (value!.length <= 6) {
                             return "كلمة المرور يجب أن تكون أكبر من 6 أحرف";
-                          } else if (value != cubit.passwordController.text) {
+                          } else if (value != bloc.passwordController.text) {
                             return "كلمة المرور غير متطابقة";
                           } else {
                             return null;
                           }
                         },
-                        controller: cubit.confirmPasswordController,
+                        controller: bloc.confirmPasswordController,
                         labelText: "تأكيد كلمة المرور",
                         prefixIcon: "assets/icon/lock_icon.png",
                         isPassword: true,
                         paddingBottom: 24,
                       ),
                       BlocBuilder(
-                        bloc: cubit,
+                        bloc: bloc,
                         builder: (context, state) {
                           return CustomFillButton(
                             isLoading: state is RegisterLoadingState,
                             title: "تسجيل الدخول",
                             onPress: () {
                               FocusScope.of(context).unfocus();
-                              cubit.register();
+                              bloc.add(RegisterEvent());
                             },
                           );
                         },
