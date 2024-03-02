@@ -1,4 +1,4 @@
-part of 'confirm_cubit.dart';
+part of 'confirm_bloc.dart';
 
 
 class ConfirmStates {}

@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
   final passwordController = TextEditingController(text: "123456789");
   // bool isLoading = false;
 
-  void _login(LoginEvent event,Emitter<LoginStates> emit) async {
+  void _login(LoginEvent event, Emitter<LoginStates> emit) async {
     if (formKey.currentState!.validate()) {
       emit(LoginLoadingState());
       final response = await DioHelper().sendData(
@@ -38,11 +38,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
         UserData model = UserData.fromJson(response.response!.data);
         await CacheHelper.saveUserData(model.model);
         if (!(navigatorKey.currentContext!.mounted)) return;
-        Navigator.of(navigatorKey.currentContext!).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const HomeView(),
-          ),
-        );
+        navigateTo(toPage: const HomeView(), isRemove: true);
 
         showMessage(
             message: "تم تسجيل الدخول بنجاح", type: MessageType.success);

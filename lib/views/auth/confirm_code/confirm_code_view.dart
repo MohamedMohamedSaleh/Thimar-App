@@ -6,7 +6,8 @@ import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.d
 import 'package:vegetable_orders_project/core/widgets/custom_circle_or_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
-import 'package:vegetable_orders_project/views/auth/confirm_code/cubit/confirm_cubit.dart';
+import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_password_bloc.dart';
+import 'package:vegetable_orders_project/views/auth/confirm_code/bloc/confirm_bloc.dart';
 import '../../../core/logic/helper_methods.dart';
 import '../login/login_view.dart';
 
@@ -21,7 +22,8 @@ class ConfirmCodeView extends StatefulWidget {
 }
 
 class _ConfirmCodeViewState extends State<ConfirmCodeView> {
-  final cubit = KiwiContainer().resolve<ConfirmCubit>();
+  final confirmBloc = KiwiContainer().resolve<ConfirmBloc>();
+  final changePasswordBloc = KiwiContainer().resolve<ChangePasswordBloc>();
 
   @override
   void initState() {
@@ -60,7 +62,7 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                       isRequirPhoneCheck: true,
                     ),
                     PinCodeTextField(
-                      controller: cubit.confirmCodeController,
+                      controller:widget.isActive? confirmBloc.confirmCodeController : changePasswordBloc.confirmCodeController,
                       appContext: context,
                       length: 4,
                       pinTheme: PinTheme(
@@ -77,20 +79,33 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                     const SizedBox(
                       height: 30,
                     ),
-                    BlocBuilder(
-                      bloc: cubit,
-                      builder: (context, state) {
-                        return CustomFillButton(
-                          isLoading: state is ConfirmloadingState,
-                          title: "تأكيد الكود",
-                          onPress: () {
-                            FocusScope.of(context).unfocus();
-                            cubit.verify(
-                                isActive: widget.isActive, phone: widget.phone);
-                          },
-                        );
-                      },
-                    ),
+                    widget.isActive
+                        ? BlocBuilder(
+                            bloc: confirmBloc,
+                            builder: (context, state) {
+                              return CustomFillButton(
+                                isLoading: state is ConfirmloadingState,
+                                title: "تأكيد الكود",
+                                onPress: () {
+                                  confirmBloc
+                                      .add(ConfirmEvent(phone: widget.phone));
+                                },
+                              );
+                            },
+                          )
+                        : BlocBuilder(
+                            bloc: changePasswordBloc,
+                            builder: (context, state) {
+                              return CustomFillButton(
+                                isLoading: state is CheckCodeLoadingState,
+                                title: "تأكيد الكود",
+                                onPress: () {
+                                  changePasswordBloc.add(
+                                      CheckCodeEvent(phone: widget.phone));
+                                },
+                              );
+                            },
+                          ),
                     const SizedBox(
                       height: 20,
                     ),

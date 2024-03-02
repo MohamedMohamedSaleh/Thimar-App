@@ -6,43 +6,40 @@ import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
 
 import '../../../../core/logic/dio_helper.dart';
 import '../../../../core/logic/helper_methods.dart';
-import '../../change_password/change_password_view.dart';
 
 part 'confirm_state.dart';
+part 'confirm_events.dart';
 
-class ConfirmCubit extends Cubit<ConfirmStates> {
-  ConfirmCubit() : super(ConfirmStates());
+class ConfirmBloc extends Bloc<ConfirmEvent, ConfirmStates> {
+  ConfirmBloc() : super(ConfirmStates()) {
+    on<ConfirmEvent>(_verify);
+  }
 
   final confirmCodeController = TextEditingController();
-  bool isLoading = false;
-  void verify({required String phone, required bool isActive}) async {
+
+  void _verify(ConfirmEvent event, Emitter<ConfirmStates> emit) async {
     emit(ConfirmloadingState());
     final response = await DioHelper().sendData(
-      endPoint: isActive ? 'verify' : 'check_code',
+      endPoint: 'verify',
       data: {
         "code": confirmCodeController.text,
-        "phone": phone,
+        "phone": event.phone,
         "type": Platform.operatingSystem,
         "device_token": 'test',
       },
     );
 
     if (response.isSuccess) {
-      if (!(navigatorKey.currentContext!).mounted) return;
       FocusScope.of(navigatorKey.currentContext!).unfocus();
       showMessage(
-        message: "تم تفعيل حسابك بنجاح",
+        message: response.message,
         type: MessageType.success,
       );
-      if (!isActive) {
-        navigateTo(toPage: const ChangePasswordView());
-      } else {
-        navigateTo(toPage: const LoginView());
-        showMessage(message: response.message);
-      }
+      navigateTo(toPage: const LoginView());
       emit(ConfirmSuccessState());
     } else {
       emit(ConfirmFailedState());
+      showMessage(message: response.message);
     }
   }
 }

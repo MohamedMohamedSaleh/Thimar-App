@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_password_bloc.dart';
 import '../../../core/logic/helper_methods.dart';
 import '../register/register_view.dart';
 
 class ChangePasswordView extends StatelessWidget {
-  const ChangePasswordView({super.key});
+  const ChangePasswordView({super.key, required this.phone});
+  final String phone;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +27,15 @@ class ChangePasswordView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            body: const SafeArea(
+            body: SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: 16,
                   left: 16,
                 ),
-                child: FormChanegePassword(),
+                child: FormChanegePassword(
+                  phone: phone,
+                ),
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
@@ -50,13 +56,16 @@ class ChangePasswordView extends StatelessWidget {
 class FormChanegePassword extends StatefulWidget {
   const FormChanegePassword({
     super.key,
+    required this.phone,
   });
+  final String phone;
 
   @override
   State<FormChanegePassword> createState() => _FormChanegePasswordState();
 }
 
 class _FormChanegePasswordState extends State<FormChanegePassword> {
+  final resetPasswordBloc = KiwiContainer().resolve<ChangePasswordBloc>();
   String? password;
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
@@ -74,11 +83,12 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             paddingHeight: 17,
           ),
           CustomAppInput(
+            controller: resetPasswordBloc.passwordController,
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
                 return "كلمة المرور مطلوبه";
-              } else if (value!.length <= 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 6 أحرف";
+              } else if (value!.length < 6) {
+                return "كلمة المرور يجب أن تكون أكبر من 5 أحرف";
               }
               password = value;
               return null;
@@ -88,12 +98,13 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             isPassword: true,
           ),
           CustomAppInput(
+            controller: resetPasswordBloc.confirmPasswordController,
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
                 return "تأكيد كلمة المرور مطلوبه";
-              } else if (value!.length <= 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 6 أحرف";
-              } else if (password != value) {
+              } else if (value!.length < 6) {
+                return "كلمة المرور يجب أن تكون أكبر من 5 أحرف";
+              } else if (resetPasswordBloc.passwordController.text != value) {
                 return "كلمة المرور غير متطابقة";
               } else {
                 return null;
@@ -104,16 +115,23 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             isPassword: true,
             paddingBottom: 25,
           ),
-          CustomFillButton(
-            title: "تغيير كلمة المرور",
-            onPress: () {
-              FocusScope.of(context).unfocus();
-              if (formKey.currentState!.validate()) {
-                // navegateTo(toPage: const ConfirmCodeView(isActive: true,),);
-              } else {
-                autovalidateMode = AutovalidateMode.onUserInteraction;
-                setState(() {});
-              }
+          BlocBuilder(
+            bloc: resetPasswordBloc,
+            builder: (context, state) {
+              return CustomFillButton(
+                isLoading:state is ResetPasswordLoadingState,
+                title: "تغيير كلمة المرور",
+                onPress: () {
+                  FocusScope.of(context).unfocus();
+                  if (formKey.currentState!.validate()) {
+                    resetPasswordBloc
+                        .add(ResetPasswordEvent(phone: widget.phone));
+                  } else {
+                    autovalidateMode = AutovalidateMode.onUserInteraction;
+                    setState(() {});
+                  }
+                },
+              );
             },
           ),
           const SizedBox(
