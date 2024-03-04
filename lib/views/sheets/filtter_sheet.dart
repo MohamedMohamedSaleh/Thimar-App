@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
-import 'package:vegetable_orders_project/features/products/search_category/search_category_cubit.dart';
+import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
 
 class FiltterSheet extends StatefulWidget {
   const FiltterSheet({super.key, required this.id});
@@ -18,10 +18,10 @@ class _FiltterSheetState extends State<FiltterSheet> {
     return Padding(
       padding: const EdgeInsets.only(right: 16, left: 16, top: 8),
       child: BlocProvider(
-        create: (context) => GetSearchCategoryCubit(),
-        child: BlocBuilder<GetSearchCategoryCubit, GetSearchCategryStates>(
+        create: (context) => GetSearchCategoryBloc(),
+        child: BlocBuilder<GetSearchCategoryBloc, GetSearchCategryStates>(
           builder: (context, state) {
-            final cubit = GetSearchCategoryCubit.get(context);
+            final cubit = GetSearchCategoryBloc.get(context);
             return ListView(
               children: [
                 const Center(
@@ -60,7 +60,7 @@ class _FiltterSheetState extends State<FiltterSheet> {
                     child: CustomFillButton(
                         title: 'تطبيق',
                         onPress: () {
-                          cubit.getSearch(id: widget.id);
+                          cubit.add(GetSearchCategoryEvent(id: widget.id));
                           Navigator.pop(context);
                         }))
               ],
@@ -90,9 +90,9 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
     RangeLabels labels =
         RangeLabels('${values.start.ceil()} ر.س', '${values.end.ceil()} ر.س');
     return BlocProvider(
-      create: (context) => GetSearchCategoryCubit(),
+      create: (context) => GetSearchCategoryBloc(),
       child: Builder(builder: (context) {
-        final cubit = GetSearchCategoryCubit.get(context);
+        final cubit = GetSearchCategoryBloc.get(context);
 
         return Column(
           children: [
@@ -185,9 +185,9 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetSearchCategoryCubit(),
+      create: (context) => GetSearchCategoryBloc(),
       child: Builder(builder: (context) {
-        final cubit = GetSearchCategoryCubit.get(context);
+        final cubit = GetSearchCategoryBloc.get(context);
         if (fromTop) {
           cubit.filter = 'asc';
         } else {

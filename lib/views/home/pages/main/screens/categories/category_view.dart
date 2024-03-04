@@ -1,36 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
-import 'package:vegetable_orders_project/features/categori_products/category_products_cubit.dart';
-import 'package:vegetable_orders_project/features/categori_products/category_products_states.dart';
-import 'package:vegetable_orders_project/features/products/search_category/search_category_cubit.dart';
+import 'package:vegetable_orders_project/features/categori_products/category_products_bloc.dart';
+import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 import 'package:vegetable_orders_project/views/sheets/filtter_sheet.dart';
 
 import '../../../../../../core/widgets/custom_app_input.dart';
 import '../../../../../../features/categoris/category_model.dart';
 
-class VegetablesView extends StatefulWidget {
-  const VegetablesView({super.key, required this.id, required this.model});
+class CategoryView extends StatefulWidget {
+  const CategoryView({super.key, required this.id, required this.model});
   final int id;
   final CategoryModel model;
 
   @override
-  State<VegetablesView> createState() => _VegetablesViewState();
+  State<CategoryView> createState() => _CategoryViewState();
 }
 
-class _VegetablesViewState extends State<VegetablesView> {
-  late GetCategoryProductsCubit cubit;
-  late final GetSearchCategoryCubit searchCubit;
+class _CategoryViewState extends State<CategoryView> {
+  final getCategoryBloc = KiwiContainer().resolve<GetCategoryProductsBloc>();
+  final getSearchBloc = KiwiContainer().resolve<GetSearchCategoryBloc>();
   bool isNotFound = false;
- 
 
   @override
   void initState() {
     super.initState();
-    cubit = BlocProvider.of(context)..getData(id: widget.id);
-     searchCubit = GetSearchCategoryCubit.get(context);
+    getCategoryBloc.add(GetCategoryProductEvent(id: widget.id));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    getSearchBloc.close();
+    getCategoryBloc.close();
   }
 
   @override
@@ -55,20 +61,19 @@ class _VegetablesViewState extends State<VegetablesView> {
               child: Stack(
                 children: [
                   CustomAppInput(
-                    controller: searchCubit.textController,
+                    controller: getSearchBloc.textController,
                     onChange: (value) {
                       if (value.isNotEmpty) {
-                        searchCubit.getSearch(
-                          text: value,
-                          id: widget.id,
-                        );
-                        if (searchCubit.search.isEmpty) {
+                        getSearchBloc.add(
+                            GetSearchCategoryEvent(id: widget.id, text: value));
+                        if (getSearchBloc.search.isEmpty) {
                           isNotFound = true;
                         }
                       } else {
                         isNotFound = false;
-                        searchCubit.getSearch(text: value, id: widget.id);
-                        searchCubit.search.clear();
+                        getSearchBloc.add(
+                            GetSearchCategoryEvent(id: widget.id, text: value));
+                        getSearchBloc.search.clear();
                       }
                     },
                     labelText: "ابحث عن ماتريد؟",
@@ -81,7 +86,7 @@ class _VegetablesViewState extends State<VegetablesView> {
                     left: 8,
                     child: InkWell(
                       onTap: () async {
-                          showModalBottomSheet(
+                        showModalBottomSheet(
                           clipBehavior: Clip.antiAlias,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -90,7 +95,9 @@ class _VegetablesViewState extends State<VegetablesView> {
                             ),
                           ),
                           context: context,
-                          builder: (context) => FiltterSheet(id: widget.id,),
+                          builder: (context) => FiltterSheet(
+                            id: widget.id,
+                          ),
                         );
                       },
                       child: const AppImage(
@@ -104,12 +111,12 @@ class _VegetablesViewState extends State<VegetablesView> {
               ),
             ),
             Expanded(
-              child:
-                  BlocBuilder<GetSearchCategoryCubit, GetSearchCategryStates>(
+              child: BlocBuilder(
+                bloc: getSearchBloc,
                 builder: (context, state) {
-                  if (searchCubit.search.isEmpty && !isNotFound) {
-                    return BlocBuilder<GetCategoryProductsCubit,
-                        GetCategoryProductsStates>(
+                  if (getSearchBloc.search.isEmpty && !isNotFound) {
+                    return BlocBuilder(
+                      bloc: getCategoryBloc,
                       builder: (context, state) {
                         if (state is GetCategoryProductsLoadingState) {
                           return const Center(
@@ -155,11 +162,11 @@ class _VegetablesViewState extends State<VegetablesView> {
                                 mainAxisSpacing: 10),
                         padding: const EdgeInsets.only(
                             right: 16, left: 16, top: 10, bottom: 20),
-                        itemCount: searchCubit.search.length,
+                        itemCount: getSearchBloc.search.length,
                         itemBuilder: (BuildContext context, int index) =>
                             ItemProduct(
                           isSearch: true,
-                          searchModel: searchCubit.search[index],
+                          searchModel: getSearchBloc.search[index],
                         ),
                       ),
                     );

@@ -30,7 +30,6 @@ class ChangePasswordBloc
       emit(CheckCodeSuccessState());
       navigateTo(toPage:  ChangePasswordView(phone: event.phone,));
     } else {
-      print('failed');
       emit(CheckCodeFailedState());
       showMessage(message: response.message);
     }

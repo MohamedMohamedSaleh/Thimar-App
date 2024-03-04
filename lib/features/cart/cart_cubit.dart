@@ -8,6 +8,28 @@ class CartCubit extends Cubit<CartStates> {
   CartCubit() : super(CartStates());
 
   CartData? cartData;
+
+  Future<void> showCart({bool isLoading = true}) async {
+    if(isLoading){
+    emit(GetCartLoadingState());
+    } 
+    final response = await DioHelper().getData(endPoint: "client/cart");
+
+    if (response.isSuccess) {
+      showMessage(
+        message: response.message,
+        type: MessageType.success,
+      );
+      final model = CartData.fromJson(response.response!.data);
+      cartData = model;
+      emit(GetCartStuccessState(model: cartData!));
+    } else {
+      emit(GetCartFailedState());
+      showMessage(message: response.message);
+    }
+  }
+
+
   Future<void> storeProduct({required int id}) async {
     emit(AddToCartLoadingState(id: id));
     final response = await DioHelper().sendData(endPoint: "client/cart", data: {
@@ -30,25 +52,6 @@ class CartCubit extends Cubit<CartStates> {
     }
   }
 
-  Future<void> showCart({bool isLoading = true}) async {
-    if(isLoading){
-    emit(GetCartLoadingState());
-    } 
-    final response = await DioHelper().getData(endPoint: "client/cart");
-
-    if (response.isSuccess) {
-      showMessage(
-        message: response.message,
-        type: MessageType.success,
-      );
-      final model = CartData.fromJson(response.response!.data);
-      cartData = model;
-      emit(GetCartStuccessState(model: cartData!));
-    } else {
-      emit(GetCartFailedState());
-      showMessage(message: response.message);
-    }
-  }
 
   Future<void> deleteProduct({required int id}) async {
     emit(DeleteFromCartLoadingState());

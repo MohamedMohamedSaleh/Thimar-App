@@ -2,13 +2,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/logic/dio_helper.dart';
 import '../products_model.dart';
 part 'similar_products_states.dart';
+part 'similar_products_events.dart';
 
-class GetSimilarProductCubit extends Cubit<GetSimilarProductStates> {
-  GetSimilarProductCubit() : super(GetSimilarProductStates());
+class GetSimilarProductBloc
+    extends Bloc<GetSimilarProductsEvents, GetSimilarProductStates> {
+  GetSimilarProductBloc() : super(GetSimilarProductStates()) {
+    on<GetSimilarProductsEvent>(_getSimilarProductData);
+  }
 
-  Future<void> getSimilarProductData({required int id}) async {
+  Future<void> _getSimilarProductData(GetSimilarProductsEvent event, Emitter<GetSimilarProductStates> emit) async {
     emit(GetSimilarProductLoadingState());
-    final response = await DioHelper().getData(endPoint: 'categories/$id');
+    final response = await DioHelper().getData(endPoint: 'categories/${event.id}');
     if (response.isSuccess) {
       final model = ProductsData.fromJson(response.response!.data);
       emit(GetSimilarProductSuccrssState(model: model.list));

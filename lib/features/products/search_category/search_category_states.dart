@@ -1,4 +1,4 @@
-part of 'search_category_cubit.dart';
+part of 'search_category_bloc.dart';
 class GetSearchCategryStates {}
 
 class GetSearchCategoryLoadingState extends GetSearchCategryStates {}

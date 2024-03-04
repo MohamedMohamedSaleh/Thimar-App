@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 
-import '../../../../../features/products/similar_products/similar_products_cubit.dart';
+import '../../../../../features/products/similar_products/similar_products_bloc.dart';
 
 class CustomListSimilarPrduct extends StatefulWidget {
   const CustomListSimilarPrduct({
@@ -17,18 +18,25 @@ class CustomListSimilarPrduct extends StatefulWidget {
 }
 
 class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
-  late GetSimilarProductCubit cubit;
+  final bloc = KiwiContainer().resolve<GetSimilarProductBloc>();
   @override
   void initState() {
     super.initState();
-    cubit = BlocProvider.of(context)..getSimilarProductData(id: widget.id);
+    bloc.add(GetSimilarProductsEvent(id: widget.id));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      child: BlocBuilder<GetSimilarProductCubit, GetSimilarProductStates>(
+      child: BlocBuilder(
+        bloc: bloc,
         builder: (context, state) {
           if (state is GetSimilarProductLoadingState) {
             return const Center(

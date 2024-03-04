@@ -1,4 +1,4 @@
-part of 'get_category_cubit.dart';
+part of 'get_category_bloc.dart';
 
 class GetCategoryStates {}
 

@@ -1,13 +1,17 @@
 import 'package:kiwi/kiwi.dart';
+import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
+import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
+import 'package:vegetable_orders_project/features/products/similar_products/similar_products_bloc.dart';
+import 'package:vegetable_orders_project/features/slider/bloc/get_slider_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_password_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/confirm_code/bloc/confirm_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/register/bloc/register_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/cubit/profile_cubit.dart';
 
-import '../features/categori_products/category_products_cubit.dart';
-import '../features/products/search_products/search_products_cubit.dart';
+import '../features/categori_products/category_products_bloc.dart';
+import '../features/products/search_products/search_products_bloc.dart';
 
 void initKiwi() {
   KiwiContainer container = KiwiContainer();
@@ -15,12 +19,14 @@ void initKiwi() {
   container.registerFactory((container) => RegisterBloc());
   container.registerFactory((container) => GetCitiesBloc());
   container.registerFactory((container) => ConfirmBloc());
+  container.registerSingleton((container) => GetCategoryBloc()..add(GetCategoryEvent()));
 
-  container.registerFactory((container) => GetCategoryProductsCubit());
-  container.registerFactory((container) => GetSearchProductsCubit());
-
-  // container.registerFactory((container) => GetSimilarProductCubit());
-  // container.registerFactory((container) => GetSearchCategoryCubit());
+  container.registerFactory((container) => GetCategoryProductsBloc());
+  container.registerFactory((container) => GetSearchProductsBloc());
+  container
+      .registerSingleton((container) => GetSliderBloc()..add(GetSliderEvent()));
+  container.registerFactory((container) => GetSimilarProductBloc());
+  container.registerFactory((container) => GetSearchCategoryBloc());
   // container.registerFactory((container) => CartCubit());
   container.registerFactory((container) => ProfileCubit());
   container.registerFactory((container) => ChangePasswordBloc());

@@ -1,4 +1,4 @@
-part of 'search_products_cubit.dart';
+part of 'search_products_bloc.dart';
 class GetSearchProductsStates {}
 
 class GetSearchProductLoadingState extends GetSearchProductsStates {}

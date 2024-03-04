@@ -1,5 +1,4 @@
-import '../products/products_model.dart';
-
+part of 'category_products_bloc.dart';
 class GetCategoryProductsStates {}
 
 class GetCategoryProductsSuccessState extends GetCategoryProductsStates {

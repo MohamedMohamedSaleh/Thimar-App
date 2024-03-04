@@ -4,16 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
-import 'package:vegetable_orders_project/features/categori_products/category_products_cubit.dart';
-import 'package:vegetable_orders_project/features/products/search_category/search_category_cubit.dart';
-import 'package:vegetable_orders_project/features/products/search_products/search_products_cubit.dart';
-import 'package:vegetable_orders_project/features/products/similar_products/similar_products_cubit.dart';
+import 'package:vegetable_orders_project/features/products/similar_products/similar_products_bloc.dart';
 import 'package:vegetable_orders_project/features/products/update_amount/update_amount_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 import 'core/logic/helper_methods.dart';
-import 'features/categoris/cubit/get_category_cubit.dart';
 import 'features/products/get_favorite_product/get_favorite_products_cubit.dart';
-import 'features/slider/cubit/get_slider_cubit.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -40,28 +35,11 @@ class MyApp extends StatelessWidget {
       providers: [
 
         BlocProvider(
-          create: (BuildContext context) => GetSliderCubit()..getData(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => GetCategoryCubit()..getData(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => GetCategoryProductsCubit(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => GetSearchProductsCubit(),
-        ),
-        BlocProvider(
           create: (BuildContext context) => GetFavoriteProductCubit()
             ..getData()
             ..getFavoriteData(),
         ),
-        BlocProvider(
-          create: (BuildContext context) => GetSimilarProductCubit(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => GetSearchCategoryCubit(),
-        ),
+
         BlocProvider(
           create: (BuildContext context) => CartCubit(),
         ),

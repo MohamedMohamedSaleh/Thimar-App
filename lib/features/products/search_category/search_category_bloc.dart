@@ -4,32 +4,33 @@ import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 
 part 'search_category_states.dart';
+part 'search_category_events.dart';
 
-class GetSearchCategoryCubit extends Cubit<GetSearchCategryStates> {
-  GetSearchCategoryCubit() : super(GetSearchCategryStates());
+class GetSearchCategoryBloc
+    extends Bloc<GetSearchCategoryEvents, GetSearchCategryStates> {
+  GetSearchCategoryBloc() : super(GetSearchCategryStates()) {
+    on<GetSearchCategoryEvent>(_getSearch);
+  }
 
   TextEditingController textController = TextEditingController();
-  static GetSearchCategoryCubit get(context) => BlocProvider.of(context);
+  static GetSearchCategoryBloc get(context) => BlocProvider.of(context);
   int minPrice = 1;
   int maxPrice = 2000;
   String filter = 'asc';
 
   List<SearchResult> search = [];
-  Future<void> getSearch({
-    String? text,
-    required int id,
-  }) async {
+  Future<void> _getSearch(GetSearchCategoryEvent event, Emitter<GetSearchCategryStates> emit) async {
     emit(GetSearchCategoryLoadingState());
     final response = await DioHelper().getData(
-        endPoint:
-            'search_category/$id/?filter=$filter&min_price=$minPrice&max_price=$maxPrice&keyword=$text',
-        );
+      endPoint:
+          'search_category/${event.id}/?filter=$filter&min_price=$minPrice&max_price=$maxPrice&keyword=${event.text}',
+    );
     if (response.isSuccess) {
       search = SearchProductData.fromJson(response.response!.data)
           .data
           .searchResult
           .toList();
-      if (text?.isEmpty ?? true) {
+      if (event.text?.isEmpty ?? true) {
         search.clear();
       }
 

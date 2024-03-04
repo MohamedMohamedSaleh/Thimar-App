@@ -1,4 +1,4 @@
-part of 'get_slider_cubit.dart';
+part of 'get_slider_bloc.dart';
 
 class GetSliderStates {}
 

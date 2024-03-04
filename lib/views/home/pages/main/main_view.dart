@@ -1,16 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
+import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
-import 'package:vegetable_orders_project/features/products/search_products/search_products_cubit.dart';
-import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/categorie_view.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
+import 'package:vegetable_orders_project/features/slider/bloc/get_slider_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/category_view.dart';
 import '../../../../features/categoris/category_model.dart';
-import '../../../../features/categoris/cubit/get_category_cubit.dart';
-import '../../../../features/slider/cubit/get_slider_cubit.dart';
 import '../../widgets/custom_item_product.dart';
 import 'widgets/main_app_bar.dart';
 
@@ -22,20 +23,24 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  late GetSliderCubit sliderCubit;
-  late GetCategoryCubit categoryCubit;
+  final getSliderBloc = KiwiContainer().resolve<GetSliderBloc>();
+  final getCategoriesBloc = KiwiContainer().resolve<GetCategoryBloc>();
+  final getSearchProducts = KiwiContainer().resolve<GetSearchProductsBloc>();
   late GetFavoriteProductCubit productCubit;
-  late GetSearchProductsCubit searchProducts;
   late CartCubit cartCubit;
   bool isNotFound = false;
   @override
   void initState() {
     super.initState();
-    sliderCubit = BlocProvider.of(context);
-    categoryCubit = BlocProvider.of(context);
     productCubit = BlocProvider.of(context);
-    searchProducts = BlocProvider.of(context);
     cartCubit = BlocProvider.of(context);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    getSearchProducts.close();
   }
 
   int currentIndex = 0;
@@ -67,17 +72,19 @@ class _MainPageState extends State<MainPage> {
                 child: Stack(
                   children: [
                     CustomAppInput(
-                      controller: searchProducts.textController,
+                      controller: getSearchProducts.textController,
                       onChange: (value) {
                         if (value.isNotEmpty) {
-                          searchProducts.getSearch(text: value);
-                          if (searchProducts.search.isEmpty) {
+                          getSearchProducts
+                              .add(GetSearchProductsEvent(text: value));
+                          if (getSearchProducts.search.isEmpty) {
                             isNotFound = true;
                           }
                         } else {
                           isNotFound = false;
-                          searchProducts.getSearch(text: value);
-                          searchProducts.search.clear();
+                          getSearchProducts
+                              .add(GetSearchProductsEvent(text: value));
+                          getSearchProducts.search.clear();
                         }
                       },
                       // controller: searchProducts.textController,
@@ -95,13 +102,15 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
-              BlocBuilder<GetSearchProductsCubit, GetSearchProductsStates>(
+              BlocBuilder(
+                bloc: getSearchProducts,
                 builder: (context, state) {
-                  if (searchProducts.search.isEmpty && !isNotFound) {
+                  if (getSearchProducts.search.isEmpty && !isNotFound) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BlocBuilder<GetSliderCubit, GetSliderStates>(
+                        BlocBuilder(
+                          bloc: getSliderBloc,
                           builder: (context, state) {
                             if (state is GetSliderLoadingState) {
                               return const Center(
@@ -194,7 +203,8 @@ class _MainPageState extends State<MainPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        BlocBuilder<GetCategoryCubit, GetCategoryStates>(
+                        BlocBuilder(
+                          bloc: getCategoriesBloc,
                           builder: (context, state) {
                             if (state is GetCtegoryLoadingState) {
                               return const Center(
@@ -279,7 +289,7 @@ class _MainPageState extends State<MainPage> {
                     return GridView.builder(
                       padding: const EdgeInsets.only(
                           bottom: 16, right: 16, left: 16),
-                      itemCount: searchProducts.search.length,
+                      itemCount: getSearchProducts.search.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
@@ -291,7 +301,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                       itemBuilder: (context, index) => ItemProduct(
                         isSearch: true,
-                        searchModel: searchProducts.search[index],
+                        searchModel: getSearchProducts.search[index],
                         isMainPage: true,
                       ),
                     );
@@ -320,7 +330,7 @@ class _ItemCategoryState extends State<_ItemCategory> {
       onTap: () {
         FocusScope.of(context).unfocus();
         navigateTo(
-            toPage: VegetablesView(
+            toPage: CategoryView(
           id: widget.model.id,
           model: widget.model,
         ));

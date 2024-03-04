@@ -1,6 +1,6 @@
 
 
-part of  'similar_products_cubit.dart';
+part of  'similar_products_bloc.dart';
 
 class GetSimilarProductStates {}
 final class GetSimilarProductLoadingState extends GetSimilarProductStates {}
