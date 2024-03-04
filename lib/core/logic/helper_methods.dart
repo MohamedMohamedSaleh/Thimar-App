@@ -17,24 +17,24 @@ bool isKeyboardOpen = false;
 enum MessageType { faild, success }
 
 void showMessage({String? message, MessageType type = MessageType.faild}) {
-  if(message!.isNotEmpty){
-  ScaffoldMessenger.of(navigatorKey.currentContext!).removeCurrentSnackBar();
-  ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-    SnackBar(
-      content: Text(
-        message,
-        textAlign: TextAlign.center,
+  if (message!.isNotEmpty) {
+    ScaffoldMessenger.of(navigatorKey.currentContext!).removeCurrentSnackBar();
+    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: (type == MessageType.success)
+            ? Theme.of(navigatorKey.currentContext!).primaryColor
+            : Colors.redAccent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: (type == MessageType.success)
-          ? Theme.of(navigatorKey.currentContext!).primaryColor
-          : Colors.redAccent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-    ),
-  );
+    );
   }
-
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
-import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
-import 'package:vegetable_orders_project/features/cart/cart_states.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/product_details_view.dart';
 import '../../../features/products/products_model.dart';
@@ -26,12 +26,12 @@ class ItemProduct extends StatefulWidget {
 }
 
 class ItemProductState extends State<ItemProduct> {
+  final cartBloc = KiwiContainer().resolve<CartBloc>();
+  
   // final cubit = KiwiContainer().resolve<CartCubit>();
-  late CartCubit cubit;
   @override
   initState() {
     super.initState();
-    cubit = BlocProvider.of(context);
   }
 
   @override
@@ -169,7 +169,8 @@ class ItemProductState extends State<ItemProduct> {
                             child: SizedBox(
                               height: 30,
                               width: 115,
-                              child: BlocBuilder<CartCubit, CartStates>(
+                              child: BlocBuilder(
+                                bloc: cartBloc,
                                 builder: (context, state) {
                                   return FilledButton(
                                     style: FilledButton.styleFrom(
@@ -185,10 +186,9 @@ class ItemProductState extends State<ItemProduct> {
                                           )
                                         : const Text('أضف للسلة'),
                                     onPressed: () {
-                                      cubit.storeProduct(
-                                          id: widget.isSearch
+                                      cartBloc.add(StorProductCartEvent(id: widget.isSearch
                                               ? widget.searchModel!.id
-                                              : widget.model!.id);
+                                              : widget.model!.id));
                                     },
                                   );
                                 },

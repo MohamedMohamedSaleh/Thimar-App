@@ -1,11 +1,12 @@
-import 'package:vegetable_orders_project/features/cart/cart_model.dart';
+part of 'cart_bloc.dart';
 
 class CartStates {}
 
 class GetCartStuccessState extends CartStates {
   final CartData model;
+  final List<CartModel> list;
 
-  GetCartStuccessState({required this.model});
+  GetCartStuccessState({required this.list, required this.model});
 }
 
 class GetCartLoadingState extends CartStates {}
@@ -27,6 +28,3 @@ class DeleteFromCartFailedState extends CartStates {}
 class DeleteFromCartSuccessState extends CartStates {}
 
 class DeleteFromCartLoadingState extends CartStates {}
-
-
-

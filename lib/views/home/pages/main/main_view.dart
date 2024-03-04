@@ -5,7 +5,7 @@ import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
-import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
@@ -27,18 +27,18 @@ class _MainPageState extends State<MainPage> {
   final getCategoriesBloc = KiwiContainer().resolve<GetCategoryBloc>();
   final getSearchProducts = KiwiContainer().resolve<GetSearchProductsBloc>();
   late GetFavoriteProductCubit productCubit;
-  late CartCubit cartCubit;
+  final cartBloc = KiwiContainer().resolve<CartBloc>();
+
   bool isNotFound = false;
   @override
   void initState() {
     super.initState();
     productCubit = BlocProvider.of(context);
-    cartCubit = BlocProvider.of(context);
+    cartBloc.add(ShowCartEvent(isLoading: false));
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     getSearchProducts.close();
   }

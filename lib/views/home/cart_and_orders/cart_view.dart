@@ -1,15 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
-import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
-import 'package:vegetable_orders_project/features/cart/cart_states.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/complet_order_view.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_plus_minus_product.dart';
 
@@ -23,12 +23,11 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
-  late CartCubit cubit;
+  final bloc = KiwiContainer().resolve<CartBloc>();
   @override
   initState() {
     super.initState();
-
-    cubit = BlocProvider.of(context)..showCart();
+    bloc.add(ShowCartEvent(isLoading: true));
   }
 
   @override
@@ -38,7 +37,7 @@ class _CartViewState extends State<CartView> {
     return ColoredBox(
       color: Colors.white,
       child: BlocBuilder(
-        bloc: cubit,
+        bloc: bloc,
         builder: (context, state) {
           if (state is GetCartLoadingState) {
             return const Center(
@@ -55,9 +54,9 @@ class _CartViewState extends State<CartView> {
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (context, index) => _ItemOrder(
                       index: index,
-                      model: cubit.cartData!.list[index],
+                      model: bloc.list[index],
                     ),
-                    itemCount: cubit.cartData!.list.length,
+                    itemCount: bloc.list.length,
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                   ),
@@ -132,7 +131,7 @@ class _CartViewState extends State<CartView> {
                     height: 12,
                   ),
                   CustomOrdersMony(
-                    model: cubit.cartData,
+                    model: bloc.cartData,
                   ),
                   !isKeyboardOpen
                       ? const SizedBox(
@@ -177,12 +176,12 @@ class _ItemOrder extends StatefulWidget {
 }
 
 class _ItemOrderState extends State<_ItemOrder> {
-  late CartCubit cubit;
+  final bloc = KiwiContainer().resolve<CartBloc>();
+
   @override
   initState() {
     super.initState();
 
-    cubit = BlocProvider.of(context);
   }
 
   @override
@@ -252,7 +251,8 @@ class _ItemOrderState extends State<_ItemOrder> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return BlocBuilder<CartCubit, CartStates>(
+                        return BlocBuilder(
+                          bloc: bloc,
                           builder: (context, state) {
                             return ZoomIn(
                               duration: const Duration(milliseconds: 500),
@@ -277,10 +277,8 @@ class _ItemOrderState extends State<_ItemOrder> {
                                                 BorderRadius.circular(15))),
                                     child: const Text('حذف'),
                                     onPressed: () async {
-                                      await cubit.deleteProduct(
-                                          id: widget.model.id);
-                                      if (!context.mounted) return;
-                                      Navigator.pop(context);
+                                      bloc.add(DeletProductCartEvent(id: widget.model.id));
+                                      // Navigator.pop(context);
                                     },
                                   ),
                                   const SizedBox(

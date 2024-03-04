@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
-import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
-import 'package:vegetable_orders_project/features/products/similar_products/similar_products_bloc.dart';
 import 'package:vegetable_orders_project/features/products/update_amount/update_amount_cubit.dart';
 import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 import 'core/logic/helper_methods.dart';
@@ -40,9 +38,9 @@ class MyApp extends StatelessWidget {
             ..getFavoriteData(),
         ),
 
-        BlocProvider(
-          create: (BuildContext context) => CartCubit(),
-        ),
+        // BlocProvider(
+        //   create: (BuildContext context) => CartCubit(),
+        // ),
         BlocProvider(
           create: (BuildContext context) => UpdateAmountCubit(),
         ),

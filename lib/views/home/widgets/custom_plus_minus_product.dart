@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vegetable_orders_project/features/cart/cart_cubit.dart';
+import 'package:kiwi/kiwi.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/products/update_amount/update_amount_cubit.dart';
 import 'package:vegetable_orders_project/features/products/update_amount/update_amount_states.dart';
 
@@ -45,14 +46,18 @@ class _CustomPlusOrMinusProductState extends State<CustomPlusOrMinusProduct> {
           child: Row(children: [
             InkWell(
               onTap: () {
-                if(widget.amount >=1){
-                updateCubit.addOne(id: widget.id, amount: widget.amount);
+                if (widget.amount >= 1) {
+                  updateCubit.addOne(id: widget.id, amount: widget.amount);
 
-                updateCubit.updateData(amount: (widget.amount), id: widget.id, isAdd: true);
-                if (!widget.isProductDetails) {
-                  BlocProvider.of<CartCubit>(context)
-                      .showCart(isLoading: false);
-                }
+                  updateCubit.updateData(
+                      amount: (widget.amount), id: widget.id, isAdd: true);
+                  if (!widget.isProductDetails) {
+                    KiwiContainer()
+                        .resolve<CartBloc>()
+                        .add(ShowCartEvent(isLoading: false));
+                    // BlocProvider.of<CartCubit>(context)
+                    //     .showCart(isLoading: false);
+                  }
                 }
               },
               child: SizedBox(
@@ -95,15 +100,17 @@ class _CustomPlusOrMinusProductState extends State<CustomPlusOrMinusProduct> {
             ),
             InkWell(
               onTap: () {
-                if(widget.amount>= 2){
-                updateCubit.minusOne(id: widget.id, amount: widget.amount);
+                if (widget.amount >= 2) {
+                  updateCubit.minusOne(id: widget.id, amount: widget.amount);
 
-                updateCubit.updateData(amount: (widget.amount), id: widget.id, isAdd: false);
+                  updateCubit.updateData(
+                      amount: (widget.amount), id: widget.id, isAdd: false);
 
-                if (!widget.isProductDetails) {
-                  BlocProvider.of<CartCubit>(context)
-                      .showCart(isLoading: false);
-                }
+                  if (!widget.isProductDetails) {
+                  KiwiContainer()
+                        .resolve<CartBloc>()
+                        .add(ShowCartEvent(isLoading: false));
+                  }
                 }
               },
               child: SizedBox(

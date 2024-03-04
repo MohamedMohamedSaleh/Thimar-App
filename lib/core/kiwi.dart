@@ -1,4 +1,5 @@
 import 'package:kiwi/kiwi.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
@@ -27,7 +28,7 @@ void initKiwi() {
       .registerSingleton((container) => GetSliderBloc()..add(GetSliderEvent()));
   container.registerFactory((container) => GetSimilarProductBloc());
   container.registerFactory((container) => GetSearchCategoryBloc());
-  // container.registerFactory((container) => CartCubit());
+  container.registerSingleton((container) => CartBloc());
   container.registerFactory((container) => ProfileCubit());
   container.registerFactory((container) => ChangePasswordBloc());
 }

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
-import 'package:vegetable_orders_project/features/cart/cart_states.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
 import '../../../../../core/logic/helper_methods.dart';
-import '../../../../../features/cart/cart_cubit.dart';
+import '../../../../../features/cart/cart_bloc.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
-
 
   @override
   State<MainAppBar> createState() => _MainAppBarState();
@@ -19,11 +18,11 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MainAppBarState extends State<MainAppBar> {
-  late CartCubit cartCubit;
+  final cartBloc = KiwiContainer().resolve<CartBloc>();
   @override
   void initState() {
     super.initState();
-    cartCubit = BlocProvider.of(context)..showCart();
+    cartBloc.add(ShowCartEvent(isLoading: false));
   }
 
   late int num = CacheHelper.getInCart() ?? 0;
@@ -83,33 +82,34 @@ class _MainAppBarState extends State<MainAppBar> {
                 child: Badge(
                   offset: const Offset(5, -5),
                   alignment: AlignmentDirectional.topStart,
-                  label: BlocListener<CartCubit, CartStates>(
+                  label: BlocListener(
+                    bloc: cartBloc,
                     listener: (context, state) {
                       if (state is AddToCartSuccessState ||
                           state is GetCartStuccessState ||
                           state is DeleteFromCartSuccessState) {
-                        num = cartCubit.cartData!.list.length;
+                        num = cartBloc.list.length;
                         CacheHelper.setInCart(num);
                       }
                     },
-                    child: BlocBuilder<CartCubit, CartStates>(
+                    child: BlocBuilder(
+                      bloc: cartBloc,
                       builder: (context, state) {
                         if (state is AddToCartSuccessState ||
-                          state is GetCartStuccessState ||
-                          state is DeleteFromCartSuccessState) {
-
-                        return Text(
-                          "$num",
-                          style: const TextStyle(
-                              fontSize: 9, fontWeight: FontWeight.bold),
-                        );
-                          }else {
-                            return Text(
-                          "$num",
-                          style: const TextStyle(
-                              fontSize: 9, fontWeight: FontWeight.bold),
-                        );
-                          }
+                            state is GetCartStuccessState ||
+                            state is DeleteFromCartSuccessState) {
+                          return Text(
+                            "$num",
+                            style: const TextStyle(
+                                fontSize: 9, fontWeight: FontWeight.bold),
+                          );
+                        } else {
+                          return Text(
+                            "$num",
+                            style: const TextStyle(
+                                fontSize: 9, fontWeight: FontWeight.bold),
+                          );
+                        }
                       },
                     ),
                   ),

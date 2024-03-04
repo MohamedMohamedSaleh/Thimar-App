@@ -33,7 +33,6 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     getSearchBloc.close();
     getCategoryBloc.close();
