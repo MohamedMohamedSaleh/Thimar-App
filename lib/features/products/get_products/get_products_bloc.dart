@@ -25,9 +25,6 @@ class GetProductBloc extends Bloc<GetProductsEvents, GetProductStates> {
 
       emit(GetProductSuccrssState(model: model.list));
     } else {
-      print(response.response!.data.toString());
-      
-
       emit(GetProductfailedState(msg: response.message));
     }
   }

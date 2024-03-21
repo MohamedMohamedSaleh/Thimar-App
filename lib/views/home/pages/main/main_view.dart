@@ -7,11 +7,11 @@ import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
-import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
 import 'package:vegetable_orders_project/features/slider/bloc/get_slider_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/category_view.dart';
 import '../../../../features/categoris/category_model.dart';
+import '../../../../features/products/products/products_bloc.dart';
 import '../../widgets/custom_item_product.dart';
 import 'widgets/main_app_bar.dart';
 
@@ -26,16 +26,11 @@ class _MainPageState extends State<MainPage> {
   final getSliderBloc = KiwiContainer().resolve<GetSliderBloc>();
   final getCategoriesBloc = KiwiContainer().resolve<GetCategoryBloc>();
   final getSearchProducts = KiwiContainer().resolve<GetSearchProductsBloc>();
-  late GetFavoriteProductCubit productCubit;
-  final cartBloc = KiwiContainer().resolve<CartBloc>();
+  final getProductsBloc = KiwiContainer().resolve<ProductsBloc>();
+  final cartBloc = KiwiContainer().resolve<CartBloc>()
+    ..add(ShowCartEvent(isLoading: false));
 
   bool isNotFound = false;
-  @override
-  void initState() {
-    super.initState();
-    productCubit = BlocProvider.of(context);
-    cartBloc.add(ShowCartEvent(isLoading: false));
-  }
 
   @override
   void dispose() {
@@ -237,10 +232,10 @@ class _MainPageState extends State<MainPage> {
                                 fontSize: 15, fontWeight: FontWeight.w800),
                           ),
                         ),
-                        BlocBuilder<GetFavoriteProductCubit,
-                            GetFavoriteProductStates>(
+                        BlocBuilder(
+                          bloc: getProductsBloc,
                           builder: (context, state) {
-                            if (productCubit.list.isEmpty ||
+                            if (getProductsBloc.list.isEmpty ||
                                 state is GetProductLoadingState) {
                               return const Center(
                                 child: CircularProgressIndicator(),
@@ -249,7 +244,7 @@ class _MainPageState extends State<MainPage> {
                               return GridView.builder(
                                 padding: const EdgeInsets.only(
                                     bottom: 16, right: 16, left: 16),
-                                itemCount: productCubit.list.length,
+                                itemCount: getProductsBloc.list.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 gridDelegate:
@@ -260,7 +255,7 @@ class _MainPageState extends State<MainPage> {
                                   mainAxisSpacing: 12,
                                 ),
                                 itemBuilder: (context, index) => ItemProduct(
-                                  model: productCubit.list[index],
+                                  model: getProductsBloc.list[index],
                                   isMainPage: true,
                                 ),
                               );

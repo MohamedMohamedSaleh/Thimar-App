@@ -5,7 +5,7 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
-import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
+import '../../../../../features/products/products/products_bloc.dart';
 import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
 import '../widgets/custom_list_comment.dart';
@@ -23,14 +23,7 @@ class ProductDetailsView extends StatefulWidget {
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   final bloc = KiwiContainer().resolve<CartBloc>();
-  late GetFavoriteProductCubit addRemoveCubit;
-  // late UpdateAmountCubit updateCubit;
-  @override
-  initState() {
-    super.initState();
-    addRemoveCubit = BlocProvider.of(context);
-    // updateCubit = BlocProvider.of(context);
-  }
+  final addRemoveBloc = KiwiContainer().resolve<ProductsBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +39,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 children: [
                   const CustomAppBarIcon(),
                   const Spacer(),
-                  BlocConsumer<GetFavoriteProductCubit,
-                      GetFavoriteProductStates>(
+                  BlocConsumer(
+                    bloc: addRemoveBloc,
                     listener: (context, state) {
                       if (state is StartAddSuccessState) {
                         isFavorit = true;
@@ -59,9 +52,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       return CustomAppBarIcon(
                         onTap: () {
                           if (isFavorit) {
-                            addRemoveCubit.removeProduct(id: widget.model.id);
+                            addRemoveBloc.add(RemoveProductsFromFavsEvent(id: widget.model.id));
                           } else {
-                            addRemoveCubit.addProduct(id: widget.model.id);
+                            addRemoveBloc.add(AddProductsToFavsEvent(id: widget.model.id));
                           }
                         },
                         isBack: false,

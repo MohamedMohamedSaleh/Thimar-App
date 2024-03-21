@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 
-import '../../../../features/products/get_favorite_product/get_favorite_products_cubit.dart';
+import '../../../../features/products/products/products_bloc.dart';
 
 class FavsPage extends StatefulWidget {
   const FavsPage({super.key});
@@ -13,12 +14,7 @@ class FavsPage extends StatefulWidget {
 }
 
 class _FavsPageState extends State<FavsPage> {
-  late GetFavoriteProductCubit cubit;
-  @override
-  initState() {
-    super.initState();
-    cubit = BlocProvider.of(context);
-  }
+  final bloc = KiwiContainer().resolve<ProductsBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +23,10 @@ class _FavsPageState extends State<FavsPage> {
         title: 'المفضلة',
         thereIsIcon: false,
       ),
-      body: BlocBuilder<GetFavoriteProductCubit, GetFavoriteProductStates>(
+      body: BlocBuilder(
+        bloc: bloc,
         builder: (context, state) {
-          if (cubit.favsList.isEmpty &&
+          if (bloc.favsList.isEmpty &&
               state is GetFavoriteProductLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -38,14 +35,14 @@ class _FavsPageState extends State<FavsPage> {
             return GridView.builder(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(16),
-              itemCount: cubit.favsList.length,
+              itemCount: bloc.favsList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 163 / 215,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10),
               itemBuilder: (context, index) =>
-                  ItemProduct(model: cubit.favsList[index]),
+                  ItemProduct(model: bloc.favsList[index]),
             );
           }
         },

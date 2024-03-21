@@ -3,6 +3,7 @@ import 'package:vegetable_orders_project/features/addresses/get_addresses/get_ad
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
+import 'package:vegetable_orders_project/features/products/products/products_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/similar_products/similar_products_bloc.dart';
 import 'package:vegetable_orders_project/features/slider/bloc/get_slider_bloc.dart';
@@ -22,6 +23,7 @@ void initKiwi() {
   container.registerFactory((container) => GetCitiesBloc());
   container.registerFactory((container) => ConfirmBloc());
   container.registerSingleton((container) => GetCategoryBloc()..add(GetCategoryEvent()));
+  container.registerSingleton((container) => ProductsBloc()..add(GetProductsEvent())..add(GetFavsProductsEvent()));
 
   container.registerFactory((container) => GetCategoryProductsBloc());
   container.registerFactory((container) => GetSearchProductsBloc());

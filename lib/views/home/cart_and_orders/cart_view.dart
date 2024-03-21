@@ -291,7 +291,6 @@ class _ItemOrderState extends State<_ItemOrder> {
                                     onPressed: () async {
                                       bloc.add(DeletProductCartEvent(
                                           id: widget.model.id));
-                                      // Navigator.pop(context);
                                     },
                                   ),
                                   const SizedBox(

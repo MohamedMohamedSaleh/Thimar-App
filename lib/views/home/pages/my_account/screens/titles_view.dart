@@ -53,7 +53,7 @@ class _TitlesViewState extends State<TitlesView> {
                   itemCount: bloc.list.length,
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 10,
                 ),
               ],
             ),

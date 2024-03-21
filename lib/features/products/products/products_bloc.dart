@@ -5,14 +5,21 @@ import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import '../../../core/logic/helper_methods.dart';
 import '../products_model.dart';
 
-part 'get_favorite_products_state.dart';
+part 'products_states.dart';
+part 'products_events.dart';
 
-class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
-  GetFavoriteProductCubit() : super(GetFavoriteProductStates());
+class ProductsBloc extends Bloc<ProductsEvents, ProductsStates> {
+  ProductsBloc() : super(ProductsStates()) {
+    on<GetProductsEvent>(_getData);
+    on<GetFavsProductsEvent>(_getFavoriteData);
+    on<AddProductsToFavsEvent>(_addProductToFavs);
+    on<RemoveProductsFromFavsEvent>(_removeProductFromFavs);
+  }
 
   static Map<int, bool> favorites = {};
   List<ProductModel> list = [];
-  Future<void> getData() async {
+  Future<void> _getData(
+      GetProductsEvent event, Emitter<ProductsStates> emit) async {
     emit(GetProductLoadingState());
     final response = await DioHelper().getData(endPoint: 'products');
     if (response.isSuccess) {
@@ -30,7 +37,8 @@ class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
 
   List<ProductModel> favsList = [];
 
-  Future<void> getFavoriteData() async {
+  Future<void> _getFavoriteData(
+      GetFavsProductsEvent event, Emitter<ProductsStates> emit) async {
     emit(GetFavoriteProductLoadingState());
     final response =
         await DioHelper().getData(endPoint: 'client/products/favorites');
@@ -43,38 +51,40 @@ class GetFavoriteProductCubit extends Cubit<GetFavoriteProductStates> {
     }
   }
 
-  Future<void> addProduct({required int id}) async {
-    favorites[id] = !favorites[id]!;
+  Future<void> _addProductToFavs(
+      AddProductsToFavsEvent event, Emitter<ProductsStates> emit) async {
+    favorites[event.id] = !favorites[event.id]!;
     emit(StartAddSuccessState());
     final response = await DioHelper()
-        .sendData(endPoint: 'client/products/$id/add_to_favorite');
+        .sendData(endPoint: 'client/products/${event.id}/add_to_favorite');
     if (response.isSuccess) {
       showMessage(
           message: response.response!.data['message'],
           type: MessageType.success);
-      getData();
-      getFavoriteData();
+      add(GetProductsEvent());
+      add(GetFavsProductsEvent());
       emit(AddFavoriteSuccessState());
     } else {
-      favorites[id] = !favorites[id]!;
+      favorites[event.id] = !favorites[event.id]!;
       emit(StartRemoveSuccessState());
       showMessage(message: 'فشل في إضافة المنتج إلى المفضلة');
       emit(AddFavoriteFailedState());
     }
   }
 
-  Future<void> removeProduct({required int id}) async {
-    favorites[id] = !favorites[id]!;
+  Future<void> _removeProductFromFavs(
+      RemoveProductsFromFavsEvent event, Emitter<ProductsStates> emit) async {
+    favorites[event.id] = !favorites[event.id]!;
     emit(StartRemoveSuccessState());
     final response = await DioHelper()
-        .sendData(endPoint: 'client/products/$id/remove_from_favorite');
+        .sendData(endPoint: 'client/products/${event.id}/remove_from_favorite');
     if (response.isSuccess && response.message.isNotEmpty) {
       showMessage(message: response.message, type: MessageType.success);
-      getData();
-      getFavoriteData();
+      add(GetProductsEvent());
+      add(GetFavsProductsEvent());
       emit(RemoveFavoriteSuccessState());
     } else {
-      favorites[id] = !favorites[id]!;
+      favorites[event.id] = !favorites[event.id]!;
       emit(StartAddSuccessState());
       showMessage(message: 'فشل في إزالة المنتج من المفضلة');
       emit(RemoveFavoriteFailedState());

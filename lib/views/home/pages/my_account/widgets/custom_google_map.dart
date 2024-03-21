@@ -78,26 +78,10 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                 );
                 setState(() {});
               },
-              gestureRecognizers: {}..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
-
+              gestureRecognizers: {}..add(Factory<EagerGestureRecognizer>(
+                  () => EagerGestureRecognizer())),
             ),
           );
-  }
-
-  Future<void> goToLocation(
-      {required double latitude, required double longitude}) async {
-    googleMapController.animateCamera(
-        CameraUpdate.newLatLngZoom(LatLng(latitude, longitude), 17));
-    markers.clear();
-
-    markers.add(
-      Marker(
-        icon: customIcon,
-        markerId: const MarkerId('1'),
-        position: LatLng(latitude, longitude),
-      ),
-    );
-    setState(() {});
   }
 
   Future<Position> _determinePosition() async {
@@ -111,4 +95,20 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     setState(() {});
     return myLocation;
   }
+
+  // void test()async {
+  //   initialPosition =await testPosition();
+  // }
+
+  // Future<LatLng> testPosition() async {
+  //   // ignore: unused_local_variable
+  //   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+  //   Position myLocation = await Geolocator.getCurrentPosition();
+  //   // await goToLocation(
+  //   //     latitude: myLocation.latitude, longitude: myLocation.longitude);
+  //   initialPosition = LatLng(myLocation.latitude, myLocation.longitude);
+  //   setState(() {});
+  //   return LatLng(myLocation.latitude, myLocation.longitude);
+  // }
 }

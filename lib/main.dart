@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 import 'core/logic/helper_methods.dart';
-import 'features/products/get_favorite_product/get_favorite_products_cubit.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -28,65 +26,56 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (BuildContext context) => GetFavoriteProductCubit()
-            ..getData()
-            ..getFavoriteData(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
+      builder: (context, child) =>
+          Directionality(textDirection: TextDirection.rtl, child: child!),
+      title: 'Orders App',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          elevation: 0,
+          color: Colors.white,
+          titleTextStyle: TextStyle(
+            color: getMaterialColor(),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
-        builder: (context, child) =>
-            Directionality(textDirection: TextDirection.rtl, child: child!),
-        title: 'Orders App',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-            elevation: 0,
-            color: Colors.white,
-            titleTextStyle: TextStyle(
-              color: getMaterialColor(),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          primarySwatch: getMaterialColor(),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: FilledButton.styleFrom(
-              side: BorderSide(color: getMaterialColor()),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                borderSide: BorderSide()),
-            disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color(0xffF3F3F3),
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color(0xffF3F3F3),
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
+        primarySwatch: getMaterialColor(),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: FilledButton.styleFrom(
+            side: BorderSide(color: getMaterialColor()),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
           ),
         ),
-        home: const SplashView(),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderSide: BorderSide()),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+        ),
       ),
+      home: const SplashView(),
     );
   }
 }

@@ -113,6 +113,7 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
 
       emit(DeleteFromCartSuccessState());
       showMessage(message: response.message, type: MessageType.success);
+      add(ShowCartEvent(isLoading: false));
       Navigator.pop(navigatorKey.currentContext!);
     } else {
       emit(DeleteFromCartFailedState());
