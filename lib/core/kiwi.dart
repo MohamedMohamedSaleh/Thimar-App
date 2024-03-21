@@ -1,4 +1,5 @@
 import 'package:kiwi/kiwi.dart';
+import 'package:vegetable_orders_project/features/addresses/get_addresses/get_addresses_bloc.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
@@ -31,4 +32,5 @@ void initKiwi() {
   container.registerSingleton((container) => CartBloc());
   container.registerFactory((container) => ProfileCubit());
   container.registerFactory((container) => ChangePasswordBloc());
+  container.registerFactory((container) => GetAddressesBloc());
 }

@@ -25,6 +25,12 @@ class CacheHelper {
   static String? getUserToken() {
     return _prefs.getString('token');
   }
+  static String? getUserName() {
+    return _prefs.getString('fullname');
+  }
+  static String? getUserPhone() {
+    return _prefs.getString('phone');
+  }
 
   static Future<void> saveUserData(Model model) async {
     await _prefs.setInt("id", model.id);

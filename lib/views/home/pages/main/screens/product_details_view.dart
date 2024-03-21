@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/products/get_favorite_product/get_favorite_products_cubit.dart';
-import 'package:vegetable_orders_project/features/products/update_amount/update_amount_cubit.dart';
-import 'package:vegetable_orders_project/features/products/update_amount/update_amount_states.dart';
-import 'package:vegetable_orders_project/views/sheets/success_add_to_cart._sheet.dart';
 import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
 import '../widgets/custom_list_comment.dart';
@@ -23,13 +22,14 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
+  final bloc = KiwiContainer().resolve<CartBloc>();
   late GetFavoriteProductCubit addRemoveCubit;
-  late UpdateAmountCubit updateCubit;
+  // late UpdateAmountCubit updateCubit;
   @override
   initState() {
     super.initState();
     addRemoveCubit = BlocProvider.of(context);
-    updateCubit = BlocProvider.of(context);
+    // updateCubit = BlocProvider.of(context);
   }
 
   @override
@@ -163,7 +163,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             const Spacer(),
                             CustomPlusOrMinusProduct(
                               id: widget.model.id,
-                              amount: widget.model.amount,
+                              index: 1,
+                              // amount: widget.model.amount,
                             ),
                           ],
                         ),
@@ -257,12 +258,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       ),
       bottomNavigationBar: InkWell(
         onTap: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => SuccessAddToCartSheet(
+          bloc.add(StorProductCartEvent(
+              id: widget.model.id,
               model: widget.model,
-            ),
-          );
+              isProduct: true,
+              amount: bloc.amountProduct));
         },
         child: Container(
           color: mainColor,
@@ -295,17 +295,30 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   ),
                 ),
                 const Spacer(),
-                BlocBuilder<UpdateAmountCubit, UpdateAmountStates>(
+                BlocBuilder(
+                  bloc: bloc,
                   builder: (context, state) {
-                    return Text(
-                      '${widget.model.price! * widget.model.amount}ر.س',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  },
+                    if (state is AddCounterSuccessState) {
+                      return Text(
+                        '${widget.model.price! * bloc.amountProduct}ر.س',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }else{
+                      return Text(
+                        '${widget.model.price! * bloc.amountProduct}ر.س',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+
+                    }
+                  }
                 ),
               ],
             ),

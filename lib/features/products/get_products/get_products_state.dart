@@ -1,24 +1,24 @@
-// part of 'get_products_cubit.dart';
+part of 'get_products_bloc.dart';
 
-// class GetProductStates {}
+class GetProductStates {}
 
-// final class GetProductLoadingState extends GetProductStates {}
+final class GetProductLoadingState extends GetProductStates {}
 
-// final class GetProductfailedState extends GetProductStates {
-//   final String msg;
+final class GetProductfailedState extends GetProductStates {
+  final String msg;
 
-//   GetProductfailedState({required this.msg});
-// }
+  GetProductfailedState({required this.msg});
+}
 
-// final class GetProductSuccrssState extends GetProductStates {
-//   final List<ProductModel> model;
+final class GetProductSuccrssState extends GetProductStates {
+  final List<ProductModel> model;
 
-//   GetProductSuccrssState({required this.model});
-// }
+  GetProductSuccrssState({required this.model});
+}
 
-// /////////////////////////////////
+/////////////////////////////////
 
 
 
-// //////////////////////////////////////////////
+//////////////////////////////////////////////
 

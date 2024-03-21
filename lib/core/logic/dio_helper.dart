@@ -51,7 +51,7 @@ class DioHelper {
     try {
       var response = await _dio.get(endPoint, queryParameters: data);
       return ResponseData(
-          message: response.data["message"],
+          message: response.data["message"]?? '',
           isSuccess: true,
           response: response);
     } on DioException catch (ex) {

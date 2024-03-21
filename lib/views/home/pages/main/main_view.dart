@@ -245,19 +245,15 @@ class _MainPageState extends State<MainPage> {
                         BlocBuilder<GetFavoriteProductCubit,
                             GetFavoriteProductStates>(
                           builder: (context, state) {
-                            if (state is GetProductLoadingState ||
-                                state is AddFavoriteSuccessState ||
-                                state is RemoveFavoriteSuccessState ||
-                                state is StartAddSuccessState ||
-                                state is StartRemoveSuccessState) {
+                            if (productCubit.list.isEmpty) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
-                            } else if (state is GetProductSuccrssState) {
+                            } else{
                               return GridView.builder(
                                 padding: const EdgeInsets.only(
                                     bottom: 16, right: 16, left: 16),
-                                itemCount: state.model.length,
+                                itemCount: productCubit.list.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 gridDelegate:
@@ -268,13 +264,9 @@ class _MainPageState extends State<MainPage> {
                                   mainAxisSpacing: 12,
                                 ),
                                 itemBuilder: (context, index) => ItemProduct(
-                                  model: state.model[index],
+                                  model: productCubit.list[index],
                                   isMainPage: true,
                                 ),
-                              );
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
                               );
                             }
                           },

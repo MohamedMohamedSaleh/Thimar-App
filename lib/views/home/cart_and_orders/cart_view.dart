@@ -32,8 +32,6 @@ class _CartViewState extends State<CartView> {
 
   @override
   Widget build(BuildContext context) {
-    isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0.0;
-
     return ColoredBox(
       color: Colors.white,
       child: BlocBuilder(
@@ -44,115 +42,130 @@ class _CartViewState extends State<CartView> {
               child: CircularProgressIndicator(),
             );
           } else {
-            return Scaffold(
-              extendBody: true,
-              appBar: const CustomAppBar(title: 'السلة', thereIsIcon: true),
-              body: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  ListView.builder(
-                    padding: const EdgeInsets.all(0),
-                    itemBuilder: (context, index) => _ItemOrder(
-                      index: index,
-                      model: bloc.list[index],
-                    ),
-                    itemCount: bloc.list.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 0),
-                          blurRadius: 17,
-                          color: const Color(0xff000000).withOpacity(0.02),
+            return GestureDetector(
+              onTap: () {
+                if (FocusScope.of(context).hasFocus) {
+                  FocusScope.of(context).unfocus();
+                }
+              },
+              child: Scaffold(
+                // extendBody: true,
+                appBar: const CustomAppBar(title: 'السلة', thereIsIcon: true),
+                body: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(0),
+                          itemBuilder: (context, index) => _ItemOrder(
+                            index: index,
+                            model: bloc.list[index],
+                          ),
+                          itemCount: bloc.list.length,
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
                         ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 17, top: 7, left: 7, bottom: 7),
-                      child: Row(
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
                         children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 40,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(9),
-                                    borderSide:
-                                        const BorderSide(color: mainColor),
-                                  ),
-                                  labelText: 'عندك كوبون ؟ ادخل رقم الكوبون',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xffB9C9A8),
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 0),
+                                  blurRadius: 17,
+                                  color:
+                                      const Color(0xff000000).withOpacity(0.02),
                                 ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 17, top: 7, left: 7, bottom: 7),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 40,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                            borderSide: const BorderSide(
+                                                color: mainColor),
+                                          ),
+                                          labelText:
+                                              'عندك كوبون ؟ ادخل رقم الكوبون',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color(0xffB9C9A8),
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 37,
+                                    child: CustomFillButton(
+                                      title: 'تطبيق',
+                                      onPress: () {},
+                                      radius: 10,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                           const SizedBox(
-                            width: 5,
+                            height: 8,
                           ),
-                          SizedBox(
-                            height: 37,
-                            child: CustomFillButton(
-                              title: 'تطبيق',
-                              onPress: () {},
-                              radius: 10,
+                          Text(
+                            'جميع الأسعار تشمل قيمة الضريبة المضافة 15%',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
                             ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomOrdersMony(
+                            model: bloc.cartData,
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    'جميع الأسعار تشمل قيمة الضريبة المضافة 15%',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  CustomOrdersMony(
-                    model: bloc.cartData,
-                  ),
-                  !isKeyboardOpen
-                      ? const SizedBox(
-                          height: 70,
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-              bottomNavigationBar: ColoredBox(
-                color: Colors.transparent,
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        right: 16, bottom: 20, top: 5, left: 16),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: CustomFillButton(
-                        title: 'الانتقال لإتمام الطلب',
-                        onPress: () {
-                          navigateTo(toPage: const CompletOrderView());
-                        },
+                ),
+                bottomNavigationBar: ColoredBox(
+                  color: Colors.transparent,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 16, bottom: 20, left: 16),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: CustomFillButton(
+                          title: 'الانتقال لإتمام الطلب',
+                          onPress: () {
+                            navigateTo(toPage: const CompletOrderView());
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -181,7 +194,6 @@ class _ItemOrderState extends State<_ItemOrder> {
   @override
   initState() {
     super.initState();
-
   }
 
   @override
@@ -238,7 +250,7 @@ class _ItemOrderState extends State<_ItemOrder> {
                   CustomPlusOrMinusProduct(
                     isProductDetails: false,
                     id: widget.model.id,
-                    amount: widget.model.amount,
+                    index: widget.index,
                   ),
                 ],
               ),
@@ -277,7 +289,8 @@ class _ItemOrderState extends State<_ItemOrder> {
                                                 BorderRadius.circular(15))),
                                     child: const Text('حذف'),
                                     onPressed: () async {
-                                      bloc.add(DeletProductCartEvent(id: widget.model.id));
+                                      bloc.add(DeletProductCartEvent(
+                                          id: widget.model.id));
                                       // Navigator.pop(context);
                                     },
                                   ),

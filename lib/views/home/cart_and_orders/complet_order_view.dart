@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
+import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
@@ -29,15 +30,15 @@ class CompletOrderView extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            const Text(
-              'الإسم : محمد',
+             Text(
+              'الإسم : ${CacheHelper.getUserName()}',
               style: _textStyle,
             ),
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              'الجوال : 05068285914',
+             Text(
+              'الجوال : ${CacheHelper.getUserPhone()}',
               style: _textStyle,
             ),
             const SizedBox(

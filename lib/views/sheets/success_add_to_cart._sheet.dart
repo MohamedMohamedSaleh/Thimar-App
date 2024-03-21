@@ -1,11 +1,12 @@
-
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_outline_send_button.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
 import '../../features/products/products_model.dart';
@@ -64,6 +65,8 @@ class SuccessAddToCartSheet extends StatelessWidget {
                     child: CustomFillButton(
                         title: 'التحويل إلى السلة',
                         onPress: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                           navigateTo(toPage: const CartView());
                         }),
                   ),
@@ -72,14 +75,20 @@ class SuccessAddToCartSheet extends StatelessWidget {
                   width: 16,
                 ),
                 Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
                     child: SizedBox(
-                        width: double.infinity,
-                        child: SizedBox(
-                            height: 47,
-                            child: CustomOutlineButton(
-                              onPress: () {},
-                              title: 'تصفح العروض',
-                            ))))
+                      height: 47,
+                      child: CustomOutlineButton(
+                        onPress: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        title: 'تصفح العروض',
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -89,10 +98,16 @@ class SuccessAddToCartSheet extends StatelessWidget {
   }
 }
 
-class _Item extends StatelessWidget {
+class _Item extends StatefulWidget {
   const _Item({required this.model});
   final ProductModel model;
 
+  @override
+  State<_Item> createState() => _ItemState();
+}
+
+class _ItemState extends State<_Item> {
+  final bloc = KiwiContainer().resolve<CartBloc>();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -100,7 +115,7 @@ class _Item extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(11),
           child: AppImage(
-            model.mainImage,
+            widget.model.mainImage,
             height: 61,
             width: 66,
             fit: BoxFit.cover,
@@ -114,16 +129,16 @@ class _Item extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              model.title,
+              widget.model.title,
               style: const TextStyle(
                   fontSize: 12, fontWeight: FontWeight.w500, color: mainColor),
             ),
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'الكمية : 1',
-              style: TextStyle(
+            Text(
+              'الكمية : ${bloc.amountProduct}',
+              style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w300,
                   color: Color(0xff7E7E7E)),
@@ -132,7 +147,7 @@ class _Item extends StatelessWidget {
               height: 2,
             ),
             Text(
-              '${model.price} ر.س',
+              '${widget.model.price} ر.س',
               style: const TextStyle(
                   fontSize: 16, fontWeight: FontWeight.w500, color: mainColor),
             ),

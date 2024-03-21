@@ -1,8 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
+
+import '../../views/sheets/success_add_to_cart._sheet.dart';
+import '../products/products_model.dart';
 
 part 'cart_events.dart';
 part 'cart_states.dart';
@@ -12,10 +15,22 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
     on<ShowCartEvent>(_showCart);
     on<StorProductCartEvent>(_storeProduct);
     on<DeletProductCartEvent>(_deleteProduct);
+    on<UpdateProductCartEvent>(_updateData);
+    on<CounterProductsEvent>(_counterProduct);
   }
 
   CartData? cartData;
   List<CartModel> list = [];
+  int amountProduct = 1;
+  void _counterProduct(CounterProductsEvent event, Emitter<CartStates> emit) {
+    if (event.isAdd) {
+      amountProduct++;
+      emit(AddCounterSuccessState());
+    } else {
+      amountProduct--;
+      emit(MinusCounterSuccessState());
+    }
+  }
 
   Future<void> _showCart(ShowCartEvent event, Emitter<CartStates> emit) async {
     if (event.isLoading) {
@@ -43,20 +58,47 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
     emit(AddToCartLoadingState(id: event.id));
     final response = await DioHelper().sendData(endPoint: "client/cart", data: {
       "product_id": "${event.id}",
-      "amount": "1",
+      "amount": '${event.amount}',
     });
 
     if (response.isSuccess) {
       // final model = AddProductData.fromJson(response.response!.data);
-      showMessage(
-        message: response.message,
-        type: MessageType.success,
-      );
+      if (event.isProduct) {
+        showModalBottomSheet(
+          context: navigatorKey.currentContext!,
+          builder: (context) => SuccessAddToCartSheet(
+            model: event.model!,
+          ),
+        );
+      } else {
+        showMessage(
+          message: response.message,
+          type: MessageType.success,
+        );
+      }
       add(ShowCartEvent(isLoading: false));
       emit(AddToCartSuccessState());
     } else {
       emit(AddToCartFailedState());
       showMessage(message: 'لم يتم إضافة المنتج');
+    }
+  }
+
+// {required int amount, required int id, required bool isAdd}
+  Future<void> _updateData(
+      UpdateProductCartEvent event, Emitter<CartStates> emit) async {
+    final response = await DioHelper()
+        .updateData(endPoint: "client/cart/${event.id}", data: {
+      'amount': event.amount,
+    });
+
+    if (response.isSuccess) {
+      // showMessage(message: response.message, type: MessageType.success);
+      add(ShowCartEvent(isLoading: false));
+      emit(UpdateAmountSuccessState());
+    } else {
+      showMessage(message: response.message);
+      emit(UpdateAmountFailedState());
     }
   }
 

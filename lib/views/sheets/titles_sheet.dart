@@ -1,47 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
 import '../../core/constants/my_colors.dart';
+import '../../features/addresses/get_addresses/get_addresses_bloc.dart';
 import '../home/pages/my_account/widgets/title_item.dart';
 
-class TitlesSheet extends StatelessWidget {
+class TitlesSheet extends StatefulWidget {
   const TitlesSheet({super.key});
 
   @override
+  State<TitlesSheet> createState() => _TitlesSheetState();
+}
+
+class _TitlesSheetState extends State<TitlesSheet> {
+  final bloc = KiwiContainer().resolve<GetAddressesBloc>()
+    ..add(GetAddressesEvent());
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        const Center(
-          child: Text(
-            'العناوين',
-            style: TextStyle(
-                color: mainColor, fontSize: 17, fontWeight: FontWeight.bold),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 10,
           ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) => const TitleItem(),
-          itemCount: 2,
-        ),
-        CustomOutlineButton(
-            onTap: () {
-              navigateTo(toPage: const AddTitleView());
-            },
-            title: 'إضافة عنوان جديد'),
-        const SizedBox(
-          height: 40,
-        ),
-      ],
+          const Center(
+            child: Text(
+              'العناوين',
+              style: TextStyle(
+                  color: mainColor, fontSize: 17, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: BlocBuilder(
+              bloc: bloc,
+              builder: (context, state) {
+                if (state is GetAddressesLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) =>
+                      TitleItem(model: bloc.list[index]),
+                  itemCount: bloc.list.length,
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomOutlineButton(
+              onTap: () {
+                navigateTo(toPage: const AddTitleView());
+              },
+              title: 'إضافة عنوان جديد'),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 }
