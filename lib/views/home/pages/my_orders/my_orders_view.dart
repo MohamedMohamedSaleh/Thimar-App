@@ -27,15 +27,21 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
           children: [
             // Content of Tab 1
             ListView.builder(
+              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-              itemBuilder: (context, index) => const CustomOrdersItem(isFinished: false,),
+              itemBuilder: (context, index) => const CustomOrdersItem(
+                isFinished: false,
+              ),
               itemCount: 7,
             ),
 
             // Content of Tab 2
             ListView.builder(
+              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-              itemBuilder: (context, index) => const CustomOrdersItem(isFinished: true,),
+              itemBuilder: (context, index) => const CustomOrdersItem(
+                isFinished: true,
+              ),
               itemCount: 7,
             ),
           ],

@@ -270,57 +270,69 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 19),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 32,
-                  width: 32,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: const Color(0xff6AA431),
+            child: BlocBuilder(
+              bloc: bloc,
+              builder: (context, state) {
+                if (state is AddToCartLoadingState) {
+                  return const Center(
+                    child: SizedBox(
+                        width: 200,
+                        child: LinearProgressIndicator(
+                          color: Color(0xff61B80C),
+                        )),
+                  );
+                }
+                return Row(
+                  children: [
+                    SizedBox(
+                      height: 32,
+                      width: 32,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: const Color(0xff6AA431),
+                        ),
+                        child: const AppImage('assets/icon/svg/Shopping.svg'),
+                      ),
                     ),
-                    child: const AppImage('assets/icon/svg/Shopping.svg'),
-                  ),
-                ),
-                const SizedBox(
-                  width: 9,
-                ),
-                const Text(
-                  'إضافة إلي السلة',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Spacer(),
-                BlocBuilder(
-                  bloc: bloc,
-                  builder: (context, state) {
-                    if (state is AddCounterSuccessState) {
-                      return Text(
-                        '${widget.model.price! * bloc.amountProduct}ر.س',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    }else{
-                      return Text(
-                        '${widget.model.price! * bloc.amountProduct}ر.س',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-
-                    }
-                  }
-                ),
-              ],
+                    const SizedBox(
+                      width: 9,
+                    ),
+                    const Text(
+                      'إضافة إلي السلة',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    BlocBuilder(
+                        bloc: bloc,
+                        builder: (context, state) {
+                          if (state is AddCounterSuccessState) {
+                            return Text(
+                              '${widget.model.price! * bloc.amountProduct}ر.س',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          } else {
+                            return Text(
+                              '${widget.model.price! * bloc.amountProduct}ر.س',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          }
+                        }),
+                  ],
+                );
+              },
             ),
           ),
         ),

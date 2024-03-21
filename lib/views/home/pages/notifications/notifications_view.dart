@@ -112,6 +112,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(top: 22, bottom: 15),
                 itemBuilder: (context, index) => _Item(model: list[index]),
                 itemCount: list.length,

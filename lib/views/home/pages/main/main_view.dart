@@ -63,6 +63,7 @@ class _MainPageState extends State<MainPage> {
             FocusScope.of(context).unfocus();
           },
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: [
               const SizedBox(
                 height: 4,
@@ -93,12 +94,6 @@ class _MainPageState extends State<MainPage> {
                       fillColor: const Color(0xff4C8613).withOpacity(.03),
                       paddingBottom: 0,
                     ),
-                    // isNotEmpty
-                    //     ? const Icon(
-                    //         Icons.clear,
-                    //         color: Colors.red,
-                    //       )
-                    //     : const SizedBox(),
                   ],
                 ),
               ),
@@ -245,11 +240,12 @@ class _MainPageState extends State<MainPage> {
                         BlocBuilder<GetFavoriteProductCubit,
                             GetFavoriteProductStates>(
                           builder: (context, state) {
-                            if (productCubit.list.isEmpty) {
+                            if (productCubit.list.isEmpty ||
+                                state is GetProductLoadingState) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
-                            } else{
+                            } else {
                               return GridView.builder(
                                 padding: const EdgeInsets.only(
                                     bottom: 16, right: 16, left: 16),

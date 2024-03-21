@@ -5,7 +5,6 @@ import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.
 
 import '../../../../features/products/get_favorite_product/get_favorite_products_cubit.dart';
 
-
 class FavsPage extends StatefulWidget {
   const FavsPage({super.key});
 
@@ -30,25 +29,23 @@ class _FavsPageState extends State<FavsPage> {
       ),
       body: BlocBuilder<GetFavoriteProductCubit, GetFavoriteProductStates>(
         builder: (context, state) {
-          if (state is GetFavoriteProductLoadingState || state is AddFavoriteSuccessState || state is RemoveFavoriteSuccessState || state is StartAddSuccessState || state is StartRemoveSuccessState) {
+          if (cubit.favsList.isEmpty &&
+              state is GetFavoriteProductLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (cubit.favsModel != null) {
+          } else {
             return GridView.builder(
-                      padding: const EdgeInsets.all(16),
-
-              itemCount: cubit.favsModel!.list.length,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              itemCount: cubit.favsList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 163/215, crossAxisSpacing: 10,mainAxisSpacing: 10),
+                  crossAxisCount: 2,
+                  childAspectRatio: 163 / 215,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10),
               itemBuilder: (context, index) =>
-                  ItemProduct(model: cubit.favsModel!.list[index]),
-            );
-          }
-          
-           else {
-            return const Center(
-              child: Text("Failed!"),
+                  ItemProduct(model: cubit.favsList[index]),
             );
           }
         },
