@@ -1,5 +1,6 @@
 import 'package:kiwi/kiwi.dart';
-import 'package:vegetable_orders_project/features/addresses/get_addresses/get_addresses_bloc.dart';
+import 'package:vegetable_orders_project/features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
+import 'package:vegetable_orders_project/features/addresses/set_address/set_address_bloc.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/register/bloc/register_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/cubit/profile_cubit.dart';
 
+// import '../features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 import '../features/categori_products/category_products_bloc.dart';
 import '../features/products/search_products/search_products_bloc.dart';
 
@@ -22,9 +24,15 @@ void initKiwi() {
   container.registerFactory((container) => RegisterBloc());
   container.registerFactory((container) => GetCitiesBloc());
   container.registerFactory((container) => ConfirmBloc());
-  container.registerSingleton((container) => GetCategoryBloc()..add(GetCategoryEvent()));
-  container.registerSingleton((container) => ProductsBloc()..add(GetProductsEvent())..add(GetFavsProductsEvent()));
-
+  container.registerFactory((container) => SetUpdateAdressBloc());
+  container.registerSingleton(
+      (container) => GetCategoryBloc()..add(GetCategoryEvent()));
+  container.registerSingleton((container) => ProductsBloc()
+    ..add(GetProductsEvent())
+    ..add(GetFavsProductsEvent()));
+  // container.registerFactory((container) => GetDeleteAddressesBloc());
+  // container.registerFactory((container) => TestAddressBloc());
+  container.registerFactory((container) => GetDeleteAddressesBloc());
   container.registerFactory((container) => GetCategoryProductsBloc());
   container.registerFactory((container) => GetSearchProductsBloc());
   container
@@ -34,5 +42,4 @@ void initKiwi() {
   container.registerSingleton((container) => CartBloc());
   container.registerFactory((container) => ProfileCubit());
   container.registerFactory((container) => ChangePasswordBloc());
-  container.registerFactory((container) => GetAddressesBloc());
 }

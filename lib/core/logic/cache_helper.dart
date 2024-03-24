@@ -15,19 +15,56 @@ class CacheHelper {
   static Future<void> setIsFavorite(bool value) async {
     await _prefs.setBool('isFavorite', value);
   }
+
   static Future<void> setInCart(int value) async {
     await _prefs.setInt('inCart', value);
   }
 
+  ////////////////////////////////////////
+  static Future<void> setLat(String value) async {
+    await _prefs.setString('lat', value);
+  }
+
+  static Future<void> setLng(String value) async {
+    await _prefs.setString('lng', value);
+  }
+
+  static Future<void> setLocation(String value) async {
+    await _prefs.setString('location', value);
+  }
+  //////////////
+
+  static String? getLat() {
+    return _prefs.getString('lat');
+  }
+
+  static String? getLng() {
+    return _prefs.getString('lng');
+  }
+
+  static String? getLocation() {
+    return _prefs.getString('location');
+  }
+
+  static Future<void> removeLocation() async {
+    await _prefs.remove('lat');
+    await _prefs.remove('lng');
+    await _prefs.remove('location');
+  }
+
+///////////////////////////////////////////
   static int? getInCart() {
     return _prefs.getInt('inCart');
   }
+
   static String? getUserToken() {
     return _prefs.getString('token');
   }
+
   static String? getUserName() {
     return _prefs.getString('fullname');
   }
+
   static String? getUserPhone() {
     return _prefs.getString('phone');
   }

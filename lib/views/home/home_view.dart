@@ -48,41 +48,53 @@ class _HomeViewState extends State<HomeView> {
     if (isNavigate && widget.isNavigatToOrder) {
       currentIndex = 1;
     }
-    return Scaffold(
-      body: isNavigate && widget.isNavigatToOrder
-          ? pages[1]
-          : pages[currentIndex],
-      bottomNavigationBar: SafeArea(
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            unselectedItemColor: const Color(0xffAED489),
-            selectedItemColor: Colors.white,
-            currentIndex: currentIndex,
-            onTap: (value) {
-              currentIndex = value;
-              isNavigate = false;
-              setState(() {});
-            },
-            // the best way is List generator
-            items: List.generate(
-              pages.length,
-              (index) => BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icon/svg/${icons[index]}.svg',
-                  // ignore: deprecated_member_use
-                  color: currentIndex == index
-                      ? Colors.white
-                      : const Color(0xffAED489),
-                ),
-                label: label[index],
-              ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (currentIndex != 0) {
+          currentIndex = 0;
+          setState(() {
+            
+          });
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: isNavigate && widget.isNavigatToOrder
+            ? pages[1]
+            : pages[currentIndex],
+        bottomNavigationBar: SafeArea(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
             ),
-            type: BottomNavigationBarType.fixed,
+            child: BottomNavigationBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              unselectedItemColor: const Color(0xffAED489),
+              selectedItemColor: Colors.white,
+              currentIndex: currentIndex,
+              onTap: (value) {
+                currentIndex = value;
+                isNavigate = false;
+                setState(() {});
+              },
+              // the best way is List generator
+              items: List.generate(
+                pages.length,
+                (index) => BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icon/svg/${icons[index]}.svg',
+                    // ignore: deprecated_member_use
+                    color: currentIndex == index
+                        ? Colors.white
+                        : const Color(0xffAED489),
+                  ),
+                  label: label[index],
+                ),
+              ),
+              type: BottomNavigationBarType.fixed,
+            ),
           ),
         ),
       ),

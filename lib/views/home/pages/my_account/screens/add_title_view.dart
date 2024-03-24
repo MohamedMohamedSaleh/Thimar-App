@@ -1,24 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
+import 'package:vegetable_orders_project/features/addresses/set_address/set_address_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_form_input.dart';
 
 import '../widgets/custom_google_map.dart';
 
 class AddTitleView extends StatefulWidget {
-  const AddTitleView({super.key});
+  const AddTitleView({
+    super.key,
+    this.isAddTitle = true,
+    this.id,
+    this.phone,
+    this.description,
+    this.lat,
+    this.lng,
+    this.type,
+  });
+  final bool isAddTitle;
+  final int? id;
+  final String? phone;
+  final String? description;
+  final String? type;
+  final double? lat;
+  final double? lng;
 
   @override
   State<AddTitleView> createState() => _AddTitleViewState();
 }
 
 class _AddTitleViewState extends State<AddTitleView> {
+  final bloc = KiwiContainer().resolve<SetUpdateAdressBloc>();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    !widget.isAddTitle ? phoneController.text = widget.phone! : null;
+    !widget.isAddTitle
+        ? descriptionController.text = widget.description!
+        : null;
+    widget.isAddTitle
+        ? isHome = true
+        : isHome = (widget.type! == 'home') ? true : false;
+  }
+
   bool isHome = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'إضافة عنوان'),
+      appBar: CustomAppBar(
+          title: widget.isAddTitle ? 'إضافة عنوان' : 'تعديل عنوان'),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Padding(
@@ -26,11 +62,15 @@ class _AddTitleViewState extends State<AddTitleView> {
           child: ScrollConfiguration(
             behavior: const ScrollBehavior().copyWith(overscroll: false),
             child: ListView(physics: const ClampingScrollPhysics(), children: [
-              const SizedBox(
+              SizedBox(
                 height: 230,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: CustomGoogleMap(),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: CustomGoogleMap(
+                    isAddTitle: widget.isAddTitle,
+                    lat: widget.lat,
+                    lng: widget.lng,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -119,9 +159,10 @@ class _AddTitleViewState extends State<AddTitleView> {
                                 blurRadius: 17)
                           ],
                           borderRadius: BorderRadius.circular(15)),
-                      child: const SizedBox(
+                      child: SizedBox(
                           height: 50,
                           child: CustomFormInput(
+                            controller: phoneController,
                             labelText: 'أدخل رقم الجوال',
                             isPhone: true,
                             isTitl: true,
@@ -139,9 +180,10 @@ class _AddTitleViewState extends State<AddTitleView> {
                                 blurRadius: 17)
                           ],
                           borderRadius: BorderRadius.circular(15)),
-                      child: const SizedBox(
+                      child: SizedBox(
                           height: 50,
                           child: CustomFormInput(
+                            controller: descriptionController,
                             labelText: 'الوصف',
                             isTitl: true,
                           )),
@@ -149,10 +191,44 @@ class _AddTitleViewState extends State<AddTitleView> {
                     const SizedBox(
                       height: 26,
                     ),
-                    SizedBox(
-                        width: double.infinity,
-                        child: CustomFillButton(
-                            title: 'إضافة العنوان', onPress: () {}))
+                    BlocBuilder(
+                      bloc: bloc,
+                      builder: (context, state) {
+                        if (state is SetAddressLoadingState ||
+                            state is UpdateAddressLoadingState) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return SizedBox(
+                            width: double.infinity,
+                            child: CustomFillButton(
+                                title: widget.isAddTitle
+                                    ? 'إضافة العنوان'
+                                    : 'تعديل العنون',
+                                onPress: () {
+                                  widget.isAddTitle
+                                      ? bloc.add(
+                                          SetAddressEvent(
+                                              isDefault: "1",
+                                              descripion:
+                                                  descriptionController.text,
+                                              phone: phoneController.text,
+                                              type: isHome ? "1" : "0"),
+                                        )
+                                      : bloc.add(
+                                          UpdateAddressEvent(
+                                            isDefault: "1",
+                                            descripion:
+                                                descriptionController.text,
+                                            phone: phoneController.text,
+                                            type: isHome ? "home" : "work",
+                                            id: widget.id!,
+                                          ),
+                                        );
+                                }));
+                      },
+                    )
                   ],
                 ),
               ),

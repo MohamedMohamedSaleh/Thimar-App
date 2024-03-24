@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
+import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
+import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/addresses/addresses_model.dart';
+import 'package:vegetable_orders_project/features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 
 class TitleItem extends StatefulWidget {
   const TitleItem({super.key, required this.model});
@@ -13,6 +19,8 @@ class TitleItem extends StatefulWidget {
 }
 
 class _TitleItemState extends State<TitleItem> {
+  final bloc = KiwiContainer().resolve<GetDeleteAddressesBloc>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +53,7 @@ class _TitleItemState extends State<TitleItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.model.type,
+                      widget.model.type == 'home' ? 'المنزل' : 'العمل',
                       style: const TextStyle(
                         color: mainColor,
                         fontSize: 15,
@@ -80,27 +88,62 @@ class _TitleItemState extends State<TitleItem> {
                 ),
               ),
               const Spacer(),
-              const Column(
+              Column(
                 children: [
                   Row(
                     children: [
-                      CustomAppBarIcon(
-                        height: 24,
-                        width: 24,
-                        isBack: false,
-                        color: Color(0xffFFD4D4),
-                        child: AppImage(
-                          'assets/icon/svg/Trash.svg',
-                        ),
+                      BlocBuilder(
+                        bloc: bloc,
+                        builder: (context, state) {
+                          if (state is DeleteAddressesLoadingState &&
+                              state.id == widget.model.id) {
+                            return const Center(
+                              child: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  )),
+                            );
+                          }
+                          return CustomAppBarIcon(
+                            onTap: () {
+                              bloc.add(
+                                  DeleteAddressesEvent(id: widget.model.id));
+                            },
+                            height: 24,
+                            width: 24,
+                            isBack: false,
+                            color: const Color(0xffFFD4D4),
+                            child: const AppImage(
+                              'assets/icon/svg/Trash.svg',
+                            ),
+                          );
+                        },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       CustomAppBarIcon(
+                        onTap: () {
+                          CacheHelper.removeLocation();
+                          navigateTo(
+                            toPage: AddTitleView(
+                              isAddTitle: false,
+                              description: widget.model.description,
+                              phone: widget.model.phone,
+                              type: widget.model.type,
+                              lat: widget.model.lat,
+                              lng: widget.model.lng,
+                              id: widget.model.id,
+                            ),
+                          );
+                        },
                         isBack: false,
                         height: 24,
                         width: 24,
-                        child: AppImage('assets/icon/svg/account/Edit2.svg'),
+                        child:
+                            const AppImage('assets/icon/svg/account/Edit2.svg'),
                       ),
                     ],
                   ),

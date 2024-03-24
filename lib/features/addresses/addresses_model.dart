@@ -25,9 +25,9 @@ class AddressModel {
   AddressModel.fromJson(Map<String, dynamic> json){
     id = json['id'];
     type = json['type'];
-    lat = json['lat'];
-    lng = json['lng'];
-    location = json['location'];
+    lat = double.tryParse(json['lat'].toString())?? 0.0;
+    lng = double.tryParse(json['lng'].toString())?? 0.0;
+    location = json['location']?? '';
     description = json['description'];
     isDefault = json['is_default'];
     phone = json['phone'];

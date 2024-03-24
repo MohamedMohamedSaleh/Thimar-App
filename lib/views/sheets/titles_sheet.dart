@@ -6,7 +6,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
 import '../../core/constants/my_colors.dart';
-import '../../features/addresses/get_addresses/get_addresses_bloc.dart';
+import '../../features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 import '../home/pages/my_account/widgets/title_item.dart';
 
 class TitlesSheet extends StatefulWidget {
@@ -17,8 +17,8 @@ class TitlesSheet extends StatefulWidget {
 }
 
 class _TitlesSheetState extends State<TitlesSheet> {
-  final bloc = KiwiContainer().resolve<GetAddressesBloc>()
-    ..add(GetAddressesEvent());
+  final bloc = KiwiContainer().resolve<GetDeleteAddressesBloc>()
+    ..add(GetAddressesEvent(isLoading: true));
 
   @override
   void dispose() {
