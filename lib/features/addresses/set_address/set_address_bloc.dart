@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
@@ -21,9 +20,6 @@ class SetUpdateAdressBloc
 
   Future<void> _addAddress(
       SetAddressEvent event, Emitter<SetUpdateAddressStates> emit) async {
-    print('***');
-    print(lat);
-    print('***');
     emit(SetAddressLoadingState());
     final response =
         await DioHelper().sendData(endPoint: '/client/addresses', data: {

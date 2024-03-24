@@ -34,10 +34,6 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   @override
   void initState() {
     super.initState();
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    print(widget.lat);
-    print(widget.lng);
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     _determinePosition();
     _initMarker();
   }
@@ -66,9 +62,6 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
 
   void goToLocation(
       {required double latitude, required double longitude}) async {
-    String x = "25.24516138143614426841";
-    double y = double.parse(x);
-    print(y);
     googleMapController.animateCamera(
         CameraUpdate.newLatLngZoom(LatLng(latitude, longitude), 15));
     markers.clear();
@@ -80,15 +73,10 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
       ),
     );
 
-    print('****************************************');
     bloc.lat = (latitude.toString());
     bloc.lng = (longitude.toString());
     CacheHelper.setLat(latitude.toString());
     CacheHelper.setLng(longitude.toString());
-    print(latitude);
-    print(longitude);
-    print(CacheHelper.getLat());
-    print(CacheHelper.getLat());
     List<Placemark> placemarks =
         await placemarkFromCoordinates(latitude, longitude);
     var myPlace = placemarks.first;
