@@ -8,7 +8,12 @@ class GetAddressesLoadingState extends GetDeleteAddressesStates {}
 
 class GetAddressesFailedState extends GetDeleteAddressesStates {}
 
-class DeleteAddressesSuccessState extends GetDeleteAddressesStates {}
+class DeleteAddressesSuccessState extends GetDeleteAddressesStates {
+  final int id;
+
+  DeleteAddressesSuccessState({required this.id});
+
+}
 
 class DeleteAddressesLoadingState extends GetDeleteAddressesStates {
   final int id;

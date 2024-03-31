@@ -1,9 +1,9 @@
-part of 'profile_cubit.dart';
+part of 'profile_bloc.dart';
 
 class ProfileStates {}
 
 class GetProfileDataSuccessState extends ProfileStates {
-  final Data data;
+  final MapData data;
 
   GetProfileDataSuccessState({required this.data});
 }

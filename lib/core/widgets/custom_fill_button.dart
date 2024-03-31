@@ -24,6 +24,7 @@ class CustomFillButton extends StatelessWidget {
       height: 55,
       child: FilledButton(
         style: FilledButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(radius))),
         onPressed: onPress,

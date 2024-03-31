@@ -79,9 +79,9 @@ class ItemProductState extends State<ItemProduct> {
                               child: Container(
                                 height: 18,
                                 width: 55,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 3),
-                                alignment: Alignment.center,
+                                padding: const EdgeInsets.only(
+                                    left: 10,right: 10, bottom: 4, top: 2),
+                                alignment: Alignment.topCenter,
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).primaryColor,
                                   borderRadius: const BorderRadius.only(
@@ -92,7 +92,7 @@ class ItemProductState extends State<ItemProduct> {
                                   '${widget.isSearch ? widget.searchModel!.discount : widget.model!.discount}%',
                                   style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),

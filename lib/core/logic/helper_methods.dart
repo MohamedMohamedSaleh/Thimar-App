@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -29,9 +30,11 @@ void showMessage({String? message, MessageType type = MessageType.faild}) {
         margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
         behavior: SnackBarBehavior.floating,
         backgroundColor: (type == MessageType.success)
-            ? Theme.of(navigatorKey.currentContext!).primaryColor
+            ? mainColor.withOpacity(.7)
             : Colors.redAccent,
+            
         shape: RoundedRectangleBorder(
+
           borderRadius: BorderRadius.circular(15),
         ),
       ),

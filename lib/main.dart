@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:vegetable_orders_project/core/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
-import 'package:vegetable_orders_project/features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
+import 'core/constants/my_colors.dart';
 import 'core/logic/helper_methods.dart';
 
 void main() async {
@@ -28,68 +28,68 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-    create: (BuildContext context) => GetDeleteAddressesBloc(),),
+    return MaterialApp(
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
-        builder: (context, child) =>
-            Directionality(textDirection: TextDirection.rtl, child: child!),
-        title: 'Orders App',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-            elevation: 0,
-            color: Colors.white,
-            titleTextStyle: TextStyle(
-              color: getMaterialColor(),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
+      builder: (context, child) =>
+          Directionality(textDirection: TextDirection.rtl, child: child!),
+      title: 'Orders App',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: getMaterialColor()),
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          elevation: 0,
+          color: Colors.white,
+          titleTextStyle: TextStyle(
+            color: getMaterialColor(),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-          primarySwatch: getMaterialColor(),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: FilledButton.styleFrom(
-              side: BorderSide(color: getMaterialColor()),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                borderSide: BorderSide()),
-            disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color(0xffF3F3F3),
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color(0xffF3F3F3),
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
+        ),
+        primarySwatch: getMaterialColor(),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: FilledButton.styleFrom(
+            side: BorderSide(color: getMaterialColor()),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
           ),
         ),
-        home: const SplashView(),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderSide: BorderSide()),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffF3F3F3),
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+        ),
       ),
+      home: const SplashView(),
     );
   }
 }
 
 MaterialColor getMaterialColor() {
-  Color myColor = const Color(0xff4C8613);
+  Color myColor = mainColor;
   return MaterialColor(
     myColor.value,
     {

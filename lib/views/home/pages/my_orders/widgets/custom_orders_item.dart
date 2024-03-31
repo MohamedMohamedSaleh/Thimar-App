@@ -4,13 +4,19 @@ import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/screens/order_details_view.dart';
 
+import '../../../../../features/my_orders/model.dart';
 import '../../../widgets/custom_decorated_box.dart';
 
 class CustomOrdersItem extends StatelessWidget {
-  const CustomOrdersItem(
-      {super.key, this.isDetailsOrder = false, this.isFinished = false});
+  const CustomOrdersItem({
+    super.key,
+    this.isDetailsOrder = false,
+    this.isFinished = false,
+    this.ordersModel,
+  });
   final bool isDetailsOrder;
   final bool isFinished;
+  final CurrentOrdersModel? ordersModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,12 +26,15 @@ class CustomOrdersItem extends StatelessWidget {
           !isDetailsOrder
               ? isFinished
                   ? navigateTo(
-                      toPage: const OrderDetailsView(
+                      toPage:  OrderDetailsView(
+                        ordersModel: ordersModel!,
                         isFinished: true,
                       ),
                     )
                   : navigateTo(
-                      toPage: const OrderDetailsView(
+                      toPage:  OrderDetailsView(
+                        ordersModel: ordersModel!,
+
                         isFinished: false,
                       ),
                     )
@@ -53,16 +62,16 @@ class CustomOrdersItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "طلب #4587",
+                          "طلب #${ordersModel!.id}",
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 17,
                               fontWeight: FontWeight.bold),
                         ),
                         // isDetailsOrder? SizedBox(height: 2,): SizedBox(),
-                        const Text(
-                          "27,يونيو,2021",
-                          style: TextStyle(
+                        Text(
+                          ordersModel!.date,
+                          style: const TextStyle(
                               color: Color((0xff9C9C9C)),
                               fontSize: 14,
                               fontWeight: FontWeight.w300),
@@ -79,22 +88,26 @@ class CustomOrdersItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         DecoratedBox(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(7)),
-                              color: Color(0xffEAFFD5)),
+                                  const BorderRadius.all(Radius.circular(7)),
+                              color: !isFinished
+                                  ? const Color(0xffEAFFD5)
+                                  : const Color(0xffFFE4E4)),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 12,
                                 vertical: isDetailsOrder ? 3 : 4),
-                            child: Text(!isFinished ? 'جاري التحضير' : 'منتهي'),
+                            child: Text(ordersModel!.status == 'pending'
+                                ? 'جاري التحضير'
+                                : 'طلب ملغي'),
                           ),
                         ),
                         isDetailsOrder
                             ? Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: Text(
-                                  '180ر.س',
+                                  '${ordersModel!.totalPrice}ر.س',
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 15,
@@ -119,12 +132,22 @@ class CustomOrdersItem extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16, right: 10),
                 child: Row(
                   children: [
-                    const CustomDecoratedBox(),
-                    const CustomDecoratedBox(),
-                    const CustomDecoratedBox(),
-                    const CustomDecoratedBox(
-                      isText: true,
-                    ),
+                    ...List.generate(
+                        ordersModel!.products.length > 3
+                            ? 3
+                            : ordersModel!.products.length,
+                        (index) => CustomDecoratedBox(
+                              product: ordersModel!.products[index],
+                            )),
+                    // const CustomDecoratedBox(),
+                    // const CustomDecoratedBox(),
+                    // const CustomDecoratedBox(),
+                    ordersModel!.products.length > 3
+                        ? CustomDecoratedBox(
+                          count:ordersModel!.products.length- 3,
+                            isText: true,
+                          )
+                        : const SizedBox(),
                     const Spacer(),
                     isDetailsOrder
                         ? const CustomAppBarIcon(
@@ -139,7 +162,7 @@ class CustomOrdersItem extends StatelessWidget {
                             ),
                           )
                         : Text(
-                            '180ر.س',
+                            '${ordersModel!.totalPrice}ر.س',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15,

@@ -25,7 +25,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             borderRadius: BorderRadius.circular(10)),
         child: TabBar(
           padding: const EdgeInsets.all(6),
-          indicatorPadding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+          indicatorPadding: const EdgeInsets.fromLTRB(-45, 0, -45, 0),
           unselectedLabelStyle:
               const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           unselectedLabelColor: const Color(0xffA2A1A4),

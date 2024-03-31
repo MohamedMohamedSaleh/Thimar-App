@@ -3,6 +3,7 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
+import 'package:vegetable_orders_project/features/my_orders/model.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/widget/custom_orders_mony.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/screens/product_evaluation_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/widgets/custom_orders_item.dart';
@@ -10,9 +11,9 @@ import 'package:vegetable_orders_project/views/home/pages/my_orders/widgets/cust
 import '../../../../../core/widgets/custom_fill_button.dart';
 
 class OrderDetailsView extends StatelessWidget {
-  const OrderDetailsView({super.key, this.isFinished = false});
-
+  const OrderDetailsView({super.key, this.isFinished = false, required this.ordersModel});
   final bool isFinished;
+  final CurrentOrdersModel ordersModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +24,7 @@ class OrderDetailsView extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           CustomOrdersItem(
+            ordersModel: ordersModel,
             isDetailsOrder: true,
             isFinished: isFinished ? true : false,
           ),

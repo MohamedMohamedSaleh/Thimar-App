@@ -10,15 +10,15 @@ import 'package:vegetable_orders_project/features/addresses/addresses_model.dart
 import 'package:vegetable_orders_project/features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 
-class TitleItem extends StatefulWidget {
-  const TitleItem({super.key, required this.model});
+class CustomTitleItem extends StatefulWidget {
+  const CustomTitleItem({super.key, required this.model});
   final AddressModel model;
 
   @override
-  State<TitleItem> createState() => _TitleItemState();
+  State<CustomTitleItem> createState() => _CustomTitleItemState();
 }
 
-class _TitleItemState extends State<TitleItem> {
+class _CustomTitleItemState extends State<CustomTitleItem> {
   final bloc = KiwiContainer().resolve<GetDeleteAddressesBloc>();
 
   @override
@@ -96,7 +96,7 @@ class _TitleItemState extends State<TitleItem> {
                         bloc: bloc,
                         builder: (context, state) {
                           if (state is DeleteAddressesLoadingState &&
-                              state.id == widget.model.id) {
+                              state.id == widget.model.id || state is DeleteAddressesSuccessState && state.id == widget.model.id) {
                             return const Center(
                               child: SizedBox(
                                   height: 20,

@@ -4,7 +4,7 @@ import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 
 import '../../../../../core/widgets/app_image.dart';
-import '../cubit/profile_cubit.dart';
+import '../bloc/profile_bloc.dart';
 
 class CustomMyData extends StatefulWidget {
   const CustomMyData({super.key, this.isMain = true});
@@ -15,12 +15,12 @@ class CustomMyData extends StatefulWidget {
 }
 
 class _CustomMyDataState extends State<CustomMyData> {
-  final cubit = KiwiContainer().resolve<ProfileCubit>();
+  final bloc = KiwiContainer().resolve<ProfileBloc>()..add(GetProfileEvent());
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: cubit,
+      bloc: bloc,
       builder: (context, state) {
         if (state is GetProfileDataSuccessState) {
           return Column(
@@ -69,12 +69,14 @@ class _CustomMyDataState extends State<CustomMyData> {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-             
             ],
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return const SizedBox(
+            height: 110,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         }
       },

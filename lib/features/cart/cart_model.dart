@@ -40,7 +40,7 @@ class CartModel {
   late  int amount;
   late final int priceBeforeDiscount;
   late final int discount;
-  late final int price;
+  late final double price;
   late final int remainingAmount;
   
   CartModel.fromJson(Map<String, dynamic> json){
@@ -50,7 +50,8 @@ class CartModel {
     amount = json['amount'];
     priceBeforeDiscount = json['price_before_discount'];
     discount = json['discount'];
-    price = int.tryParse(json['price'].toString())?.truncate()?? 0;
+    price = double.tryParse(json['price'].toString())??0;
+    // price = int.tryParse(json['price'].toString())?.truncate()?? 0;
     remainingAmount = json['remaining_amount'];
   }
 

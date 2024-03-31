@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:vegetable_orders_project/views/home/pages/favs/favs_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/main_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/my_account_view.dart';
@@ -48,17 +49,16 @@ class _HomeViewState extends State<HomeView> {
     if (isNavigate && widget.isNavigatToOrder) {
       currentIndex = 1;
     }
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) async {
         if (currentIndex != 0) {
           currentIndex = 0;
-          setState(() {
-            
-          });
-          return false;
+          setState(() {});
+        } else {
+          SystemNavigator.pop();
         }
-        return true;
       },
+      canPop: false,
       child: Scaffold(
         body: isNavigate && widget.isNavigatToOrder
             ? pages[1]

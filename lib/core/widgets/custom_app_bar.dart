@@ -22,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Stack(
           children: [
             AppBar(
+              forceMaterialTransparency: true,
               automaticallyImplyLeading: false,
               title: Padding(
                 padding: const EdgeInsets.only(top: 14),

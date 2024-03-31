@@ -8,7 +8,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
 import '../../../../../features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
-import '../widgets/title_item.dart';
+import '../widgets/custom_title_item.dart';
 
 class TitlesView extends StatefulWidget {
   const TitlesView({super.key});
@@ -31,11 +31,10 @@ class _TitlesViewState extends State<TitlesView> {
       appBar: const CustomAppBar(
         title: 'العناوين',
       ),
-      body: BlocConsumer(
+      body: BlocBuilder(
         bloc: bloc,
-        listener: (context, state) {},
         builder: (context, state) {
-          if (bloc.list.isEmpty && state is GetAddressesLoadingState) {
+          if (bloc.list.isEmpty || state is GetAddressesLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -50,7 +49,7 @@ class _TitlesViewState extends State<TitlesView> {
                     shrinkWrap: true,
                     padding:
                         const EdgeInsets.only(top: 26, right: 16, left: 16),
-                    itemBuilder: (context, index) => TitleItem(
+                    itemBuilder: (context, index) => CustomTitleItem(
                       model: bloc.list[index],
                     ),
                     itemCount: bloc.list.length,

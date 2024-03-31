@@ -4,7 +4,6 @@ import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
 import 'package:vegetable_orders_project/models/cities_model.dart';
 
-
 class CitiesSheet extends StatefulWidget {
   const CitiesSheet({super.key});
 
@@ -75,9 +74,8 @@ class _CitiesSheetState extends State<CitiesSheet> {
 
 class _Item extends StatelessWidget {
   const _Item({
-    Key? key,
     required this.city,
-  }) : super(key: key);
+  }) : super();
   final CityModel city;
   @override
   Widget build(BuildContext context) {

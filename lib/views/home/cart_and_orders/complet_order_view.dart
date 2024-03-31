@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
+import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/widget/custom_orders_mony.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/sheets/finish_order_sheet.dart';
@@ -13,9 +15,16 @@ import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
 import '../../../core/widgets/custom_fill_button.dart';
 import '../../sheets/thank_you_sheet.dart';
 
-class CompletOrderView extends StatelessWidget {
+class CompletOrderView extends StatefulWidget {
   const CompletOrderView({super.key});
 
+  @override
+  State<CompletOrderView> createState() => _CompletOrderViewState();
+}
+
+class _CompletOrderViewState extends State<CompletOrderView> {
+  DateTime? datePicker;
+  TimeOfDay? timePicker;
   @override
   Widget build(BuildContext context) {
     isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0.0;
@@ -30,14 +39,14 @@ class CompletOrderView extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-             Text(
+            Text(
               'الإسم : ${CacheHelper.getUserName()}',
               style: _textStyle,
             ),
             const SizedBox(
               height: 10,
             ),
-             Text(
+            Text(
               'الجوال : ${CacheHelper.getUserPhone()}',
               style: _textStyle,
             ),
@@ -119,8 +128,9 @@ class CompletOrderView extends StatelessWidget {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () {
-                      showDatePicker(
+                    onTap: () async {
+                      datePicker = await showDatePicker(
+                        locale: const Locale('ar', 'AR'),
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime.now(),
@@ -128,6 +138,7 @@ class CompletOrderView extends StatelessWidget {
                         cancelText: 'إلغاء',
                         confirmText: 'حسنا',
                       );
+                      setState(() {});
                     },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
@@ -145,7 +156,9 @@ class CompletOrderView extends StatelessWidget {
                               width: 12,
                             ),
                             Text(
-                              'اختر اليوم والتاريخ',
+                              datePicker == null
+                                  ? 'اختر اليوم والتاريخ'
+                                  : datePicker.toString().split(" ")[0],
                               style: _textStyle.copyWith(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -167,13 +180,21 @@ class CompletOrderView extends StatelessWidget {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () {
-                      showTimePicker(
+                    onTap: () async {
+                      timePicker = await showTimePicker(
+                        builder: (context, child) {
+                          return MediaQuery(
+                            data: MediaQuery.of(context)
+                                .copyWith(alwaysUse24HourFormat: false),
+                            child: child!,
+                          );
+                        },
                         context: context,
                         initialTime: TimeOfDay.now(),
                         cancelText: 'إلغاء',
                         confirmText: 'حسنا',
                       );
+                      setState(() {});
                     },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
@@ -191,7 +212,9 @@ class CompletOrderView extends StatelessWidget {
                               width: 12,
                             ),
                             Text(
-                              'اختر الوقت',
+                              timePicker == null
+                                  ? 'اختر الوقت'
+                                  : "${timePicker?.minute.toString()} : ${timePicker?.hour.toString()} ",
                               style: _textStyle.copyWith(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -349,7 +372,8 @@ class CompletOrderView extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            const CustomOrdersMony(
+            CustomOrdersMony(
+              model: KiwiContainer().resolve<CartBloc>().cartData!,
               isCompletOrder: true,
             ),
             isKeyboardOpen

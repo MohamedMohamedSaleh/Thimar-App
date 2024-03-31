@@ -106,7 +106,7 @@ class _CartViewState extends State<CartView> {
                                           labelText:
                                               'عندك كوبون ؟ ادخل رقم الكوبون',
                                           labelStyle: const TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             color: Color(0xffB9C9A8),
                                             fontWeight: FontWeight.w300,
                                           ),
@@ -145,7 +145,7 @@ class _CartViewState extends State<CartView> {
                             height: 12,
                           ),
                           CustomOrdersMony(
-                            model: bloc.cartData,
+                            model: bloc.cartData!,
                           ),
                         ],
                       ),
@@ -269,15 +269,21 @@ class _ItemOrderState extends State<_ItemOrder> {
                             return ZoomIn(
                               duration: const Duration(milliseconds: 500),
                               child: AlertDialog(
+                                surfaceTintColor: Colors.white,
+                                backgroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15)),
                                 title: state is DeleteFromCartLoadingState
                                     ? const Center(
                                         child: CircularProgressIndicator(),
                                       )
-                                    : const Text(
-                                        'هل متأكد من حذف الطلب؟',
-                                        textAlign: TextAlign.center,
+                                    : const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'هل متأكد من حذف الطلب؟',
+                                          style: TextStyle(fontSize: 18),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                 actionsAlignment: MainAxisAlignment.center,
                                 actions: [

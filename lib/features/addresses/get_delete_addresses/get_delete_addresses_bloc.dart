@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
@@ -16,17 +18,14 @@ class GetDeleteAddressesBloc
   List<AddressModel> list = [];
   Future<void> _getData(
       GetAddressesEvent event, Emitter<GetDeleteAddressesStates> emit) async {
-   if(event.isLoading){
-    emit(GetAddressesLoadingState());
-   }
+    if (event.isLoading) {
+      emit(GetAddressesLoadingState());
+    }
 
     final response = await DioHelper().getData(endPoint: 'client/addresses');
     if (response.isSuccess) {
       final model = AddressData.fromJson(response.response!.data);
       list = model.list;
-      print(list.length);
-      print('*************************************************************');
-
       emit(GetAddressesSuccessState());
     } else {
       emit(GetAddressesFailedState());
@@ -40,11 +39,14 @@ class GetDeleteAddressesBloc
     final response =
         await DioHelper().deleteData(endPoint: '/client/addresses/${event.id}');
     if (response.isSuccess) {
-      showMessage(message: response.message, type: MessageType.success);
-      // Navigator.pop(navigatorKey.currentContext!);
-      // navigateTo(toPage: const TitlesView());
+      Future.delayed(
+       const Duration(milliseconds: 700),
+        () {
+          showMessage(message: response.message, type: MessageType.success);
+        },
+      );
       add(GetAddressesEvent(isLoading: false));
-      emit(DeleteAddressesSuccessState());
+      emit(DeleteAddressesSuccessState(id: event.id));
     } else {
       emit(DeleteAddressesFailedState());
       showMessage(message: response.message);

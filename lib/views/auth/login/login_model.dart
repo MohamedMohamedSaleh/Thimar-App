@@ -22,6 +22,8 @@ class Model {
   late final String userType;
   late final String token;
   late final int userCartCount;
+  late final City city;
+
   
   Model.fromJson(Map<String, dynamic> json){
     id = json['id'];
@@ -30,11 +32,26 @@ class Model {
     email = json['email'];
     image = json['image'];
     isBan = json['is_ban'];
+    city = City.fromJson(json['city'] ?? {});
+
     isActive = json['is_active'];
     unreadNotifications = json['unread_notifications'];
     userType = json['user_type'];
     token = json['token'];
     userCartCount = json['user_cart_count'];
   }
+
+}
+
+
+class City {
+  late final String id;
+  late final String name;
+  
+  City.fromJson(Map<String, dynamic> json){
+    id = json['id']??0;
+    name = json['name']??'';
+  }
+
 
 }

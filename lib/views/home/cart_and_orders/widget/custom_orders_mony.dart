@@ -40,7 +40,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                 ),
                 const Spacer(),
                 Text(
-                  widget.model?.totalPriceBeforeDiscount.toString()?? '',
+                  "${widget.model?.totalPriceBeforeDiscount.toString()?? '00'}ر.س",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,
@@ -65,7 +65,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                       ),
                       const Spacer(),
                       Text(
-                        widget.model?.deliveryCost.toString()?? '',
+                        "${widget.model?.deliveryCost.toString()?? ''}ر.س",
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 15,

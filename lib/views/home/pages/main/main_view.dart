@@ -40,15 +40,16 @@ class _MainPageState extends State<MainPage> {
 
   int currentIndex = 0;
   // bool isNotEmpty = false;
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (FocusScope.of(context).hasFocus) {
           FocusScope.of(context).unfocus();
-          return false;
+          didPop = false;
         } else {
-          return true;
+          didPop = true;
         }
       },
       child: Scaffold(

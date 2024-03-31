@@ -37,18 +37,26 @@ class _CategoryViewState extends State<CategoryView> {
     getSearchBloc.close();
     getCategoryBloc.close();
   }
+  // () async {
+  //       if (FocusScope.of(context).hasFocus) {
+  //         FocusScope.of(context).unfocus();
+  //         return false;
+  //       } else {
+  //         return true;
+  //       }
+  //     },
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked:(didPop) {
         if (FocusScope.of(context).hasFocus) {
           FocusScope.of(context).unfocus();
-          return false;
+          didPop= false;
         } else {
-          return true;
+          didPop= true;
         }
-      },
+      }, 
       child: Scaffold(
         extendBody: true,
         appBar: CustomAppBar(title: widget.model.name),

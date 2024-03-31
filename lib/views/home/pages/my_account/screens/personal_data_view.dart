@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/cubit/profile_cubit.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/profile_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
 class PersonalDataView extends StatefulWidget {
@@ -14,13 +15,19 @@ class PersonalDataView extends StatefulWidget {
 }
 
 class _PersonalDataViewState extends State<PersonalDataView> {
-  final cubit = KiwiContainer().resolve<ProfileCubit>()..getData();
-  TextEditingController nameController =
-      TextEditingController(text: "محمد علي");
-  TextEditingController numberController =
-      TextEditingController(text: "01009294728");
-  TextEditingController cityController =
-      TextEditingController(text: "المنصورة");
+  final cubit = KiwiContainer().resolve<ProfileBloc>();
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = CacheHelper.getUserName() ?? '';
+    phoneController.text = CacheHelper.getUserPhone() ?? '';
+    cityController.text = CacheHelper.getUserCity() ?? 'ldkfjsal';
+    print(cityController.text);
+  }
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -52,7 +59,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
             CustomAppInput(
               isPhone: true,
               isData: true,
-              controller: numberController,
+              controller: phoneController,
               fillColor: const Color(0xffFAFFF5),
               labelText: 'رقم الجوال',
               prefixIcon: 'assets/icon/svg/account/Phone.svg',
