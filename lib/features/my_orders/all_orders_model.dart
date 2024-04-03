@@ -1,9 +1,9 @@
-class CurrentOrdersData {
+class AllOrdersData {
   late final List<CurrentOrdersModel> list;
   late final String status;
   late final String message;
 
-  CurrentOrdersData.fromJson(Map<String, dynamic> json) {
+  AllOrdersData.fromJson(Map<String, dynamic> json) {
     list = List.from(json['data'] ?? [])
         .map((e) => CurrentOrdersModel.fromJson(e))
         .toList();

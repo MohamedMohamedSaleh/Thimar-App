@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/features/my_orders/model.dart';
+import 'package:vegetable_orders_project/features/my_orders/all_orders_model.dart';
 
 import '../../../core/widgets/app_image.dart';
 

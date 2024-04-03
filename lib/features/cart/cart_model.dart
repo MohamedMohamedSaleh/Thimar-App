@@ -1,9 +1,9 @@
 class CartData {
 
   late final List<CartModel> list;
-  late final int totalPriceBeforeDiscount;
-  late final int totalDiscount;
-  late final int totalPriceWithVat;
+  late final num totalPriceBeforeDiscount;
+  late final num totalDiscount;
+  late final num totalPriceWithVat;
   late final int deliveryCost;
   late final int freeDeliveryPrice;
   late final double vat;
@@ -17,8 +17,8 @@ class CartData {
   CartData.fromJson(Map<String, dynamic> json){
     list = List.from(json['data']).map((e)=>CartModel.fromJson(e)).toList();
     totalPriceBeforeDiscount = json['total_price_before_discount'];
-    totalDiscount = int.tryParse((json['total_discount']).toString())?.truncate()?? 0;
-    totalPriceWithVat = int.tryParse(json['total_price_with_vat'].toString())?? 0;
+    totalDiscount = json['total_discount'];
+    totalPriceWithVat = json['total_price_with_vat'];
     deliveryCost = json['delivery_cost'];
     freeDeliveryPrice = json['free_delivery_price'];
     vat = json['vat'];
@@ -40,7 +40,7 @@ class CartModel {
   late  int amount;
   late final int priceBeforeDiscount;
   late final int discount;
-  late final double price;
+  late final num price;
   late final int remainingAmount;
   
   CartModel.fromJson(Map<String, dynamic> json){
@@ -50,7 +50,7 @@ class CartModel {
     amount = json['amount'];
     priceBeforeDiscount = json['price_before_discount'];
     discount = json['discount'];
-    price = double.tryParse(json['price'].toString())??0;
+    price = json['price'];
     // price = int.tryParse(json['price'].toString())?.truncate()?? 0;
     remainingAmount = json['remaining_amount'];
   }
