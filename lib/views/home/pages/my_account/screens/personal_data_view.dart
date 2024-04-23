@@ -21,8 +21,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
     super.initState();
     nameController.text = CacheHelper.getUserName() ?? '';
     phoneController.text = CacheHelper.getUserPhone() ?? '';
-    cityController.text = CacheHelper.getUserCity() ?? 'ldkfjsal';
-    print(cityController.text);
+    cityController.text = CacheHelper.getUserCity() ?? '';
   }
 
   TextEditingController nameController = TextEditingController();

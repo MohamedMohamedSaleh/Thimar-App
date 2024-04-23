@@ -35,15 +35,17 @@ class CustomDecoratedBox extends StatelessWidget {
                     ),
                   ),
                 )
-              : ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: AppImage(
-                    product!.url,
-                    height: 20,
-                    width: 20,
-                    fit: BoxFit.cover,
-                  ),
-              ),
+              : product != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(7),
+                      child: AppImage(
+                        product!.url,
+                        height: 20,
+                        width: 20,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : const SizedBox(),
         ),
       ),
     );

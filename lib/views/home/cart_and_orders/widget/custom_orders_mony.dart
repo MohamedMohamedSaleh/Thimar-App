@@ -160,18 +160,18 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                               ],
                             )
                           : const SizedBox(),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      const Divider(
+                        height: 5,
+                      ),
+                      const SizedBox(
+                        height: 3,
+                      ),
                     ],
                   )
                 : const SizedBox(),
-            const SizedBox(
-              height: 3,
-            ),
-            const Divider(
-              height: 5,
-            ),
-            const SizedBox(
-              height: 3,
-            ),
             Row(
               children: [
                 Text(
