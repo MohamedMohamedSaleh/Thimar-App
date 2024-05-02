@@ -25,9 +25,14 @@ class CustomAppBarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: isBack ?() {
-         Navigator.pop(context, true) ;
-      }: onTap,
+      onTap: isBack
+          ? () {
+              Navigator.pop(context, true);
+              if (FocusScope.of(context).hasFocus) {
+                FocusScope.of(context).unfocus();
+              }
+            }
+          : onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(isBack ? 9 : 7),

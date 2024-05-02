@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:vegetable_orders_project/features/get_location.dart';
 import 'package:vegetable_orders_project/views/home/pages/favs/favs_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/main_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/my_account_view.dart';
@@ -18,6 +19,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    GetLocationn.determinePosition();
+  }
+
   bool isNavigate = true;
   int currentIndex = 0;
   List<Widget> pages = [

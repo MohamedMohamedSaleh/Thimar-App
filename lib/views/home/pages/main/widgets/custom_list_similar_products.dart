@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
+import 'package:vegetable_orders_project/views/home/widgets/shimmer_loading.dart';
 
 import '../../../../../features/products/similar_products/similar_products_bloc.dart';
 
@@ -39,9 +40,7 @@ class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
         bloc: bloc,
         builder: (context, state) {
           if (state is GetSimilarProductLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const ShimmerLoadingProduct(isMain: false,);
           } else if (state is GetSimilarProductSuccrssState) {
             return SizedBox(
               height: 180,

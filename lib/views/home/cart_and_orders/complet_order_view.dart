@@ -377,8 +377,6 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                   return CustomFillButton(
                     title: 'إنهاء الطلب',
                     onPress: () {
-                      print(
-                          "${timePicker?.hour.toString()}:${timePicker?.minute.toString()}");
                       bloc.add(
                         AddOrderEvent(
                           date: datePicker.toString().split(" ")[0],

@@ -13,6 +13,7 @@ import 'package:vegetable_orders_project/views/home/pages/main/screens/categorie
 import '../../../../features/categoris/category_model.dart';
 import '../../../../features/products/products/products_bloc.dart';
 import '../../widgets/custom_item_product.dart';
+import '../../widgets/shimmer_loading.dart';
 import 'widgets/main_app_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -54,159 +55,176 @@ class _MainPageState extends State<MainPage> {
       },
       child: Scaffold(
         appBar: const MainAppBar(),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              const SizedBox(
-                height: 4,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Stack(
-                  children: [
-                    CustomAppInput(
-                      controller: getSearchProducts.textController,
-                      onChange: (value) {
-                        if (value.isNotEmpty) {
-                          getSearchProducts
-                              .add(GetSearchProductsEvent(text: value));
-                          if (getSearchProducts.search.isEmpty) {
-                            isNotFound = true;
-                          }
-                        } else {
-                          isNotFound = false;
-                          getSearchProducts
-                              .add(GetSearchProductsEvent(text: value));
-                          getSearchProducts.search.clear();
-                        }
-                      },
-                      // controller: searchProducts.textController,
-                      labelText: "ابحث عن ماتريد؟",
-                      prefixIcon: "assets/icon/svg/search.svg",
-                      fillColor: const Color(0xff4C8613).withOpacity(.03),
-                      paddingBottom: 0,
-                    ),
-                  ],
+        body: RefreshIndicator(
+          displacement: 20,
+          strokeWidth: 3,
+          backgroundColor: Colors.green[100],
+          onRefresh: callRefresh,
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                const SizedBox(
+                  height: 4,
                 ),
-              ),
-              BlocBuilder(
-                bloc: getSearchProducts,
-                builder: (context, state) {
-                  if (getSearchProducts.search.isEmpty && !isNotFound) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BlocBuilder(
-                          bloc: getSliderBloc,
-                          builder: (context, state) {
-                            if (state is GetSliderLoadingState) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (state is GetSliderSuccessState) {
-                              return StatefulBuilder(
-                                builder: (context, setState1) {
-                                  return Column(
-                                    children: [
-                                      CarouselSlider(
-                                        items: List.generate(
-                                          state.model.length,
-                                          (index) => AppImage(
-                                            state.model[index].media,
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Stack(
+                    children: [
+                      CustomAppInput(
+                        controller: getSearchProducts.textController,
+                        onChange: (value) {
+                          if (value.isNotEmpty) {
+                            getSearchProducts
+                                .add(GetSearchProductsEvent(text: value));
+                            if (getSearchProducts.search.isEmpty) {
+                              isNotFound = true;
+                            }
+                          } else {
+                            isNotFound = false;
+                            getSearchProducts
+                                .add(GetSearchProductsEvent(text: value));
+                            getSearchProducts.search.clear();
+                          }
+                        },
+                        // controller: searchProducts.textController,
+                        labelText: "ابحث عن ماتريد؟",
+                        prefixIcon: "assets/icon/svg/search.svg",
+                        fillColor: const Color(0xff4C8613).withOpacity(.03),
+                        paddingBottom: 0,
+                      ),
+                    ],
+                  ),
+                ),
+                BlocBuilder(
+                  bloc: getSearchProducts,
+                  builder: (context, state) {
+                    if (getSearchProducts.search.isEmpty && !isNotFound) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BlocBuilder(
+                            bloc: getSliderBloc,
+                            builder: (context, state) {
+                              if (state is GetSliderLoadingState) {
+                                return sliderShimmerLoading();
+                              } else if (state is GetSliderSuccessState) {
+                                return StatefulBuilder(
+                                  builder: (context, setState1) {
+                                    return Column(
+                                      children: [
+                                        CarouselSlider(
+                                          items: List.generate(
+                                            state.model.length,
+                                            (index) => AppImage(
+                                              state.model[index].media,
+                                              height: 164,
+                                              width: double.infinity,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                          options: CarouselOptions(
                                             height: 164,
-                                            width: double.infinity,
-                                            fit: BoxFit.fill,
+                                            viewportFraction: 1,
+                                            onPageChanged: (index, reason) {
+                                              currentIndex = index;
+                                              setState1(() {});
+                                            },
+                                            autoPlay: true,
                                           ),
                                         ),
-                                        options: CarouselOptions(
-                                          height: 164,
-                                          viewportFraction: 1,
-                                          onPageChanged: (index, reason) {
-                                            currentIndex = index;
-                                            setState1(() {});
-                                          },
-                                          autoPlay: true,
+                                        const SizedBox(
+                                          height: 8,
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: List.generate(
-                                            state.model.length,
-                                            (index) => Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .only(end: 4),
-                                              child: CircleAvatar(
-                                                radius: (index == currentIndex)
-                                                    ? 5
-                                                    : 4,
-                                                backgroundColor: (index ==
-                                                        currentIndex)
-                                                    ? Theme.of(context)
-                                                        .primaryColor
-                                                    : const Color(0xff61880c)
-                                                        .withOpacity(.5),
+                                        SizedBox(
+                                          height: 10,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: List.generate(
+                                              state.model.length,
+                                              (index) => Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .only(end: 4),
+                                                child: CircleAvatar(
+                                                  radius:
+                                                      (index == currentIndex)
+                                                          ? 5
+                                                          : 4,
+                                                  backgroundColor: (index ==
+                                                          currentIndex)
+                                                      ? Theme.of(context)
+                                                          .primaryColor
+                                                      : const Color(0xff61880c)
+                                                          .withOpacity(.5),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            } else {
-                              return const Text("failed");
-                            }
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              right: 16, top: 27, left: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "الأقسام",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w800),
-                              ),
-                              Text(
-                                "عرض الكل",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w300,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                            ],
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                return const Text("failed");
+                              }
+                            },
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        BlocBuilder(
-                          bloc: getCategoriesBloc,
-                          builder: (context, state) {
-                            if (state is GetCtegoryLoadingState) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (state is GetCtegorySuccessState) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 16),
-                                child: SizedBox(
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                right: 16, top: 27, left: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "الأقسام",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                Text(
+                                  "عرض الكل",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          BlocBuilder(
+                            bloc: getCategoriesBloc,
+                            builder: (context, state) {
+                              if (state is GetCtegoryLoadingState) {
+                                return SizedBox(
+                                  height: 90,
+                                  child: ListView.separated(
+                                    padding: const EdgeInsets.only(
+                                        left: 16, right: 16),
+                                    itemBuilder: (context, index) =>
+                                        categoryShimmerLoading(),
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(
+                                      width: 20,
+                                    ),
+                                    itemCount: 5,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                );
+                              } else if (state is GetCtegorySuccessState) {
+                                return SizedBox(
                                   height: 102,
                                   child: ListView.separated(
+                                    padding: const EdgeInsets.only(
+                                        left: 16, right: 16),
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) =>
                                         _ItemCategory(
@@ -218,85 +236,87 @@ class _MainPageState extends State<MainPage> {
                                     ),
                                     itemCount: state.model.length,
                                   ),
-                                ),
-                              );
-                            } else {
-                              return const Text("failed");
-                            }
-                          },
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 5, right: 16),
-                          child: Text(
-                            'الأصناف',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w800),
+                                );
+                              } else {
+                                return const Text("failed");
+                              }
+                            },
                           ),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 5, right: 16),
+                            child: Text(
+                              'الأصناف',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                          BlocBuilder(
+                            bloc: getProductsBloc,
+                            builder: (context, state) {
+                              if (getProductsBloc.list.isEmpty ||
+                                  state is GetProductLoadingState) {
+                                return const ShimmerLoadingProduct();
+                              } else {
+                                return GridView.builder(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 16, right: 16, left: 16),
+                                  itemCount: getProductsBloc.list.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 12,
+                                    childAspectRatio: 163 / 250,
+                                    mainAxisSpacing: 12,
+                                  ),
+                                  itemBuilder: (context, index) => ItemProduct(
+                                    model: getProductsBloc.list[index],
+                                    isMainPage: true,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      );
+                    } else if (state is GetSearchProductLoadingState) {
+                      return const ShimmerLoadingProduct();
+                    } else {
+                      return GridView.builder(
+                        padding: const EdgeInsets.only(
+                            bottom: 16, right: 16, left: 16),
+                        itemCount: getSearchProducts.search.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 163 / 250,
+                          mainAxisSpacing: 12,
                         ),
-                        BlocBuilder(
-                          bloc: getProductsBloc,
-                          builder: (context, state) {
-                            if (getProductsBloc.list.isEmpty ||
-                                state is GetProductLoadingState) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              return GridView.builder(
-                                padding: const EdgeInsets.only(
-                                    bottom: 16, right: 16, left: 16),
-                                itemCount: getProductsBloc.list.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 12,
-                                  childAspectRatio: 163 / 250,
-                                  mainAxisSpacing: 12,
-                                ),
-                                itemBuilder: (context, index) => ItemProduct(
-                                  model: getProductsBloc.list[index],
-                                  isMainPage: true,
-                                ),
-                              );
-                            }
-                          },
+                        itemBuilder: (context, index) => ItemProduct(
+                          isSearch: true,
+                          searchModel: getSearchProducts.search[index],
+                          isMainPage: true,
                         ),
-                      ],
-                    );
-                  } else if (state is GetSearchProductLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return GridView.builder(
-                      padding: const EdgeInsets.only(
-                          bottom: 16, right: 16, left: 16),
-                      itemCount: getSearchProducts.search.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        childAspectRatio: 163 / 250,
-                        mainAxisSpacing: 12,
-                      ),
-                      itemBuilder: (context, index) => ItemProduct(
-                        isSearch: true,
-                        searchModel: getSearchProducts.search[index],
-                        isMainPage: true,
-                      ),
-                    );
-                  }
-                },
-              ),
-            ],
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> callRefresh() async {
+    getSliderBloc.add(GetSliderEvent());
+    getCategoriesBloc.add(GetCategoryEvent());
+    getProductsBloc.add(GetProductsEvent());
   }
 }
 
@@ -323,6 +343,7 @@ class _ItemCategoryState extends State<_ItemCategory> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            clipBehavior: Clip.antiAlias,
             width: 70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(11),

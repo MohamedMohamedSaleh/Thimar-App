@@ -7,12 +7,21 @@ final class AddOrderEvent extends MyOrdersEvents {
   final String date;
   final String time;
 
-  AddOrderEvent({required this.date,required this.time, required this.payType});
+  AddOrderEvent(
+      {required this.date, required this.time, required this.payType});
 }
 
-class GetCurrentOrdersEvent extends MyOrdersEvents {}
+class GetCurrentOrdersEvent extends MyOrdersEvents {
+  final bool isLoading;
 
-class GetFinishedOrdersEvent extends MyOrdersEvents {}
+  GetCurrentOrdersEvent({required this.isLoading});
+}
+
+class GetFinishedOrdersEvent extends MyOrdersEvents {
+  final bool isLoading;
+
+  GetFinishedOrdersEvent({required this.isLoading});
+}
 
 class GetMyOrderEvent extends MyOrdersEvents {
   final int id;

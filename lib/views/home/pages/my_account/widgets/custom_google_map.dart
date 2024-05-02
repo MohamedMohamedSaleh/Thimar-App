@@ -1,14 +1,17 @@
+// import 'dart:async';
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/features/addresses/set_address/set_address_bloc.dart';
+import 'package:vegetable_orders_project/features/get_location.dart';
 
 class CustomGoogleMap extends StatefulWidget {
   const CustomGoogleMap({
@@ -30,12 +33,21 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   // Completer<GoogleMapController>? myController;
   GoogleMapController? googleMapController;
   final Set<Marker> markers = {};
-  static LatLng? initialPosition;
+  // static LatLng? initialPosition;
   @override
   void initState() {
     super.initState();
+  
     _determinePosition();
     _initMarker();
+  }
+
+  Future<void> _determinePosition()async{
+  if (GetLocationn.initialPosition == null) {
+     await GetLocationn.determinePosition();
+      setState(() {
+      });
+    }
   }
 
   late BitmapDescriptor customIcon;
@@ -90,7 +102,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
-    return initialPosition == null
+    return GetLocationn.initialPosition == null
         ? Center(
             child: Text(
               'loading map...',
@@ -109,7 +121,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                 // myController?.complete(controller);
               },
               initialCameraPosition:
-                  CameraPosition(target: initialPosition!, zoom: 15),
+                  CameraPosition(target: GetLocationn.initialPosition!, zoom: 15),
               onTap: (argument) {
                 goToLocation(
                     latitude: argument.latitude, longitude: argument.longitude);
@@ -121,16 +133,16 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
           );
   }
 
-  Future<Position> _determinePosition() async {
-    // bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-    Position myLocation = await Geolocator.getCurrentPosition();
-    // await goToLocation(
-    //     latitude: myLocation.latitude, longitude: myLocation.longitude);
-    initialPosition = LatLng(myLocation.latitude, myLocation.longitude);
-    if (!mounted) return myLocation;
-    setState(() {});
-    return myLocation;
-  }
+  // Future<Position> _determinePosition() async {
+  //   // bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   GetLocationn.initialPosition;
+  //   Position myLocation = await Geolocator.getCurrentPosition();
+  //   // await goToLocation(
+  //   //     latitude: myLocation.latitude, longitude: myLocation.longitude);
+  //   initialPosition = LatLng(myLocation.latitude, myLocation.longitude);
+  //   if (!mounted) return myLocation;
+  //   setState(() {});
+  //   return myLocation;
+  // }
 }
 // 31.58204289076406

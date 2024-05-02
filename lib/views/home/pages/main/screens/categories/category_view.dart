@@ -6,6 +6,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/features/categori_products/category_products_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
+import 'package:vegetable_orders_project/views/home/widgets/shimmer_loading.dart';
 import 'package:vegetable_orders_project/views/sheets/filtter_sheet.dart';
 
 import '../../../../../../core/widgets/custom_app_input.dart';
@@ -37,26 +38,19 @@ class _CategoryViewState extends State<CategoryView> {
     getSearchBloc.close();
     getCategoryBloc.close();
   }
-  // () async {
-  //       if (FocusScope.of(context).hasFocus) {
-  //         FocusScope.of(context).unfocus();
-  //         return false;
-  //       } else {
-  //         return true;
-  //       }
-  //     },
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked:(didPop) {
-        if (FocusScope.of(context).hasFocus) {
-          FocusScope.of(context).unfocus();
-          didPop= false;
-        } else {
-          didPop= true;
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (!didPop) {
+          Navigator.pop(context);
+          if (FocusScope.of(context).hasFocus) {
+            FocusScope.of(context).unfocus();
+          }
         }
-      }, 
+      },
       child: Scaffold(
         extendBody: true,
         appBar: CustomAppBar(title: widget.model.name),
@@ -126,25 +120,38 @@ class _CategoryViewState extends State<CategoryView> {
                       bloc: getCategoryBloc,
                       builder: (context, state) {
                         if (state is GetCategoryProductsLoadingState) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                          return const ShimmerLoadingProduct(
+                            isMain: false,
                           );
                         } else if (state is GetCategoryProductsSuccessState) {
                           return GestureDetector(
                             onTap: () => FocusScope.of(context).unfocus(),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 163 / 215,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10),
-                              padding: const EdgeInsets.only(
-                                  right: 16, left: 16, top: 10, bottom: 20),
-                              itemCount: state.model.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  ItemProduct(
-                                model: state.model[index],
+                            child: RefreshIndicator(
+                              displacement: 20,
+                              strokeWidth: 3,
+                              backgroundColor: Colors.green[100],
+                              onRefresh: () async {
+                                getCategoryBloc.add(
+                                    GetCategoryProductEvent(id: widget.id));
+                              },
+                              child: GridView.builder(
+                                physics: state.model.length > 4
+                                    ? const BouncingScrollPhysics()
+                                    : const AlwaysScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 163 / 215,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 10),
+                                padding: const EdgeInsets.only(
+                                    right: 16, left: 16, top: 10, bottom: 20),
+                                itemCount: state.model.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) =>
+                                        ItemProduct(
+                                  model: state.model[index],
+                                ),
                               ),
                             ),
                           );
