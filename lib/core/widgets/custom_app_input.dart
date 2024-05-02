@@ -43,6 +43,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
         bottom: widget.paddingBottom,
       ),
       child: TextFormField(
+        autofocus: false,
         onChanged: widget.onChange,
         cursorHeight: widget.isData ? 17 : null,
         style: widget.isData

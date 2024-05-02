@@ -28,3 +28,10 @@ final class GetOrderFailedState extends MyOrdersStates {}
 final class CancelOrderSuccessState extends MyOrdersStates {}
 final class CancelOrderLoadingState extends MyOrdersStates {}
 final class CancelOrderFailedState extends MyOrdersStates {}
+
+
+final class AddOrderSuccessState extends MyOrdersStates {}
+
+final class AddOrderLoadingState extends MyOrdersStates {}
+
+final class AddOrderFailedState extends MyOrdersStates {}

@@ -15,14 +15,13 @@ class MyOrdersPage extends StatefulWidget {
 }
 
 class _MyOrdersPageState extends State<MyOrdersPage> {
-  final bloc = KiwiContainer().resolve<MyOrdersBloc>()
-    ..add(GetCurrentOrdersEvent())
-    ..add(GetFinishedOrdersEvent());
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   bloc.add(GetCurrentOrdersEvent());
-  // }
+  final bloc = KiwiContainer().resolve<MyOrdersBloc>();
+  @override
+  void initState() {
+    super.initState();
+    bloc.add(GetCurrentOrdersEvent());
+    bloc.add(GetFinishedOrdersEvent());
+  }
 
   @override
   Widget build(BuildContext context) {

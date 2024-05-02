@@ -2,6 +2,14 @@ part of 'my_orders_bloc.dart';
 
 class MyOrdersEvents {}
 
+final class AddOrderEvent extends MyOrdersEvents {
+  final String payType;
+  final String date;
+  final String time;
+
+  AddOrderEvent({required this.date,required this.time, required this.payType});
+}
+
 class GetCurrentOrdersEvent extends MyOrdersEvents {}
 
 class GetFinishedOrdersEvent extends MyOrdersEvents {}

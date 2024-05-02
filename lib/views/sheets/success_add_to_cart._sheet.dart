@@ -65,6 +65,7 @@ class SuccessAddToCartSheet extends StatelessWidget {
                     child: CustomFillButton(
                         title: 'التحويل إلى السلة',
                         onPress: () {
+                          KiwiContainer().resolve<CartBloc>().amountProduct = 1;
                           Navigator.pop(context);
                           Navigator.pop(context);
                           navigateTo(toPage: const CartView());
@@ -81,6 +82,7 @@ class SuccessAddToCartSheet extends StatelessWidget {
                       height: 47,
                       child: CustomOutlineButton(
                         onPress: () {
+                          KiwiContainer().resolve<CartBloc>().amountProduct = 1;
                           Navigator.pop(context);
                           Navigator.pop(context);
                         },

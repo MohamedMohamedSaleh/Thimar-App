@@ -20,60 +20,71 @@ class _TitlesSheetState extends State<TitlesSheet> {
   final bloc = KiwiContainer().resolve<GetDeleteAddressesBloc>()
     ..add(GetAddressesEvent(isLoading: true));
 
-
-
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            const Center(
-              child: Text(
-                'العناوين',
-                style: TextStyle(
-                    color: mainColor, fontSize: 17, fontWeight: FontWeight.bold),
+    return PopScope(
+      onPopInvoked: (didPop) {
+        if (!didPop) {
+          Navigator.pop(context);
+        }
+      },
+      canPop: false,
+      child: ColoredBox(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: BlocBuilder(
-                bloc: bloc,
-                builder: (context, state) {
-                  if (state is GetAddressesLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+              const Center(
+                child: Text(
+                  'العناوين',
+                  style: TextStyle(
+                      color: mainColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: BlocBuilder(
+                  bloc: bloc,
+                  builder: (context, state) {
+                    if (state is GetAddressesLoadingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context, bloc.list[index]);
+                          },
+                          child: CustomTitleItem(model: bloc.list[index])),
+                      itemCount: bloc.list.length,
                     );
-                  }
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) =>
-                        CustomTitleItem(model: bloc.list[index]),
-                    itemCount: bloc.list.length,
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomOutlineButton(
-                onTap: () {
-                  navigateTo(toPage: const AddTitleView());
-                },
-                title: 'إضافة عنوان جديد'),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              CustomOutlineButton(
+                  onTap: () {
+                    navigateTo(toPage: const AddTitleView());
+                  },
+                  title: 'إضافة عنوان جديد'),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

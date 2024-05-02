@@ -2,8 +2,8 @@ class MyOrderData {
   late final String status;
   late final String message;
   late final OrderModel data;
-  
-  MyOrderData.fromJson(Map<String, dynamic> json){
+
+  MyOrderData.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = OrderModel.fromJson(json['data']);
@@ -26,11 +26,12 @@ class OrderModel {
   late final Null note;
   late final String deliveryPayer;
   late final int isVip;
-  late final num vipDiscount;
+  late final num vipDiscount1;
+  late String vipDiscount;
   late final num priceBeforeDiscount;
   late final num discount;
-  
-  OrderModel.fromJson(Map<String, dynamic> json){
+
+  OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     status = json['status'];
     date = json['date'];
@@ -40,13 +41,16 @@ class OrderModel {
     totalPrice = json['total_price'];
     clientName = json['client_name'];
     phone = json['phone'];
-    address = Address.fromJson(json['address']?? {});
-    products = List.from(json['products']??[]).map((e)=>Products.fromJson(e)).toList();
+    address = Address.fromJson(json['address'] ?? {});
+    products = List.from(json['products'] ?? [])
+        .map((e) => Products.fromJson(e))
+        .toList();
     payType = json['pay_type'];
     note = null;
     deliveryPayer = json['delivery_payer'];
     isVip = json['is_vip'];
-    vipDiscount = json['vip_discount'];
+    vipDiscount1 = json['vip_discount'];
+    vipDiscount = vipDiscount1.toDouble().toStringAsFixed(2);
     priceBeforeDiscount = json['price_before_discount'];
     discount = json['discount'];
   }
@@ -61,25 +65,25 @@ class Address {
   late final String description;
   late final bool isDefault;
   late final String phone;
-  
-  Address.fromJson(Map<String, dynamic> json){
-    id = json['id']?? 0;
-    type = json['type']??'';
-    lat = json['lat']??0;
-    lng = json['lng']??0;
-    location = json['location']??'';
-    description = json['description']??'';
-    isDefault = json['is_default']??false;
-    phone = json['phone']??'';
+
+  Address.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    type = json['type'] ?? '';
+    lat = json['lat'] ?? 0;
+    lng = json['lng'] ?? 0;
+    location = json['location'] ?? '';
+    description = json['description'] ?? '';
+    isDefault = json['is_default'] ?? false;
+    phone = json['phone'] ?? '';
   }
 }
 
 class Products {
   late final String name;
   late final String url;
-  
-  Products.fromJson(Map<String, dynamic> json){
-    name = json['name']??'';
-    url = json['url']??'';
+
+  Products.fromJson(Map<String, dynamic> json) {
+    name = json['name'] ?? '';
+    url = json['url'] ?? '';
   }
 }

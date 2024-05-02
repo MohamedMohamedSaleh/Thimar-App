@@ -52,9 +52,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       return CustomAppBarIcon(
                         onTap: () {
                           if (isFavorit) {
-                            addRemoveBloc.add(RemoveProductsFromFavsEvent(id: widget.model.id));
+                            addRemoveBloc.add(RemoveProductsFromFavsEvent(
+                                id: widget.model.id));
                           } else {
-                            addRemoveBloc.add(AddProductsToFavsEvent(id: widget.model.id));
+                            addRemoveBloc.add(
+                                AddProductsToFavsEvent(id: widget.model.id));
                           }
                         },
                         isBack: false,
@@ -251,11 +253,14 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       ),
       bottomNavigationBar: InkWell(
         onTap: () {
-          bloc.add(StorProductCartEvent(
+          bloc.add(
+            StorProductCartEvent(
               id: widget.model.id,
               model: widget.model,
               isProduct: true,
-              amount: bloc.amountProduct));
+              amount: bloc.amountProduct,
+            ),
+          );
         },
         child: Container(
           color: mainColor,

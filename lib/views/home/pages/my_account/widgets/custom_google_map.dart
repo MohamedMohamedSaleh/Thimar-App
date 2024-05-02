@@ -28,7 +28,7 @@ class CustomGoogleMap extends StatefulWidget {
 class _CustomGoogleMapState extends State<CustomGoogleMap> {
   final bloc = KiwiContainer().resolve<SetUpdateAdressBloc>();
   // Completer<GoogleMapController>? myController;
-  late GoogleMapController googleMapController;
+  GoogleMapController? googleMapController;
   final Set<Marker> markers = {};
   static LatLng? initialPosition;
   @override
@@ -57,21 +57,25 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   @override
   void dispose() {
     super.dispose();
-    googleMapController.dispose();
+    if (googleMapController != null) {
+      googleMapController!.dispose();
+    }
   }
 
   void goToLocation(
       {required double latitude, required double longitude}) async {
-    googleMapController.animateCamera(
-        CameraUpdate.newLatLngZoom(LatLng(latitude, longitude), 15));
-    markers.clear();
-    markers.add(
-      Marker(
-        icon: customIcon,
-        markerId: const MarkerId('1'),
-        position: LatLng(latitude, longitude),
-      ),
-    );
+    if (googleMapController != null) {
+      googleMapController!.animateCamera(
+          CameraUpdate.newLatLngZoom(LatLng(latitude, longitude), 15));
+      markers.clear();
+      markers.add(
+        Marker(
+          icon: customIcon,
+          markerId: const MarkerId('1'),
+          position: LatLng(latitude, longitude),
+        ),
+      );
+    }
 
     bloc.lat = (latitude.toString());
     bloc.lng = (longitude.toString());
@@ -89,7 +93,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     return initialPosition == null
         ? Center(
             child: Text(
-              'loading map..',
+              'loading map...',
               style: TextStyle(
                   fontFamily: 'Avenir-Medium', color: Colors.grey[400]),
             ),
@@ -124,6 +128,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     // await goToLocation(
     //     latitude: myLocation.latitude, longitude: myLocation.longitude);
     initialPosition = LatLng(myLocation.latitude, myLocation.longitude);
+    if (!mounted) return myLocation;
     setState(() {});
     return myLocation;
   }

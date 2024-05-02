@@ -95,6 +95,7 @@ class _CartViewState extends State<CartView> {
                                     child: SizedBox(
                                       height: 40,
                                       child: TextFormField(
+                                        
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(

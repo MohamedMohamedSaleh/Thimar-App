@@ -21,7 +21,6 @@ class GetSearchProductsBloc
       'keyword': event.text,
     });
     if (response.isSuccess) {
-      // print(response.response!.statusCode);
       search = SearchProductData.fromJson(response.response!.data)
           .data
           .searchResult

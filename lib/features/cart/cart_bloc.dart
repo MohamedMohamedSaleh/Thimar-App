@@ -87,6 +87,7 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
 // {required int amount, required int id, required bool isAdd}
   Future<void> _updateData(
       UpdateProductCartEvent event, Emitter<CartStates> emit) async {
+    emit(UpdateAmountLoadingState());
     final response = await DioHelper()
         .updateData(endPoint: "client/cart/${event.id}", data: {
       'amount': event.amount,

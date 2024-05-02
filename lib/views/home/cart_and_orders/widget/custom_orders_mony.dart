@@ -150,7 +150,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  "${widget.isDetailsOrder ? widget.orderModel?.vipDiscount.toString() : widget.model?.totalDiscount.toString() ?? ''}ر.س",
+                                  "${widget.isDetailsOrder ? widget.orderModel?.vipDiscount.toString() : widget.model?.vipDiscount.toString() ?? ''}ر.س",
                                   style: const TextStyle(
                                     color: Colors.orange,
                                     fontSize: 15,
@@ -184,7 +184,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                 ),
                 const Spacer(),
                 Text(
-                  '${widget.isDetailsOrder ? widget.orderModel?.totalPrice.toString() : widget.model?.totalPriceWithVat}ر.س',
+                  '${widget.isDetailsOrder ? widget.orderModel?.totalPrice.toString() : widget.isCompletOrder ? widget.model?.sum : widget.model?.totalPriceWithVat.toString()}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15,

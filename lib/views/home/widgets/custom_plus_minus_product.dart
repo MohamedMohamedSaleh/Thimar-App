@@ -52,8 +52,6 @@ class _CustomPlusOrMinusProductState extends State<CustomPlusOrMinusProduct> {
                     setState(() {});
                   }
                 } else if (bloc.list[widget.index].amount >= 1) {
-                  // updateCubit.addOne(id: widget.id, amount: widget.amount);
-
                   bloc.add(UpdateProductCartEvent(
                       amount: ++bloc.list[widget.index].amount, id: widget.id));
                 }
@@ -81,7 +79,7 @@ class _CustomPlusOrMinusProductState extends State<CustomPlusOrMinusProduct> {
                   bloc: bloc,
                   builder: (context, state) {
                     return Text(
-                      '${widget.isProductDetails ? bloc.amountProduct : bloc.list[widget.index].amount}',
+                      '${widget.isProductDetails ? bloc.amountProduct : (state == UpdateAmountLoadingState) ? bloc.list[widget.index].amount : bloc.list[widget.index].amount}',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: widget.isProductDetails ? 15 : 11,
