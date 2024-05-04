@@ -95,7 +95,6 @@ class _CartViewState extends State<CartView> {
                                     child: SizedBox(
                                       height: 40,
                                       child: TextFormField(
-                                        
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(
@@ -264,68 +263,75 @@ class _ItemOrderState extends State<_ItemOrder> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return BlocBuilder(
-                          bloc: bloc,
-                          builder: (context, state) {
-                            return ZoomIn(
-                              duration: const Duration(milliseconds: 500),
-                              child: AlertDialog(
-                                surfaceTintColor: Colors.white,
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                title: state is DeleteFromCartLoadingState
-                                    ? const Center(
-                                        child: CircularProgressIndicator(),
-                                      )
-                                    : const Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'هل متأكد من حذف الطلب؟',
-                                          style: TextStyle(fontSize: 18),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                actionsAlignment: MainAxisAlignment.center,
-                                actions: [
-                                  FilledButton(
-                                    style: FilledButton.styleFrom(
-                                        backgroundColor: Colors.red,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15))),
-                                    child: const Text('حذف'),
-                                    onPressed: () async {
-                                      bloc.add(DeletProductCartEvent(
-                                          id: widget.model.id));
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  FilledButton(
-                                    style: FilledButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15))),
-                                    child: const Text('إلغاء'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
+                        return ZoomIn(
+                          duration: const Duration(milliseconds: 500),
+                          child: AlertDialog(
+                            surfaceTintColor: Colors.white,
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            title: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'هل متأكد من حذف الطلب؟',
+                                style: TextStyle(fontSize: 18),
+                                textAlign: TextAlign.center,
                               ),
-                            );
-                          },
+                            ),
+                            actionsAlignment: MainAxisAlignment.center,
+                            actions: [
+                              FilledButton(
+                                style: FilledButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15))),
+                                child: const Text('حذف'),
+                                onPressed: () async {
+                                  bloc.add(DeletProductCartEvent(
+                                      id: widget.model.id));
+                                },
+                              ),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              FilledButton(
+                                style: FilledButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15))),
+                                child: const Text('إلغاء'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
                         );
                       },
                     );
+
                     //
                   },
                   height: 26,
                   width: 26,
                   color: const Color(0xffFF0000).withOpacity(0.13),
-                  child: const AppImage('assets/icon/svg/Trash.svg'),
+                  child: BlocBuilder(
+                    bloc: bloc,
+                    builder: (context, state) {
+                      return state is DeleteFromCartLoadingState &&
+                              state.id == widget.model.id
+                          ? const Center(
+                              child: SizedBox(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.5,
+                                  )),
+                            )
+                          : const AppImage('assets/icon/svg/Trash.svg');
+                    },
+                  ),
                 ),
               ),
             ],

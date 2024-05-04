@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/features/get_location.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/favs/favs_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/main_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/my_account_view.dart';
@@ -50,6 +52,7 @@ class _HomeViewState extends State<HomeView> {
     'المفضلة',
     'حسابي',
   ];
+  final bloc = KiwiContainer().resolve<GetSearchProductsBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,19 @@ class _HomeViewState extends State<HomeView> {
           currentIndex = 0;
           setState(() {});
         } else {
-          SystemNavigator.pop();
+          if (FocusScope.of(context).hasFocus ||
+              bloc.textController.text.isNotEmpty) {
+            if (bloc.searchText.isNotEmpty) {
+              bloc.isNotFound = false;
+              bloc.add(GetSearchProductsEvent(text: ''));
+              bloc.textController.clear();
+              bloc.search.clear();
+            }
+
+            FocusManager.instance.primaryFocus?.unfocus();
+          } else {
+            SystemNavigator.pop();
+          }
         }
       },
       canPop: false,

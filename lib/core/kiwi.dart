@@ -5,6 +5,7 @@ import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
 import 'package:vegetable_orders_project/features/my_orders/get_my_orders/my_orders_bloc.dart';
+import 'package:vegetable_orders_project/features/notifications/notifications_bloc.dart';
 import 'package:vegetable_orders_project/features/products/products/products_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/similar_products/similar_products_bloc.dart';
@@ -35,7 +36,7 @@ void initKiwi() {
   // container.registerFactory((container) => TestAddressBloc());
   container.registerSingleton((container) => GetDeleteAddressesBloc());
   container.registerFactory((container) => GetCategoryProductsBloc());
-  container.registerFactory((container) => GetSearchProductsBloc());
+  container.registerSingleton((container) => GetSearchProductsBloc());
   container
       .registerSingleton((container) => GetSliderBloc()..add(GetSliderEvent()));
   container.registerFactory((container) => GetSimilarProductBloc());
@@ -44,4 +45,5 @@ void initKiwi() {
   container.registerSingleton((container) => ProfileBloc());
   container.registerSingleton((container) => MyOrdersBloc());
   container.registerFactory((container) => ChangePasswordBloc());
+  container.registerFactory((container) => NotificationsBloc());
 }

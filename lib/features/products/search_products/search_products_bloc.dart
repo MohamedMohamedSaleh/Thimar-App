@@ -12,11 +12,14 @@ class GetSearchProductsBloc
     on<GetSearchProductsEvent>(_getSearch);
   }
 
+bool isNotFound = false;
   TextEditingController textController = TextEditingController();
-
+  String searchText = '';
   List<SearchResult> search = [];
-  Future<void> _getSearch(GetSearchProductsEvent event, Emitter<GetSearchProductsStates> emit) async {
+  Future<void> _getSearch(GetSearchProductsEvent event,
+      Emitter<GetSearchProductsStates> emit) async {
     emit(GetSearchProductLoadingState());
+    searchText = event.text;
     final response = await DioHelper().getData(endPoint: 'search/', data: {
       'keyword': event.text,
     });

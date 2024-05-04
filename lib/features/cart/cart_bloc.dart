@@ -105,7 +105,8 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
 
   Future<void> _deleteProduct(
       DeletProductCartEvent event, Emitter<CartStates> emit) async {
-    emit(DeleteFromCartLoadingState());
+    emit(DeleteFromCartLoadingState(id: event.id));
+      Navigator.pop(navigatorKey.currentContext!);
     final response = await DioHelper()
         .deleteData(endPoint: 'client/cart/delete_item/${event.id}');
 
@@ -115,7 +116,6 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
       emit(DeleteFromCartSuccessState());
       showMessage(message: response.message, type: MessageType.success);
       add(ShowCartEvent(isLoading: false));
-      Navigator.pop(navigatorKey.currentContext!);
     } else {
       emit(DeleteFromCartFailedState());
     }

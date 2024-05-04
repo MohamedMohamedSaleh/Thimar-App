@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void navigate() async {
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(milliseconds: 2000), () {
       navigateTo(
         isRemove: true,
         toPage: CacheHelper.isAuth() ? const HomeView() : const LoginView(),
@@ -52,11 +52,11 @@ class _SplashViewState extends State<SplashView> {
           ),
           Center(
             child: FlipInY(
-              delay: const Duration(seconds: 1),
-              duration: const Duration(seconds: 2),
+              delay: const Duration(milliseconds: 700),
+              duration: const Duration(milliseconds: 1500),
               child: ZoomIn(
-                delay: const Duration(seconds: 1),
-                duration: const Duration(seconds: 1),
+                delay: const Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 750),
                 child: Image.asset(
                   "assets/images/vegetable_basket.png",
                   width: 160,

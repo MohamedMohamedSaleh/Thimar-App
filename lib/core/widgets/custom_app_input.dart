@@ -16,10 +16,12 @@ class CustomAppInput extends StatefulWidget {
     this.fillColor = Colors.white,
     this.isData = false,
     this.onChange,
+    this.suffixIcon,
   });
   final Color fillColor;
   final String labelText;
   final String prefixIcon;
+  final Widget? suffixIcon;
   final double paddingBottom;
   final bool isPhone;
   final bool isPassword;
@@ -110,10 +112,12 @@ class _CustomAppInputState extends State<CustomAppInput> {
                     isSecure = !isSecure;
                     setState(() {});
                   },
-                  icon:
-                      Icon(isSecure ? Icons.visibility : Icons.visibility_off),
+                  icon: Icon(
+                    isSecure ? Icons.visibility : Icons.visibility_off,
+                    color: mainColor,
+                  ),
                 )
-              : null,
+              : widget.suffixIcon,
           icon: widget.isPhone
               ? Container(
                   decoration: BoxDecoration(

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 
@@ -15,10 +13,11 @@ class ShimmerLoadingProduct extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 163 / 250,
-          crossAxisCount: 2,
-          mainAxisSpacing: 20,
-          crossAxisSpacing: 20),
+        childAspectRatio: 163 / 250,
+        crossAxisCount: 2,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
+      ),
       itemCount: 10,
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
@@ -153,7 +152,7 @@ Widget sliderShimmerLoading() => Column(
             ...List.generate(
               5,
               (index) => const Padding(
-                padding: EdgeInsets.only(left: 6),
+                padding: EdgeInsets.only(left: 4),
                 child: ShimmerWidget.circular(
                   width: 8,
                   height: 8,
@@ -285,6 +284,73 @@ Widget orderShimmerLoading() => Shimmer.fromColors(
                     ),
                   ),
                 ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+
+Widget notificationShimmerLoading() => Shimmer.fromColors(
+      baseColor: mainColor.withOpacity(.5),
+      highlightColor: mainColor.withOpacity(.5),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: mainColor.withOpacity(.3),
+          borderRadius: BorderRadius.circular(11),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ShimmerWidget.rectangular(
+                color: mainColor.withOpacity(.8),
+                height: 30,
+                width: 30,
+                shapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ShimmerWidget.rectangular(
+                      color: mainColor.withOpacity(.8),
+                      height: 14,
+                      width: 120,
+                      shapeBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    ShimmerWidget.rectangular(
+                      color: mainColor.withOpacity(.8),
+                      height: 11,
+                      width: double.infinity,
+                      shapeBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    ShimmerWidget.rectangular(
+                      color: mainColor.withOpacity(.8),
+                      height: 10,
+                      width: 100,
+                      shapeBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

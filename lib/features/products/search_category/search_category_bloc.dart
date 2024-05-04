@@ -19,7 +19,8 @@ class GetSearchCategoryBloc
   String filter = 'asc';
 
   List<SearchResult> search = [];
-  Future<void> _getSearch(GetSearchCategoryEvent event, Emitter<GetSearchCategryStates> emit) async {
+  Future<void> _getSearch(GetSearchCategoryEvent event,
+      Emitter<GetSearchCategryStates> emit) async {
     emit(GetSearchCategoryLoadingState());
     final response = await DioHelper().getData(
       endPoint:
