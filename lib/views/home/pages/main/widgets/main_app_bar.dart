@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
+import 'package:vegetable_orders_project/features/get_location.dart';
+import 'package:vegetable_orders_project/features/my_orders/get_my_orders/my_orders_bloc.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
+import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
 
 import '../../../../../core/logic/helper_methods.dart';
+import '../../../../../features/addresses/addresses_model.dart';
 import '../../../../../features/cart/cart_bloc.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -19,6 +23,7 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _MainAppBarState extends State<MainAppBar> {
   final cartBloc = KiwiContainer().resolve<CartBloc>();
+  AddressModel? model;
   @override
   void initState() {
     super.initState();
@@ -49,32 +54,73 @@ class _MainAppBarState extends State<MainAppBar> {
                 'سلة ثمار',
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
-              Expanded(
-                child: Text.rich(
-                  textAlign: TextAlign.center,
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                          text: "التوصيل إلى",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                      const TextSpan(text: '\n'),
-                      TextSpan(
-                        text: "شارع الملك فهد - جدة",
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal),
+              const Spacer(),
+              StreamBuilder<bool>(
+                  stream: GetLocationn.controller.stream,
+                  builder: (context, snapshot) {
+                    return SizedBox(
+                      width: 150,
+                      child: GestureDetector(
+                        onTap: () async {
+                          model = await showModalBottomSheet(
+                            clipBehavior: Clip.antiAlias,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35),
+                              ),
+                            ),
+                            context: context,
+                            builder: (context) => const TitlesSheet(),
+                          );
+                          if (model?.location.isNotEmpty ?? false) {
+                            // TODO: this is operation to delete some string
+                            final list = model!.location.split(' ');
+                            list.removeAt(0);
+                            String location = list.join(' ');
+
+                            CacheHelper.setCurrentLocation(location);
+                            GetLocationn.controller.add(true);
+                          }
+                          KiwiContainer().resolve<MyOrdersBloc>().addressId =
+                              model?.id.toString();
+                        },
+                        child: Text.rich(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                  text: "التوصيل إلى",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(text: '\n'),
+                              TextSpan(
+                                text:
+                                    CacheHelper.getCurrentLocation()?.isEmpty ??
+                                            true
+                                        ? "اختر عنوانك"
+                                        : CacheHelper.getCurrentLocation(),
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    );
+                  }),
               const SizedBox(
-                width: 10,
+                width: 13,
               ),
+              const Spacer(),
               GestureDetector(
                 onTap: () {
                   navigateTo(toPage: const CartView());

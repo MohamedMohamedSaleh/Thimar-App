@@ -95,6 +95,7 @@ class _CartViewState extends State<CartView> {
                                     child: SizedBox(
                                       height: 40,
                                       child: TextFormField(
+                                        autofocus: false,
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(
@@ -145,7 +146,7 @@ class _CartViewState extends State<CartView> {
                             height: 12,
                           ),
                           CustomOrdersMony(
-                            model: bloc.cartData!,
+                            model: bloc.cartData,
                           ),
                         ],
                       ),

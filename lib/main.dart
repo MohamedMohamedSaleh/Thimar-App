@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height); //693.3
-    print(MediaQuery.of(context).size.width); //320.0
+  //693.3
+     //320.0
     return ScreenUtilInit(
       builder: (context, child) => MaterialApp(
         localizationsDelegates: const [GlobalMaterialLocalizations.delegate],

@@ -29,10 +29,15 @@ class CacheHelper {
     await _prefs.setString('lng', value);
   }
 
+  static Future<void> setCurrentLocation(String value) async {
+    await _prefs.setString('currentLocation', value);
+  }
   static Future<void> setLocation(String value) async {
     await _prefs.setString('location', value);
   }
   //////////////
+
+
 
   static String? getLat() {
     return _prefs.getString('lat');
@@ -42,6 +47,9 @@ class CacheHelper {
     return _prefs.getString('lng');
   }
 
+  static String? getCurrentLocation() {
+    return _prefs.getString('currentLocation');
+  }
   static String? getLocation() {
     return _prefs.getString('location');
   }
