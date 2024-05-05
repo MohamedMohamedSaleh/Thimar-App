@@ -1,6 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vegetable_orders_project/views/auth/login/login_model.dart';
 
+import '../../views/home/pages/my_account/bloc/profile_model.dart';
+
 class CacheHelper {
   static late final SharedPreferences _prefs;
 
@@ -69,6 +71,10 @@ class CacheHelper {
     return _prefs.getString('token');
   }
 
+  static String? getUserImage() {
+    return _prefs.getString('image');
+  }
+
   static String? getUserName() {
     return _prefs.getString('fullname');
   }
@@ -79,7 +85,13 @@ class CacheHelper {
   static String? getUserCity() {
     return _prefs.getString('city');
   }
+  static int? getUserIsVip() {
+    return _prefs.getInt('isVip');
+  }
 
+  static String? getcityId() {
+    return _prefs.getString('cityId');
+  }
   static Future<void> saveUserData(Model model) async {
     await _prefs.setInt("id", model.id);
     await _prefs.setString("token", model.token);
@@ -87,13 +99,24 @@ class CacheHelper {
     await _prefs.setString("email", model.email);
     await _prefs.setString("phone", model.phone);
     await _prefs.setString("image", model.image);
-    await _prefs.setString("userType", model.userType);
     await _prefs.setString("city", model.city.name);
     await _prefs.setBool("isActive", model.isActive);
     await _prefs.setInt("isBan", model.isBan);
-
     await _prefs.setString("userType", model.userType);
     await _prefs.setInt("userCartCount", model.userCartCount);
+    await _prefs.setString("cityId", model.city.id);
+
+  }
+
+
+  static Future<void> saveEditData(UserDataProfile model) async {
+    await _prefs.setInt("id", model.id);
+    await _prefs.setString("fullname", model.fullname);
+    await _prefs.setString("phone", model.phone);
+    await _prefs.setString("image", model.image);
+    await _prefs.setInt("isVip", model.isVip);
+    await _prefs.setString("city", model.city.name);
+    await _prefs.setString("cityId", model.city.id.toString());
   }
 
   static bool isAuth() {

@@ -3,7 +3,7 @@ part of 'profile_bloc.dart';
 class ProfileStates {}
 
 class GetProfileDataSuccessState extends ProfileStates {
-  final MapData data;
+  final UserDataProfile data;
 
   GetProfileDataSuccessState({required this.data});
 }
@@ -11,3 +11,4 @@ class GetProfileDataSuccessState extends ProfileStates {
 class GetProfileDataFailedState extends ProfileStates {}
 
 class GetProfileDataLoadingState extends ProfileStates {}
+

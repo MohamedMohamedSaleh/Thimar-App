@@ -13,7 +13,10 @@ class DioHelper {
     Map<String, dynamic>? data,
   }) async {
     try {
-      var response = await _dio.post(endPoint, data: data);
+      var response = await _dio.post(
+        endPoint,
+        data: FormData.fromMap(data ?? {}),
+      );
       return ResponseData(
           message: (response.data.toString()).isNotEmpty
               ? response.data['message']
@@ -28,20 +31,27 @@ class DioHelper {
     }
   }
 
+ static MultipartFile convertPathToMultiPart({required String imagePath}) {
+    return MultipartFile.fromFileSync(imagePath,
+        filename: imagePath.split('/').last);
+  }
+
   Future<ResponseData> deleteData({
     required String endPoint,
-     Map<String, dynamic>? data,
+    Map<String, dynamic>? data,
   }) async {
-    try{
-    var response = await _dio.delete(endPoint, data: data);
-    return ResponseData(message: response.data['message'], isSuccess: true, response: response);
-    }on DioException catch(ex){
+    try {
+      var response = await _dio.delete(endPoint, data: data);
+      return ResponseData(
+          message: response.data['message'],
+          isSuccess: true,
+          response: response);
+    } on DioException catch (ex) {
       return ResponseData(
           message: ex.response!.data["message"],
           isSuccess: false,
           response: ex.response);
     }
-
   }
 
   Future<ResponseData> getData({
@@ -51,7 +61,7 @@ class DioHelper {
     try {
       var response = await _dio.get(endPoint, queryParameters: data);
       return ResponseData(
-          message: response.data["message"]?? '',
+          message: response.data["message"] ?? '',
           isSuccess: true,
           response: response);
     } on DioException catch (ex) {

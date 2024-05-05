@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/main.dart';
 import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/connect_with_us_view.dart';
@@ -24,183 +26,194 @@ class MyAccountPage extends StatelessWidget {
       body: ScrollConfiguration(
         behavior: const ScrollBehavior().copyWith(overscroll: false),
         child: SafeArea(
-          child: ListView(
-            physics: const PageScrollPhysics(),
-            addRepaintBoundaries: false,
-            children: [
-              const _CustomAppBarAccount(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
-                child: Column(
-                  children: [
-                    DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: const Color(0xffF6F6F6),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () =>
-                                    navigateTo(toPage: const PersonalDataView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'account_details',
-                                  title: 'البيانات الشخصية',
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () =>
-                                    navigateTo(toPage: const WalletView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'Wallet',
-                                  title: 'المحفظة',
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () =>
-                                    navigateTo(toPage: const TitlesView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'Location',
-                                  title: 'العناوين',
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () =>
-                                    navigateTo(toPage: const PaymentView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'send_mony',
-                                  title: 'الدفع',
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: const Color(0xffF6F6F6),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () => navigateTo(
-                                    toPage: const FrequentlyQuestionsView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'Questions',
-                                  title: 'أسئلة متكررة',
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () =>
-                                    navigateTo(toPage: const PrivacyPolicyView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'privacy_policy',
-                                  title: 'سياسة الخصوصية',
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () =>
-                                    navigateTo(toPage: const ConnectWithUsView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'Call_Calling',
-                                  title: 'تواصل معنا',
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () => navigateTo(
-                                    toPage: const SuggestionsComplaintsView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'Edit',
-                                  title: 'الشكاوي والأقتراحات',
-                                ),
-                              ),
-                              const _ItemMyAccount(
-                                icon: 'share',
-                                title: 'مشاركة التطبيق',
-                              ),
-                            ],
-                          ),
-                        )),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: const Color(0xffF6F6F6),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () => navigateTo(
-                                    toPage: const AboutApplicationView()),
-                                child: const _ItemMyAccount(
-                                  icon: 'application',
-                                  title: 'عن التطبيق',
-                                ),
-                              ),
-                              const _ItemMyAccount(
-                                icon: 'language',
-                                title: 'تغيير اللغة',
-                              ),
-                              const _ItemMyAccount(
-                                icon: 'Note',
-                                title: 'الشروط والأحكام',
-                              ),
-                              const _ItemMyAccount(
-                                icon: 'Star',
-                                title: 'تقييم التطبيق',
-                              ),
-                            ],
-                          ),
-                        )),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: const Color(0xffF6F6F6),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  CacheHelper.clearUserData();
-                                  navigateTo(toPage: const LoginView());
-                                },
-                                child: const _ItemMyAccount(
-                                  title: 'تسجيل الخروج',
-                                  icon: 'Turn_off',
-                                  isLogout: true,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ],
-                ),
+          child: Theme(
+            data: ThemeData().copyWith(
+              splashColor: Colors.transparent,
+              primaryColor: mainColor,
+              colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: getMaterialColor(),
               ),
-            ],
+            ),
+            child: ListView(
+              physics: const PageScrollPhysics(),
+              addRepaintBoundaries: false,
+              children: [
+                const _CustomAppBarAccount(),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                  child: Column(
+                    children: [
+                      DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color(0xffF6F6F6),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () => navigateTo(
+                                      toPage: const PersonalDataView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'account_details',
+                                    title: 'البيانات الشخصية',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () =>
+                                      navigateTo(toPage: const WalletView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'Wallet',
+                                    title: 'المحفظة',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () =>
+                                      navigateTo(toPage: const TitlesView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'Location',
+                                    title: 'العناوين',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () =>
+                                      navigateTo(toPage: const PaymentView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'send_mony',
+                                    title: 'الدفع',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color(0xffF6F6F6),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () => navigateTo(
+                                      toPage: const FrequentlyQuestionsView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'Questions',
+                                    title: 'أسئلة متكررة',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => navigateTo(
+                                      toPage: const PrivacyPolicyView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'privacy_policy',
+                                    title: 'سياسة الخصوصية',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => navigateTo(
+                                      toPage: const ConnectWithUsView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'Call_Calling',
+                                    title: 'تواصل معنا',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => navigateTo(
+                                      toPage:
+                                          const SuggestionsComplaintsView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'Edit',
+                                    title: 'الشكاوي والأقتراحات',
+                                  ),
+                                ),
+                                const _ItemMyAccount(
+                                  icon: 'share',
+                                  title: 'مشاركة التطبيق',
+                                ),
+                              ],
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color(0xffF6F6F6),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () => navigateTo(
+                                      toPage: const AboutApplicationView()),
+                                  child: const _ItemMyAccount(
+                                    icon: 'application',
+                                    title: 'عن التطبيق',
+                                  ),
+                                ),
+                                const _ItemMyAccount(
+                                  icon: 'language',
+                                  title: 'تغيير اللغة',
+                                ),
+                                const _ItemMyAccount(
+                                  icon: 'Note',
+                                  title: 'الشروط والأحكام',
+                                ),
+                                const _ItemMyAccount(
+                                  icon: 'Star',
+                                  title: 'تقييم التطبيق',
+                                ),
+                              ],
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color(0xffF6F6F6),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    CacheHelper.clearUserData();
+                                    navigateTo(toPage: const LoginView());
+                                  },
+                                  child: const _ItemMyAccount(
+                                    title: 'تسجيل الخروج',
+                                    icon: 'Turn_off',
+                                    isLogout: true,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

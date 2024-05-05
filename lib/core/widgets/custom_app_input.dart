@@ -45,7 +45,6 @@ class _CustomAppInputState extends State<CustomAppInput> {
         bottom: widget.paddingBottom,
       ),
       child: TextFormField(
-        autofocus: false,
         onChanged: widget.onChange,
         cursorHeight: widget.isData ? 17 : null,
         style: widget.isData
@@ -59,6 +58,8 @@ class _CustomAppInputState extends State<CustomAppInput> {
             widget.isPhone ? TextInputType.number : TextInputType.text,
         obscureText: isSecure && widget.isPassword,
         decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: widget.isData
@@ -132,8 +133,8 @@ class _CustomAppInputState extends State<CustomAppInput> {
                     ),
                     // color: Colors.red,
                   ),
-                  width: 60,
-                  height: 60,
+                  width: 54,
+                  height: 54,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

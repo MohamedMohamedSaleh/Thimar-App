@@ -36,19 +36,19 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.4
+  flutter_localizations:
+    sdk: flutter
   flutter_screenutil: ^5.9.0
   flutter_svg: null
   geocoding: ^3.0.0
   geolocator: ^11.0.0
   google_maps_flutter: ^2.5.3
+  image_picker: ^1.1.1
   kiwi: ^5.0.0
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0
-  flutter_localizations:
-    sdk: flutter
 
-    
 dev_dependencies:
   flutter_lints: ^3.0.2
   flutter_test:
