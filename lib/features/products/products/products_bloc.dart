@@ -62,7 +62,7 @@ class ProductsBloc extends Bloc<ProductsEvents, ProductsStates> {
           message: response.response!.data['message'],
           type: MessageType.success);
       add(GetProductsEvent());
-      add(GetFavsProductsEvent());
+      add(GetFavsProductsEvent(isLoading: true));
       emit(AddFavoriteSuccessState());
     } else {
       favorites[event.id] = !favorites[event.id]!;
@@ -81,7 +81,7 @@ class ProductsBloc extends Bloc<ProductsEvents, ProductsStates> {
     if (response.isSuccess && response.message.isNotEmpty) {
       showMessage(message: response.message, type: MessageType.success);
       add(GetProductsEvent());
-      add(GetFavsProductsEvent());
+      add(GetFavsProductsEvent(isLoading: true));
       emit(RemoveFavoriteSuccessState());
     } else {
       favorites[event.id] = !favorites[event.id]!;

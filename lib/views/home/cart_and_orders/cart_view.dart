@@ -41,6 +41,31 @@ class _CartViewState extends State<CartView> {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          } else if (bloc.list.isEmpty) {
+            return const SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppImage('assets/icon/no_data_cart.png',
+                            width: 200,
+                  
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    'لا توجد طلبات',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: mainColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            );
           } else {
             return GestureDetector(
               onTap: () {

@@ -14,7 +14,11 @@ import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_
 import 'package:vegetable_orders_project/views/auth/confirm_code/bloc/confirm_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/register/bloc/register_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/edit_password/edit_password_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/get_profile/profile_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy/policy_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/questions_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/suggestions/suggestions_bloc.dart';
 
 // import '../features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 import '../features/categori_products/category_products_bloc.dart';
@@ -27,12 +31,16 @@ void initKiwi() {
   container.registerFactory((container) => RegisterBloc());
   container.registerFactory((container) => GetCitiesBloc());
   container.registerFactory((container) => ConfirmBloc());
+  container.registerFactory((container) => EditPasswordBloc());
+  container.registerFactory((container) => QuestionsBloc());
+  container.registerFactory((container) => PolicyBloc());
+  container.registerFactory((container) => SuggestionsBloc());
   container.registerSingleton((container) => SetUpdateAdressBloc());
   container.registerSingleton(
       (container) => GetCategoryBloc()..add(GetCategoryEvent()));
   container.registerSingleton((container) => ProductsBloc()
     ..add(GetProductsEvent())
-    ..add(GetFavsProductsEvent()));
+    ..add(GetFavsProductsEvent(isLoading: true)));
   // container.registerFactory((container) => GetDeleteAddressesBloc());
   // container.registerFactory((container) => TestAddressBloc());
   container.registerSingleton((container) => GetDeleteAddressesBloc());

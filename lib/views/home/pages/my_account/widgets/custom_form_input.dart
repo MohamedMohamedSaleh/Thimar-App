@@ -26,6 +26,7 @@ class CustomFormInput extends StatelessWidget {
       maxLines: maxLines,
       keyboardType: isPhone ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         labelStyle: TextStyle(
             fontSize: isFillColor ? 15 : 13, fontWeight: FontWeight.w300),
         labelText: labelText,

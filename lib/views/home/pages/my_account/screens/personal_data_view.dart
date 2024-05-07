@@ -1,7 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
@@ -11,7 +9,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/get_profile/profile_bloc.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/screens/change_password.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/change_password_account_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 import 'package:vegetable_orders_project/views/sheets/cities_sheet.dart';
 

@@ -73,8 +73,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                           ),
                           //TODO: this is not found change image
                           AppImage(
-                            'assets/icon/not_found.png',
-                            height: 180,
+                            'assets/icon/no_data_favs.png',
+                            width: 200,
                           ),
                           Text(
                             'لا توجد طلبات',

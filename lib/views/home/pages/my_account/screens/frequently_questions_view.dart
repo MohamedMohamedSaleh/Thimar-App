@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/model..dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/questions_bloc.dart';
 
-class FrequentlyQuestionsView extends StatelessWidget {
+import '../../../../../core/widgets/app_image.dart';
+
+class FrequentlyQuestionsView extends StatefulWidget {
   const FrequentlyQuestionsView({super.key});
+
+  @override
+  State<FrequentlyQuestionsView> createState() =>
+      _FrequentlyQuestionsViewState();
+}
+
+class _FrequentlyQuestionsViewState extends State<FrequentlyQuestionsView> {
+  final bloc = KiwiContainer().resolve<QuestionsBloc>()
+    ..add(GetQuestionsEvent());
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,83 +32,65 @@ class FrequentlyQuestionsView extends StatelessWidget {
       appBar: const CustomAppBar(
         title: 'أسئلة متكررة',
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 6),
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          children: const [
-            _CustomExpansionTile(
-              title: 'كيفية الدفع عن طريق البطاقة الإئتمانيه؟',
-              text:
-                  """هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص  """,
-            ),
-            _CustomExpansionTile(
-              title: 'كل ما تريد معرفته عن أكواد الخصم/ الكوبونات',
-              text:
-                  """ هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص """,
-            ),
-            _CustomExpansionTile(
-              title: 'كيفية الدفع عن طريق البطاقة الإئتمانيه؟',
-              text:
-                  """ هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص """,
-            ),
-            _CustomExpansionTile(
-              title: 'هل يتم وضع منتجات جديدة كل فترة؟',
-              text:
-                  """ هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص """,
-            ),
-            _CustomExpansionTile(
-              title: 'ما هي الفترة الزمنية لتحديث المخزون لديكم؟',
-              text:
-                  """هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص  """,
-            ),
-            _CustomExpansionTile(
-              title: 'لم أستلم منتج ما، ماذا أفعل؟',
-              text:
-                  """هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص  """,
-            ),
-            _CustomExpansionTile(
-              title: 'كيفية الدفع عن طريق البطاقة الإئتمانيه؟',
-              text:
-                  """هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص  """,
-            ),
-            _CustomExpansionTile(
-              title: 'كل ما تريد معرفته عن أكواد الخصم/ الكوبونات',
-              text:
-                  """هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص  """,
-            ),
-            _CustomExpansionTile(
-              title: 'ما هي الفترة الزمنية لتحديث المخزون لديكم؟',
-              text:
-                  """هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص  """,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+      body: BlocBuilder(
+          bloc: bloc,
+          builder: (context, state) {
+            if (state is GetQuestionsLoading) {
+              return const Center(
+                child: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: CircularProgressIndicator(
+                    // backgroundColor: Colors.grey.withOpacity(.5),
+                    strokeCap: StrokeCap.round,
+                  ),
+                ),
+              );
+            } else {
+              if (state is GetQuestionsSuccess) {
+                return Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: ListView.builder(
+                      itemCount: bloc.list.length,
+                      itemBuilder: (context, index) => _CustomExpansionTile(
+                        model: bloc.list[index],
+                      ),
+                    ));
+              } else {
+                return const SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppImage(
+                        'assets/icon/no_data_category.png',
+                        width: 200,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'لا توجد أسألة',
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: mainColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              }
+            }
+          }),
     );
   }
 }
 
 class _CustomExpansionTile extends StatefulWidget {
-  const _CustomExpansionTile({
-    required this.title,
-    required this.text,
-  });
-  final String title;
-  final String text;
-
+  const _CustomExpansionTile({required this.model});
+  final QuestionModel model;
   @override
   State<_CustomExpansionTile> createState() => __CustomExpansionTileState();
 }
@@ -101,7 +103,7 @@ class __CustomExpansionTileState extends State<_CustomExpansionTile> {
       childrenPadding: const EdgeInsets.symmetric(horizontal: 16),
       tilePadding: const EdgeInsets.symmetric(horizontal: 16),
       title: Text(
-        widget.title,
+        widget.model.question,
         style: const TextStyle(
             color: mainColor, fontSize: 15, fontWeight: FontWeight.bold),
       ),
@@ -118,7 +120,7 @@ class __CustomExpansionTileState extends State<_CustomExpansionTile> {
       ),
       children: [
         Text(
-          widget.text,
+          widget.model.answer,
           style: const TextStyle(
               color: Color(0xff828282),
               fontSize: 15,

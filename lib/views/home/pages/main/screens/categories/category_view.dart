@@ -9,6 +9,7 @@ import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.
 import 'package:vegetable_orders_project/views/home/widgets/shimmer_loading.dart';
 import 'package:vegetable_orders_project/views/sheets/filtter_sheet.dart';
 
+import '../../../../../../core/constants/my_colors.dart';
 import '../../../../../../core/widgets/custom_app_input.dart';
 import '../../../../../../features/categoris/category_model.dart';
 
@@ -124,37 +125,67 @@ class _CategoryViewState extends State<CategoryView> {
                             isMain: false,
                           );
                         } else if (state is GetCategoryProductsSuccessState) {
-                          return GestureDetector(
-                            onTap: () => FocusScope.of(context).unfocus(),
-                            child: RefreshIndicator(
-                              displacement: 20,
-                              strokeWidth: 3,
-                              backgroundColor: Colors.green[100],
-                              onRefresh: () async {
-                                getCategoryBloc.add(
-                                    GetCategoryProductEvent(id: widget.id));
-                              },
-                              child: GridView.builder(
-                                physics: state.model.length > 4
-                                    ? const BouncingScrollPhysics()
-                                    : const AlwaysScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 163 / 215,
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10),
-                                padding: const EdgeInsets.only(
-                                    right: 16, left: 16, top: 10, bottom: 20),
-                                itemCount: state.model.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) =>
-                                        ItemProduct(
-                                  model: state.model[index],
+                          if (state.model.isNotEmpty) {
+                            return GestureDetector(
+                              onTap: () => FocusScope.of(context).unfocus(),
+                              child: RefreshIndicator(
+                                displacement: 20,
+                                strokeWidth: 3,
+                                backgroundColor: Colors.green[100],
+                                onRefresh: () async {
+                                  getCategoryBloc.add(
+                                      GetCategoryProductEvent(id: widget.id));
+                                },
+                                child: GridView.builder(
+                                  physics: state.model.length > 4
+                                      ? const BouncingScrollPhysics()
+                                      : const AlwaysScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 163 / 215,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10),
+                                  padding: const EdgeInsets.only(
+                                      right: 16, left: 16, top: 10, bottom: 20),
+                                  itemCount: state.model.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          ItemProduct(
+                                    model: state.model[index],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            return const SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AppImage(
+                                    'assets/icon/no_data_category.png',
+                                    width: 200,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    'لا توجد بيانات',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: mainColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 80,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         } else {
                           return const Text('Failed');
                         }

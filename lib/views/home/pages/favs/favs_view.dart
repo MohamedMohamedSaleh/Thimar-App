@@ -5,6 +5,8 @@ import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 
+import '../../../../core/constants/my_colors.dart';
+import '../../../../core/widgets/app_image.dart';
 import '../../../../features/products/products/products_bloc.dart';
 import '../../widgets/shimmer_loading.dart';
 
@@ -19,7 +21,7 @@ class _FavsPageState extends State<FavsPage> {
   final bloc = KiwiContainer().resolve<ProductsBloc>();
 
   Future<void> refreshCallback() async {
-    bloc.add(GetFavsProductsEvent());
+    bloc.add(GetFavsProductsEvent(isLoading: true));
   }
 
   @override
@@ -34,12 +36,36 @@ class _FavsPageState extends State<FavsPage> {
         body: BlocBuilder(
           bloc: bloc,
           builder: (context, state) {
-            if (bloc.favsList.isEmpty ||
-                state is GetFavoriteProductLoadingState) {
+            if (state is GetFavoriteProductLoadingState) {
               return const Padding(
                 padding: EdgeInsets.only(top: 16),
                 child: ShimmerLoadingProduct(
                   isMain: false,
+                ),
+              );
+            } else if (bloc.favsList.isEmpty) {
+              return const SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppImage(
+                      'assets/icon/no_data_favs.png',
+                      width: 200,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      'لا توجد بيانات',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: mainColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               );
             } else {

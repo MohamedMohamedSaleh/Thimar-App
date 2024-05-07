@@ -15,7 +15,6 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wal
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
 import 'screens/frequently_questions_view.dart';
-import 'screens/payment_view.dart';
 
 class MyAccountPage extends StatelessWidget {
   const MyAccountPage({super.key});
@@ -77,14 +76,6 @@ class MyAccountPage extends StatelessWidget {
                                   child: const _ItemMyAccount(
                                     icon: 'Location',
                                     title: 'العناوين',
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () =>
-                                      navigateTo(toPage: const PaymentView()),
-                                  child: const _ItemMyAccount(
-                                    icon: 'send_mony',
-                                    title: 'الدفع',
                                   ),
                                 ),
                               ],

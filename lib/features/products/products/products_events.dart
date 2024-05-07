@@ -4,7 +4,11 @@ class ProductsEvents {}
 
 class GetProductsEvent extends ProductsEvents {}
 
-class GetFavsProductsEvent extends ProductsEvents {}
+class GetFavsProductsEvent extends ProductsEvents {
+  final bool isLoading;
+
+  GetFavsProductsEvent({required this.isLoading});
+}
 
 class AddProductsToFavsEvent extends ProductsEvents {
   final int id;
@@ -13,7 +17,7 @@ class AddProductsToFavsEvent extends ProductsEvents {
 }
 
 class RemoveProductsFromFavsEvent extends ProductsEvents {
-    final int id;
+  final int id;
 
   RemoveProductsFromFavsEvent({required this.id});
 }
