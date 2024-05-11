@@ -5,3 +5,4 @@ abstract class PolicyEvents {}
 class GetPolicyEvent extends PolicyEvents {}
 
 class GetAboutEvent extends PolicyEvents {}
+class GetTermsEvent extends PolicyEvents {}

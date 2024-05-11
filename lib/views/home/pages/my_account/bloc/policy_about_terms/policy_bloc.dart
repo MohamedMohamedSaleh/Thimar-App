@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy/model.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy_about_terms/model.dart';
 
 import '../../../../../../core/logic/dio_helper.dart';
 
@@ -10,6 +10,7 @@ class PolicyBloc extends Bloc<PolicyEvents, PolicyStates> {
   PolicyBloc() : super(PolicyInitial()) {
     on<GetPolicyEvent>(_getPolicy);
     on<GetAboutEvent>(_about);
+    on<GetTermsEvent>(_terms);
   }
 
   Future<void> _getPolicy(
@@ -32,6 +33,17 @@ class PolicyBloc extends Bloc<PolicyEvents, PolicyStates> {
       emit(AboutSuccessState(model: model));
     } else {
       emit(AboutFailedState());
+    }
+  }
+
+  Future<void> _terms(GetTermsEvent event, Emitter<PolicyStates> emit) async {
+    emit(TermsLoadingState());
+    final response = await DioHelper().getData(endPoint: '/terms');
+    if (response.isSuccess) {
+      final model = TermsData.fromJson(response.response!.data).data;
+      emit(TermsSuccessState(model: model));
+    } else {
+      emit(TermsFailedState());
     }
   }
 }

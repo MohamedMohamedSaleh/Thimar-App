@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
@@ -10,6 +11,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/con
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/privacy_policy_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/suggestions_complaints_view.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/screens/terms_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/titles_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
@@ -128,9 +130,17 @@ class MyAccountPage extends StatelessWidget {
                                     title: 'الشكاوي والأقتراحات',
                                   ),
                                 ),
-                                const _ItemMyAccount(
-                                  icon: 'share',
-                                  title: 'مشاركة التطبيق',
+                                InkWell(
+                                  onTap: () async {
+                                    const url =
+                                        'https://play.google.com/store/apps/details?id=com.alalmiya.thamra';
+                                    await Share.share(
+                                        'This app is very usefull.\n\n$url');
+                                  },
+                                  child: const _ItemMyAccount(
+                                    icon: 'share',
+                                    title: 'مشاركة التطبيق',
+                                  ),
                                 ),
                               ],
                             ),
@@ -161,13 +171,26 @@ class MyAccountPage extends StatelessWidget {
                                   icon: 'language',
                                   title: 'تغيير اللغة',
                                 ),
-                                const _ItemMyAccount(
-                                  icon: 'Note',
-                                  title: 'الشروط والأحكام',
+                                InkWell(
+                                  onTap: () {
+                                    navigateTo(toPage: const TermsView());
+                                  },
+                                  child: const _ItemMyAccount(
+                                    icon: 'Note',
+                                    title: 'الشروط والأحكام',
+                                  ),
                                 ),
-                                const _ItemMyAccount(
-                                  icon: 'Star',
-                                  title: 'تقييم التطبيق',
+                                InkWell(
+                                  onTap: () async {
+                                    const url =
+                                        'https://play.google.com/store/apps/details?id=com.alalmiya.thamra';
+                                    await Share.share(
+                                        'This app is very usefull.\n\n$url');
+                                  },
+                                  child: const _ItemMyAccount(
+                                    icon: 'Star',
+                                    title: 'تقييم التطبيق',
+                                  ),
                                 ),
                               ],
                             ),

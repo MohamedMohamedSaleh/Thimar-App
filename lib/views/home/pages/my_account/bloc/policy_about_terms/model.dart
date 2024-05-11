@@ -37,3 +37,28 @@ class AboutModel {
     about = json['about'];
   }
 }
+
+
+class TermsData {
+
+  late final TermsModel data;
+  late final String status;
+  late final String message;
+  
+  TermsData.fromJson(Map<String, dynamic> json){
+    data = TermsModel.fromJson(json['data']);
+    status = json['status'];
+    message = json['message'];
+  }
+
+}
+
+class TermsModel {
+ 
+  late final String terms;
+  
+  TermsModel.fromJson(Map<String, dynamic> json){
+    terms = json['terms'];
+  }
+
+}

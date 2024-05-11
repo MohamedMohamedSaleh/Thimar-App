@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/model..dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/model.dart';
 
 part 'questions_event.dart';
 part 'questions_state.dart';

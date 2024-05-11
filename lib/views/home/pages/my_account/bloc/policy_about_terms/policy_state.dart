@@ -23,3 +23,14 @@ final class AboutSuccessState extends PolicyStates {
 final class AboutLoadingState extends PolicyStates {}
 
 final class AboutFailedState extends PolicyStates {}
+
+
+final class TermsSuccessState extends PolicyStates {
+  final TermsModel model;
+
+  TermsSuccessState({required this.model});
+}
+
+final class TermsLoadingState extends PolicyStates {}
+
+final class TermsFailedState extends PolicyStates {}

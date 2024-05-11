@@ -4,7 +4,7 @@ import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/model..dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/model.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/questions_bloc.dart';
 
 import '../../../../../core/widgets/app_image.dart';

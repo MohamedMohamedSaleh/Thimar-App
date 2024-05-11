@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:html/parser.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
-import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy/policy_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy_about_terms/policy_bloc.dart';
 
 import '../../../../../core/constants/my_colors.dart';
 
@@ -40,6 +41,8 @@ class _AboutApplicationViewState extends State<AboutApplicationView> {
               ),
             );
           } else if (state is AboutSuccessState) {
+            var model = parse(state.model.about);
+            String text = model.body!.text;
             return Padding(
               padding: const EdgeInsets.only(top: 12),
               child: ListView(
@@ -58,11 +61,12 @@ class _AboutApplicationViewState extends State<AboutApplicationView> {
                     height: 20,
                   ),
                   Text(
-                    state.model.about,
+                    text,
                     style: const TextStyle(
-                        color: Color(0xff828282),
+                        height: 2.1,
                         fontSize: 15,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 66, 63, 63)),
                   ),
                   const SizedBox(
                     height: 24,

@@ -7,29 +7,23 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy
 
 import '../../../../../core/widgets/app_image.dart';
 
-class PrivacyPolicyView extends StatefulWidget {
-  const PrivacyPolicyView({super.key});
+class TermsView extends StatefulWidget {
+  const TermsView({super.key});
 
   @override
-  State<PrivacyPolicyView> createState() => _PrivacyPolicyViewState();
+  State<TermsView> createState() => _TermsViewState();
 }
 
-class _PrivacyPolicyViewState extends State<PrivacyPolicyView> {
-  final bloc = KiwiContainer().resolve<PolicyBloc>()..add(GetPolicyEvent());
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.close();
-  }
-
+class _TermsViewState extends State<TermsView> {
+  final bloc = KiwiContainer().resolve<PolicyBloc>()..add(GetTermsEvent());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'سياسة الخصوصية'),
+      appBar: const CustomAppBar(title: 'الشروط والأحكام'),
       body: BlocBuilder(
         bloc: bloc,
         builder: (context, state) {
-          if (state is GetPolicyLoading) {
+          if (state is TermsLoadingState) {
             return const Center(
               child: SizedBox(
                 height: 40,
@@ -40,8 +34,8 @@ class _PrivacyPolicyViewState extends State<PrivacyPolicyView> {
                 ),
               ),
             );
-          } else if (state is GetPolicySuccess) {
-            var model = parse(state.model.policy);
+          } else if (state is TermsSuccessState) {
+            var model = parse(state.model.terms);
             String text = model.body!.text;
             return Padding(
               padding: const EdgeInsets.only(top: 10),
