@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_form_input.dart';
@@ -12,46 +13,55 @@ class AddCardSheet extends StatelessWidget {
       height: double.infinity,
       child: ListView(
         padding:
-            const EdgeInsets.only(right: 16, left: 16, bottom: 26, top: 16),
+            const EdgeInsets.only(right: 16, left: 16, bottom: 26, top: 16).w,
         children: [
-          const Text(
+          Text(
             'إضافة بطاقة',
             style: TextStyle(
-                color: mainColor, fontSize: 15, fontWeight: FontWeight.bold),
+                color: mainColor, fontSize: 15.sp, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(
-            height: 16,
+          SizedBox(
+            height: 16.h,
           ),
           const CustomFormInput(
               isFillColor: false, labelText: 'اسم صاحب البطاقة'),
-          const SizedBox(
-            height: 16,
+          SizedBox(
+            height: 16.h,
           ),
-          const CustomFormInput(isFillColor: false, labelText: 'رقم البطاقة', isPhone: true,),
-          const SizedBox(
-            height: 16,
+          const CustomFormInput(
+            isFillColor: false,
+            labelText: 'رقم البطاقة',
+            isPhone: true,
           ),
-          const Row(
+          SizedBox(
+            height: 16.h,
+          ),
+          Row(
             children: [
-              Expanded(
+              const Expanded(
                   child: CustomFormInput(
-                      isFillColor: false,
-                      labelText: 'تاريخ الإنتهاء (شهر / سنة)', isPhone: true,)),
+                isFillColor: false,
+                labelText: 'تاريخ الإنتهاء (شهر / سنة)',
+                isPhone: true,
+              )),
               SizedBox(
-                width: 16,
+                width: 16.w,
               ),
-              Expanded(
+              const Expanded(
                   child: CustomFormInput(
-                      isFillColor: false, labelText: '(Cvv) الرقم السري ', isPhone: true,)),
+                isFillColor: false,
+                labelText: '(Cvv) الرقم السري ',
+                isPhone: true,
+              )),
             ],
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: 40.h,
           ),
           CustomFillButton(title: 'إضافة بطاقة', onPress: () {}),
-          const SizedBox(
-            height: 250,
+          SizedBox(
+            height: 250.h,
           ),
         ],
       ),

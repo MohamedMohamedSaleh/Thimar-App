@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_outline_send_button.dart';
 
 class CustomCircleOrButton extends StatefulWidget {
@@ -40,8 +41,8 @@ class _CustomCircleOrButtonState extends State<CustomCircleOrButton> {
     return !isTemerFinished
         ? Center(
             child: SizedBox(
-              height: 60,
-              width: 60,
+              height: 60.h,
+              width: 60.h,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -54,7 +55,8 @@ class _CustomCircleOrButtonState extends State<CustomCircleOrButton> {
                     child: Text(
                       "${minute.round().toString().padLeft(2, '0')}:${second.round().toString().padLeft(2, '0')}",
                       style: TextStyle(
-                          fontSize: 21, color: Theme.of(context).primaryColor),
+                          fontSize: 21.sp,
+                          color: Theme.of(context).primaryColor),
                     ),
                   ),
                 ],
@@ -62,16 +64,15 @@ class _CustomCircleOrButtonState extends State<CustomCircleOrButton> {
             ),
           )
         : Center(
-          child: SizedBox(
-            height: 47,
-            child: CustomOutlineButton(
-              title: 'إعادة الإرسال',
+            child: SizedBox(
+              height: 47.h,
+              child: CustomOutlineButton(
+                title: 'إعادة الإرسال',
                 onPress: () {
                   startCounting();
-                  
                 },
               ),
-          ),
-        );
+            ),
+          );
   }
 }

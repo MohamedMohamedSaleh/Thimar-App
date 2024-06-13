@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
@@ -24,13 +25,13 @@ class ForgetPasswordView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            body: const SafeArea(
+            body: SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: 16,
                   left: 16,
-                ),
-                child: FormForgetPassword(),
+                ).r,
+                child: const FormForgetPassword(),
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
@@ -68,12 +69,12 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
       key: formKey,
       autovalidateMode: autovalidateMode,
       child: ListView(
-        padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+        padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8).r,
         children: [
-          const CustomIntroduction(
+          CustomIntroduction(
             mainText: "نسيت كلمة المرور",
             supText: "أدخل رقم الجوال المرتبط بحسابك",
-            paddingHeight: 24,
+            paddingHeight: 24.h,
           ),
           CustomAppInput(
             validator: (String? value) {
@@ -87,7 +88,7 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
             labelText: "رقم الجوال",
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
-            paddingBottom: 28,
+            paddingBottom: 28.h,
             controller: phoneController,
           ),
           CustomFillButton(

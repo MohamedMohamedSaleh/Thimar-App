@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
 import 'package:vegetable_orders_project/features/my_orders/my_order_model.dart';
@@ -38,7 +39,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                   'إجمالي المنتجات',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -47,7 +48,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                   "${widget.isDetailsOrder ? widget.orderModel?.priceBeforeDiscount.toString() : widget.model?.totalPriceBeforeDiscount.toString() ?? '00'}ر.س",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -62,16 +63,16 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                   'الخصم',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const Spacer(),
                 Text(
-                  '-${widget.isDetailsOrder ? widget.orderModel?.discount.toString() : widget.model?.totalDiscount}ر.س',
+                  '-${widget.isDetailsOrder ? widget.orderModel?.discount.toString() : widget.model?.totalDiscount.toDouble().toStringAsFixed(2)}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -95,16 +96,16 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                             'الاجمالي بعد خصم المنتجات',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           const Spacer(),
                           Text(
-                            "${widget.isDetailsOrder ? widget.orderModel?.orderPrice.toString() : widget.model?.totalPriceWithVat.toString() ?? ''}ر.س",
+                            "${widget.isDetailsOrder ? widget.orderModel?.orderPrice.toString() : widget.model?.totalPriceWithVat.toDouble().toStringAsFixed(2) ?? ''}ر.س",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -119,7 +120,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                             'سعر التوصيل',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -128,7 +129,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                             "${widget.isDetailsOrder ? widget.orderModel?.deliveryPrice.toString() : widget.model?.deliveryCost.toString() ?? ''}ر.س",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -140,20 +141,20 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                       widget.orderModel?.isVip == 1 || widget.model?.isVip == 1
                           ? Row(
                               children: [
-                                const Text(
+                                Text(
                                   'خصم عميل مميز',
                                   style: TextStyle(
                                     color: Colors.orange,
-                                    fontSize: 15,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 const Spacer(),
                                 Text(
                                   "${widget.isDetailsOrder ? widget.orderModel?.vipDiscount.toString() : widget.model?.vipDiscount.toString() ?? ''}ر.س",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.orange,
-                                    fontSize: 15,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -178,16 +179,16 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                   'المجموع',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const Spacer(),
                 Text(
-                  '${widget.isDetailsOrder ? widget.orderModel?.totalPrice.toString() : widget.isCompletOrder ? widget.model?.sum : widget.model?.totalPriceWithVat.toString()}ر.س',
+                  '${widget.isDetailsOrder ? widget.orderModel?.totalPrice.toString() : widget.isCompletOrder ? widget.model?.sum.toDouble().toStringAsFixed(2) : widget.model?.totalPriceWithVat.toDouble().toStringAsFixed(2)}ر.س',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -202,12 +203,12 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                         'تم الدفع بواسطة',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontSize: 15,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(
-                        width: 16,
+                      SizedBox(
+                        width: 16.sp,
                       ),
                       const AppImage('assets/icon/svg/blue_visa.svg'),
                     ],

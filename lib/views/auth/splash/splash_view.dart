@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/views/home/home_view.dart';
@@ -37,12 +38,12 @@ class _SplashViewState extends State<SplashView> {
         children: [
           Positioned.directional(
               textDirection: TextDirection.ltr,
-              bottom: -53,
-              start: 27,
+              bottom: -53.h,
+              start: 27.w,
               child: Image.asset(
                 "assets/images/splash_ib.png",
-                width: 448,
-                height: 298,
+                width: 448.w,
+                height: 298.h,
               )),
           Image.asset(
             "assets/images/splash_bg.png",
@@ -59,8 +60,8 @@ class _SplashViewState extends State<SplashView> {
                 duration: const Duration(milliseconds: 750),
                 child: Image.asset(
                   "assets/images/vegetable_basket.png",
-                  width: 160,
-                  height: 157,
+                  width: 160.w,
+                  height: 157.h,
                 ),
               ),
             ),

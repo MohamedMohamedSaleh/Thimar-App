@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
@@ -18,7 +19,6 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-
   final bloc = KiwiContainer().resolve<RegisterBloc>();
 
   @override
@@ -40,16 +40,16 @@ class _RegisterViewState extends State<RegisterView> {
                 padding: const EdgeInsets.only(
                   right: 16,
                   left: 16,
-                ),
+                ).r,
                 child: Form(
                   autovalidateMode: bloc.autovalidateMode,
                   key: bloc.formKey,
                   child: ListView(
                     children: [
-                      const CustomIntroduction(
+                      CustomIntroduction(
                         mainText: "مرحبا بك مرة أخرى",
                         supText: "يمكنك تسجيل الدخول الأن",
-                        paddingHeight: 22,
+                        paddingHeight: 22.h,
                       ),
                       CustomAppInput(
                         validator: (value) {
@@ -83,10 +83,10 @@ class _RegisterViewState extends State<RegisterView> {
                               child: GestureDetector(
                                 onTap: () async {
                                   bloc.city = await showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
+                                    shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(28),
-                                        topRight: Radius.circular(28),
+                                        topLeft: const Radius.circular(28).w,
+                                        topRight: const Radius.circular(28).w,
                                       ),
                                     ),
                                     clipBehavior: Clip.antiAlias,
@@ -133,8 +133,8 @@ class _RegisterViewState extends State<RegisterView> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 9,
+                      SizedBox(
+                        height: 9.h,
                       ),
                       CustomAppInput(
                         validator: (String? value) {
@@ -149,7 +149,7 @@ class _RegisterViewState extends State<RegisterView> {
                         labelText: "كلمة المرور",
                         prefixIcon: "assets/icon/lock_icon.png",
                         isPassword: true,
-                        paddingBottom: 9,
+                        paddingBottom: 9.h,
                       ),
                       CustomAppInput(
                         validator: (String? value) {
@@ -167,7 +167,7 @@ class _RegisterViewState extends State<RegisterView> {
                         labelText: "تأكيد كلمة المرور",
                         prefixIcon: "assets/icon/lock_icon.png",
                         isPassword: true,
-                        paddingBottom: 24,
+                        paddingBottom: 24.h,
                       ),
                       BlocBuilder(
                         bloc: bloc,
@@ -182,8 +182,8 @@ class _RegisterViewState extends State<RegisterView> {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: 20.h,
                       ),
                     ],
                   ),

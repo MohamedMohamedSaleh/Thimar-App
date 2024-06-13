@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
@@ -32,23 +33,23 @@ class _TitlesSheetState extends State<TitlesSheet> {
       child: ColoredBox(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             children: [
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 10.h,
               ),
-              const Center(
+              Center(
                 child: Text(
                   'العناوين',
                   style: TextStyle(
                       color: mainColor,
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 10.h,
               ),
               Expanded(
                 child: BlocBuilder(
@@ -72,16 +73,16 @@ class _TitlesSheetState extends State<TitlesSheet> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 10.h,
               ),
               CustomOutlineButton(
                   onTap: () {
                     navigateTo(toPage: const AddTitleView());
                   },
                   title: 'إضافة عنوان جديد'),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 20.h,
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppImage extends StatelessWidget {
   const AppImage(
@@ -20,8 +21,8 @@ class AppImage extends StatelessWidget {
     if (path.endsWith('svg')) {
       return SvgPicture.asset(
         path,
-        height: height,
-        width: width,
+        height: height?.h,
+        width: width?.w,
         fit: fit,
         // ignore: deprecated_member_use
         color: color,
@@ -29,16 +30,16 @@ class AppImage extends StatelessWidget {
     } else if (path.startsWith('http')) {
       return Image.network(
         path,
-        height: height,
-        width: width,
+        height: height?.h,
+        width: width?.w,
         fit: fit,
         color: color,
       );
     } else {
       return Image.asset(
         path,
-        height: height,
-        width: width,
+        height: height?.h,
+        width: width?.w,
         fit: fit,
         color: color,
       );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:vegetable_orders_project/core/constants/my_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+
+import '../constants/my_colors.dart';
 
 class CustomAppInput extends StatefulWidget {
   const CustomAppInput({
@@ -46,10 +48,10 @@ class _CustomAppInputState extends State<CustomAppInput> {
       ),
       child: TextFormField(
         onChanged: widget.onChange,
-        cursorHeight: widget.isData ? 17 : null,
+        cursorHeight: widget.isData ? 17.h : null,
         style: widget.isData
-            ? const TextStyle(
-                color: mainColor, fontSize: 15, fontWeight: FontWeight.bold)
+            ? TextStyle(
+                color: mainColor, fontSize: 15.sp, fontWeight: FontWeight.bold)
             : null,
         controller: widget.controller,
         validator: widget.validator,
@@ -58,22 +60,21 @@ class _CustomAppInputState extends State<CustomAppInput> {
             widget.isPhone ? TextInputType.number : TextInputType.text,
         obscureText: isSecure && widget.isPassword,
         decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12.w),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: widget.isData
                     ? const Color(0xff8AC253)
                     : const Color(0xffF3F3F3),
               ),
-              borderRadius: BorderRadius.circular(15)),
+              borderRadius: BorderRadius.circular(15).w),
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: widget.isData
                   ? const Color(0xff8AC253)
                   : const Color(0xffF3F3F3),
             ),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15).w,
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -81,7 +82,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
                   ? const Color(0xff8AC253)
                   : const Color(0xffF3F3F3),
             ),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15).w,
           ),
           filled: true,
           fillColor: widget.fillColor,
@@ -90,20 +91,20 @@ class _CustomAppInputState extends State<CustomAppInput> {
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w400)
               : widget.isData
-                  ? const TextStyle(
-                      color: Color(0xffAFAFAF),
-                      fontSize: 15,
+                  ? TextStyle(
+                      color: const Color(0xffAFAFAF),
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400)
                   : null,
           labelText: widget.labelText,
           prefixIcon: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12).r,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
+              padding: EdgeInsets.symmetric(vertical: 5.h),
               child: AppImage(
                 widget.prefixIcon,
-                width: 18,
-                height: 20,
+                width: 18.w,
+                height: 20.h,
               ),
             ),
           ),
@@ -130,11 +131,11 @@ class _CustomAppInputState extends State<CustomAppInput> {
                     ),
                     borderRadius: BorderRadius.circular(
                       15,
-                    ),
+                    ).w,
                     // color: Colors.red,
                   ),
-                  width: 54,
-                  height: 54,
+                  width: 54.w,
+                  height: 54.w,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -142,8 +143,8 @@ class _CustomAppInputState extends State<CustomAppInput> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Image.asset("assets/images/saudia_flag.png"),
                       ),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Text(
                         "+966",

@@ -17,7 +17,6 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-
   await CacheHelper.init();
   initKiwi();
   runApp(const MyApp());
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
     //693.3
     //320.0
     return ScreenUtilInit(
-      designSize: const Size(320, 700),
+      designSize: const Size(330, 750),
       builder: (context, child) => MaterialApp(
         localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
         supportedLocales: const [

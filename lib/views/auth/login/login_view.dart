@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
@@ -28,19 +29,19 @@ class LoginView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            body: const SafeArea(
+            body: SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: 16,
                   left: 16,
-                ),
-                child: FormLogin(),
+                ).r,
+                child: const FormLogin(),
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
               text: "ليس لديك حساب ؟",
               buttonText: " تسجيل الأن",
-              paddingBottom: 22,
+              paddingBottom: 22.h,
               onPress: () {
                 navigateTo(toPage: const RegisterView());
               },
@@ -69,13 +70,6 @@ class _FormLoginState extends State<FormLogin> {
     super.dispose();
     bloc.close();
   }
-  // late Loginbloc bloc;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   bloc = BlocProvider.of(context);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +79,10 @@ class _FormLoginState extends State<FormLogin> {
       child: ListView(
         padding: const EdgeInsets.only(top: 0),
         children: [
-          const CustomIntroduction(
+          CustomIntroduction(
             mainText: "مرحبا بك مرة أخرى",
             supText: "يمكنك تسجيل الدخول الأن",
-            paddingHeight: 28,
+            paddingHeight: 28.h,
           ),
           CustomAppInput(
             validator: (String? value) {
@@ -122,10 +116,10 @@ class _FormLoginState extends State<FormLogin> {
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
-              child: const Text(
+              child: Text(
                 "نسيت كلمة المرور ؟",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w300,
                     height: .1,
                     color: Colors.black),
@@ -135,8 +129,8 @@ class _FormLoginState extends State<FormLogin> {
               },
             ),
           ),
-          const SizedBox(
-            height: 32,
+          SizedBox(
+            height: 32.h,
           ),
           BlocBuilder(
             bloc: bloc,
@@ -150,8 +144,8 @@ class _FormLoginState extends State<FormLogin> {
               );
             },
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 20.h,
           ),
         ],
       ),

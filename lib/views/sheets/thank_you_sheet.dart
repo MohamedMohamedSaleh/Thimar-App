@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
@@ -13,37 +14,37 @@ class ThankYouSheet extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(
-            height: 14,
+          SizedBox(
+            height: 14.h,
           ),
-          const AppImage(
+          AppImage(
             'assets/icon/svg/thankyou.svg',
-            height: 215,
-            width: 240,
+            height: 215.h,
+            width: 240.w,
           ),
-          const SizedBox(
-            height: 16,
+          SizedBox(
+            height: 16.h,
           ),
-          const Text(
+          Text(
             'شكرا لك لقد تم تنفيذ طلبك بنجاح',
             style: TextStyle(
-                color: mainColor, fontSize: 20, fontWeight: FontWeight.bold),
+                color: mainColor, fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            height: 6,
+          SizedBox(
+            height: 6.h,
           ),
-          const Text(
+          Text(
             'يمكنك متابعة حالة الطلب او الرجوع للرئسيية',
             style: TextStyle(
-                color: Color(0xffACACAC),
-                fontSize: 16,
+                color: const Color(0xffACACAC),
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500),
           ),
-          const SizedBox(
-            height: 26,
+          SizedBox(
+            height: 26.h,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
               children: [
                 Expanded(
@@ -58,24 +59,24 @@ class ThankYouSheet extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(
-                  width: 16,
+                SizedBox(
+                  width: 16.w,
                 ),
                 Expanded(
                   child: SizedBox(
-                    height: 55,
+                    height: 55.h,
                     child: OutlinedButton(
                       onPressed: () {
                         Navigator.pop(context);
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        // navigateTo(toPage: const HomeView(), isRemove: true);
+                        // navigateTo(toPage:  HomeView(), isRemove: true);
                       },
-                      child: const Text(
+                      child: Text(
                         'الرئيسية',
                         style: TextStyle(
                           color: mainColor,
-                          fontSize: 15,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -85,8 +86,8 @@ class ThankYouSheet extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 22,
+          SizedBox(
+            height: 22.h,
           ),
         ],
       ),

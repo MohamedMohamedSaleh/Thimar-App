@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
@@ -16,7 +17,7 @@ class _FiltterSheetState extends State<FiltterSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16, left: 16, top: 8),
+      padding: const EdgeInsets.only(right: 16, left: 16, top: 8).r,
       child: BlocProvider(
         create: (context) => GetSearchCategoryBloc(),
         child: BlocBuilder<GetSearchCategoryBloc, GetSearchCategryStates>(
@@ -24,36 +25,38 @@ class _FiltterSheetState extends State<FiltterSheet> {
             final cubit = GetSearchCategoryBloc.get(context);
             return ListView(
               children: [
-                const Center(
+                Center(
                   child: Text(
                     'تصفية',
                     style: TextStyle(
                       color: mainColor,
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const Divider(height: 10),
-                const SizedBox(
-                  height: 4,
+                Divider(height: 10.h),
+                SizedBox(
+                  height: 4.h,
                 ),
-                const Text(
+                Text(
                   'السعر',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
                 const _CustomSliderPrice(),
                 const Divider(),
-                const Text(
+                Text(
                   'الترتيب',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 5,
+                SizedBox(
+                  height: 5.h,
                 ),
                 const _CustomCheckPrice(),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 20.h,
                 ),
                 SizedBox(
                     width: double.infinity,
@@ -117,18 +120,15 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
                 },
               ),
             ),
-            const SizedBox(
-              height: 0,
-            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     'من:',
                     style: TextStyle(
                         color: mainColor,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
@@ -136,18 +136,18 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
                   ),
                   Text(
                     '${values.start.ceil()}ر.س',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: mainColor,
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   const Spacer(),
-                  const Text(
+                  Text(
                     'إلى:',
                     style: TextStyle(
                       color: mainColor,
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -156,9 +156,9 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
                   ),
                   Text(
                     '${values.end.ceil()}ر.س',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: mainColor,
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -209,7 +209,7 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
                         BorderSide(width: 1, color: mainColor.withOpacity(.5)),
                     shape: RoundedRectangleBorder(
                         side: const BorderSide(width: 1),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5).w),
                     value: !fromTop,
                     onChanged: (value) {
                       fromTop = false;
@@ -217,11 +217,11 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
                     },
                   ),
                 ),
-                const Text(
+                Text(
                   'من السعر الأقل للأعلي',
                   style: TextStyle(
                       color: mainColor,
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500),
                 ),
               ],
@@ -241,7 +241,7 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
                         BorderSide(width: 1, color: mainColor.withOpacity(.5)),
                     shape: RoundedRectangleBorder(
                         side: const BorderSide(width: 1),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5).w),
                     value: fromTop,
                     onChanged: (value) {
                       fromTop = true;
@@ -249,11 +249,11 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
                     },
                   ),
                 ),
-                const Text(
+                Text(
                   'من السعر الأعلى للأقل',
                   style: TextStyle(
                       color: mainColor,
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500),
                 ),
               ],

@@ -92,6 +92,8 @@ class CacheHelper {
   static String? getcityId() {
     return _prefs.getString('cityId');
   }
+
+
   static Future<void> saveUserData(Model model) async {
     await _prefs.setInt("id", model.id);
     await _prefs.setString("token", model.token);
@@ -105,7 +107,6 @@ class CacheHelper {
     await _prefs.setString("userType", model.userType);
     await _prefs.setInt("userCartCount", model.userCartCount);
     await _prefs.setString("cityId", model.city.id);
-
   }
 
 

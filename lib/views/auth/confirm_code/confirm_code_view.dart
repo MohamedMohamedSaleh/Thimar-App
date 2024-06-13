@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
@@ -46,12 +47,12 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(
-                  right: 16,
-                  left: 16,
+                padding: EdgeInsets.only(
+                  right: 16.w,
+                  left: 16.w,
                 ),
                 child: ListView(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 15).r,
                   children: [
                     CustomIntroduction(
                       mainText: !widget.isActive
@@ -62,22 +63,24 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                       isRequirPhoneCheck: true,
                     ),
                     PinCodeTextField(
-                      controller:widget.isActive? confirmBloc.confirmCodeController : changePasswordBloc.confirmCodeController,
+                      controller: widget.isActive
+                          ? confirmBloc.confirmCodeController
+                          : changePasswordBloc.confirmCodeController,
                       appContext: context,
                       length: 4,
                       pinTheme: PinTheme(
                         shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(15),
-                        fieldHeight: 50,
-                        fieldWidth: 60,
+                        borderRadius: BorderRadius.circular(15).w,
+                        fieldHeight: 50.h,
+                        fieldWidth: 60.w,
                         selectedColor: Theme.of(context).primaryColor,
                         inactiveColor: const Color(0xffF3F3F3),
                       ),
                       cursorColor: Theme.of(context).primaryColor,
                       keyboardType: TextInputType.number,
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 30.h,
                     ),
                     widget.isActive
                         ? BlocBuilder(
@@ -100,28 +103,28 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                                 isLoading: state is CheckCodeLoadingState,
                                 title: "تأكيد الكود",
                                 onPress: () {
-                                  changePasswordBloc.add(
-                                      CheckCodeEvent(phone: widget.phone));
+                                  changePasswordBloc
+                                      .add(CheckCodeEvent(phone: widget.phone));
                                 },
                               );
                             },
                           ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
-                    const Text(
+                    Text(
                       "لم تستلم الكود ؟\nيمكنك إعادة إرسال الكود بعد",
                       textDirection: TextDirection.ltr,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w300),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 30.h,
                     ),
                     const CustomCircleOrButton(),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                   ],
                 ),

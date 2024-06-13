@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
@@ -29,9 +30,9 @@ class ChangePasswordView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(
-                  right: 16,
-                  left: 16,
+                padding:  EdgeInsets.only(
+                  right: 16.w,
+                  left: 16.w,
                 ),
                 child: FormChanegePassword(
                   phone: phone,
@@ -41,7 +42,7 @@ class ChangePasswordView extends StatelessWidget {
             bottomNavigationBar: CustomBottomNavigationBar(
               text: "ليس لديك حساب ؟",
               buttonText: " تسجيل الدخول",
-              paddingBottom: 22,
+              paddingBottom: 22.h,
               onPress: () {
                 navigateTo(toPage: const RegisterView());
               },
@@ -77,10 +78,10 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
       child: ListView(
         padding: const EdgeInsets.only(top: 0),
         children: [
-          const CustomIntroduction(
+           CustomIntroduction(
             mainText: "نسيت كلمة المرور",
             supText: "أدخل كلمة المرور الجديدة",
-            paddingHeight: 17,
+            paddingHeight: 17.h,
           ),
           CustomAppInput(
             controller: resetPasswordBloc.passwordController,
@@ -113,7 +114,7 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             labelText: "تأكيد كلمة المرور",
             prefixIcon: "assets/icon/lock_icon.png",
             isPassword: true,
-            paddingBottom: 25,
+            paddingBottom: 25.h,
           ),
           BlocBuilder(
             bloc: resetPasswordBloc,
@@ -134,8 +135,8 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
               );
             },
           ),
-          const SizedBox(
-            height: 20,
+           SizedBox(
+            height: 20.h,
           ),
         ],
       ),

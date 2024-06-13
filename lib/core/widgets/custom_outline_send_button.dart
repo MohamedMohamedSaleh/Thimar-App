@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomOutlineButton extends StatelessWidget {
   const CustomOutlineButton({super.key, required this.onPress, required this.title});
@@ -12,7 +13,7 @@ class CustomOutlineButton extends StatelessWidget {
         title,
         style: TextStyle(
           color: Theme.of(context).primaryColor,
-          fontSize: 15,
+          fontSize: 15.sp,
           fontWeight: FontWeight.bold,
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -27,7 +28,7 @@ void showMessage({String? message, MessageType type = MessageType.faild}) {
           textAlign: TextAlign.center,
         ),
         duration: const Duration(seconds: 2),
-        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+        margin:  EdgeInsets.symmetric(horizontal: 30.w, vertical: 50.h),
         behavior: SnackBarBehavior.floating,
         backgroundColor: (type == MessageType.success)
             ? mainColor.withOpacity(.7)
@@ -35,7 +36,7 @@ void showMessage({String? message, MessageType type = MessageType.faild}) {
             
         shape: RoundedRectangleBorder(
 
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15).w,
         ),
       ),
     );

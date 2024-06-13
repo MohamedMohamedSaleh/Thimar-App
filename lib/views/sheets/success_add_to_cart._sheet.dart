@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
@@ -18,50 +19,50 @@ class SuccessAddToCartSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 215,
+      height: 215.h,
       child: Padding(
-        padding: const EdgeInsets.only(top: 16, right: 20, left: 20),
+        padding: EdgeInsets.only(top: 16.h, right: 20.w, left: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
                 CustomAppBarIcon(
                   isBack: false,
-                  height: 18,
-                  width: 18,
+                  height: 18.w,
+                  width: 18.w,
                   child: Icon(
                     Icons.check_rounded,
-                    size: 14,
+                    size: 14.h,
                     color: mainColor,
                   ),
                 ),
                 SizedBox(
-                  width: 12,
+                  width: 12.w,
                 ),
                 Text(
                   'تم إضافة المنتج بنجاح',
                   style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: mainColor),
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 20.h,
             ),
             _Item(
               model: model,
             ),
-            const SizedBox(
-              height: 16,
+            SizedBox(
+              height: 16.h,
             ),
             Row(
               children: [
                 Expanded(
                   child: SizedBox(
-                    height: 47,
+                    height: 47.h,
                     child: CustomFillButton(
                         title: 'التحويل إلى السلة',
                         onPress: () {
@@ -72,14 +73,14 @@ class SuccessAddToCartSheet extends StatelessWidget {
                         }),
                   ),
                 ),
-                const SizedBox(
-                  width: 16,
+                SizedBox(
+                  width: 16.w,
                 ),
                 Expanded(
                   child: SizedBox(
                     width: double.infinity,
                     child: SizedBox(
-                      height: 47,
+                      height: 47.h,
                       child: CustomOutlineButton(
                         onPress: () {
                           KiwiContainer().resolve<CartBloc>().amountProduct = 1;
@@ -115,16 +116,16 @@ class _ItemState extends State<_Item> {
     return Row(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: BorderRadius.circular(11).w,
           child: AppImage(
             widget.model.mainImage,
-            height: 61,
-            width: 66,
+            height: 61.h,
+            width: 66.w,
             fit: BoxFit.cover,
           ),
         ),
-        const SizedBox(
-          width: 11,
+        SizedBox(
+          width: 11.w,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,26 +133,30 @@ class _ItemState extends State<_Item> {
           children: [
             Text(
               widget.model.title,
-              style: const TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.w500, color: mainColor),
+              style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: mainColor),
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5.h,
             ),
             Text(
               'الكمية : ${bloc.amountProduct}',
-              style: const TextStyle(
-                  fontSize: 12,
+              style: TextStyle(
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w300,
-                  color: Color(0xff7E7E7E)),
+                  color: const Color(0xff7E7E7E)),
             ),
             const SizedBox(
               height: 2,
             ),
             Text(
               '${widget.model.price} ر.س',
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, color: mainColor),
+              style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: mainColor),
             ),
           ],
         ),

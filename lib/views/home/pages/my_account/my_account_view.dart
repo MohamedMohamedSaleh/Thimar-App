@@ -36,7 +36,7 @@ class MyAccountPage extends StatelessWidget {
               ),
             ),
             child: ListView(
-              physics: const PageScrollPhysics(),
+              // physics: const PageScrollPhysics(),
               addRepaintBoundaries: false,
               children: [
                 const _CustomAppBarAccount(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({
@@ -15,14 +16,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: paddingBottom, top: 0),
+      padding: EdgeInsets.only(bottom: paddingBottom.h, top: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             text,
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 15.sp,
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w300,
             ),
@@ -32,7 +33,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             child: Text(
               buttonText,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp,
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w600,
               ),
