@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/features/get_location.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/favs/favs_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/main_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/my_account_view.dart';
@@ -45,13 +47,13 @@ class _HomeViewState extends State<HomeView> {
     'my_account',
   ];
 
-  List<String> label = [
-    'الرئيسية',
-    'طلباتي',
-    'الإشعارات',
-    'المفضلة',
-    'حسابي',
-  ];
+  // List<String> label = [
+  //   LocaleKeys.home_nav_main_page.tr(),
+  //   LocaleKeys.home_nav_my_orders.tr(),
+  //   LocaleKeys.home_nav_notifications.tr(),
+  //   LocaleKeys.home_nav_favs.tr(),
+  //   LocaleKeys.home_nav_my_account.tr(),
+  // ];
   final bloc = KiwiContainer().resolve<GetSearchProductsBloc>();
 
   @override
@@ -92,6 +94,8 @@ class _HomeViewState extends State<HomeView> {
               topRight: Radius.circular(20),
             ),
             child: BottomNavigationBar(
+              unselectedLabelStyle: const TextStyle(fontSize: 10),
+              selectedLabelStyle: const TextStyle(fontSize: 12),
               backgroundColor: Theme.of(context).primaryColor,
               unselectedItemColor: const Color(0xffAED489),
               selectedItemColor: Colors.white,
@@ -112,7 +116,13 @@ class _HomeViewState extends State<HomeView> {
                         ? Colors.white
                         : const Color(0xffAED489),
                   ),
-                  label: label[index],
+                  label: [
+                    LocaleKeys.home_nav_main_page.tr(),
+                    LocaleKeys.home_nav_my_orders.tr(),
+                    LocaleKeys.home_nav_notifications.tr(),
+                    LocaleKeys.home_nav_favs.tr(),
+                    LocaleKeys.home_nav_my_account.tr(),
+                  ][index],
                 ),
               ),
               type: BottomNavigationBarType.fixed,

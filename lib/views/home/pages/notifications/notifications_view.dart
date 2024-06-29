@@ -70,9 +70,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     : ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.only(top: 22, bottom: 15),
-                        itemBuilder: (context, index) => _Item(
-                          model: bloc.list[index],
-                        ),
+                        itemBuilder: (context, index) => const SizedBox(),
+                        /*  _Item(
+                          model: bloc.list[index], */
+                        // ),
                         itemCount: bloc.list.length,
                       ),
           );

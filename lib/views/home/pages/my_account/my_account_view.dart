@@ -1,9 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
+import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
+import 'package:vegetable_orders_project/features/products/products/products_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/main.dart';
 import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
@@ -18,9 +23,14 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/cus
 
 import 'screens/frequently_questions_view.dart';
 
-class MyAccountPage extends StatelessWidget {
+class MyAccountPage extends StatefulWidget {
   const MyAccountPage({super.key});
 
+  @override
+  State<MyAccountPage> createState() => _MyAccountPageState();
+}
+
+class _MyAccountPageState extends State<MyAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,25 +69,26 @@ class MyAccountPage extends StatelessWidget {
                                 InkWell(
                                   onTap: () => navigateTo(
                                       toPage: const PersonalDataView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'account_details',
-                                    title: 'البيانات الشخصية',
+                                    title: LocaleKeys.my_account_personal_data
+                                        .tr(),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () =>
                                       navigateTo(toPage: const WalletView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Wallet',
-                                    title: 'المحفظة',
+                                    title: LocaleKeys.my_account_wallet.tr(),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () =>
                                       navigateTo(toPage: const TitlesView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Location',
-                                    title: 'العناوين',
+                                    title: LocaleKeys.my_account_addresses.tr(),
                                   ),
                                 ),
                               ],
@@ -100,34 +111,35 @@ class MyAccountPage extends StatelessWidget {
                                 InkWell(
                                   onTap: () => navigateTo(
                                       toPage: const FrequentlyQuestionsView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Questions',
-                                    title: 'أسئلة متكررة',
+                                    title: LocaleKeys.my_account_faqs.tr(),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () => navigateTo(
                                       toPage: const PrivacyPolicyView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'privacy_policy',
-                                    title: 'سياسة الخصوصية',
+                                    title: LocaleKeys.my_account_policy.tr(),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () => navigateTo(
                                       toPage: const ConnectWithUsView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Call_Calling',
-                                    title: 'تواصل معنا',
+                                    title: LocaleKeys.my_account_call_us.tr(),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () => navigateTo(
                                       toPage:
                                           const SuggestionsComplaintsView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Edit',
-                                    title: 'الشكاوي والأقتراحات',
+                                    title:
+                                        LocaleKeys.my_account_complaints.tr(),
                                   ),
                                 ),
                                 InkWell(
@@ -137,9 +149,9 @@ class MyAccountPage extends StatelessWidget {
                                     await Share.share(
                                         'This app is very usefull.\n\n$url');
                                   },
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'share',
-                                    title: 'مشاركة التطبيق',
+                                    title: LocaleKeys.my_account_share_app.tr(),
                                   ),
                                 ),
                               ],
@@ -162,22 +174,39 @@ class MyAccountPage extends StatelessWidget {
                                 InkWell(
                                   onTap: () => navigateTo(
                                       toPage: const AboutApplicationView()),
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'application',
-                                    title: 'عن التطبيق',
+                                    title: LocaleKeys.my_account_about_app.tr(),
                                   ),
                                 ),
-                                const _ItemMyAccount(
-                                  icon: 'language',
-                                  title: 'تغيير اللغة',
+                                InkWell(
+                                  onTap: () async {
+                                    String code =
+                                        context.locale.languageCode == "en"
+                                            ? "ar"
+                                            : "en";
+                                    await context.setLocale(Locale(code));
+                                    setState(() {});
+                                    KiwiContainer()
+                                        .resolve<GetCategoryBloc>()
+                                        .add(GetCategoryEvent());
+                                    KiwiContainer()
+                                        .resolve<ProductsBloc>()
+                                        .add(GetProductsEvent());
+                                  },
+                                  child: _ItemMyAccount(
+                                    icon: 'language',
+                                    title: LocaleKeys.my_account_change_language
+                                        .tr(),
+                                  ),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     navigateTo(toPage: const TermsView());
                                   },
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Note',
-                                    title: 'الشروط والأحكام',
+                                    title: LocaleKeys.my_account_terms.tr(),
                                   ),
                                 ),
                                 InkWell(
@@ -187,9 +216,9 @@ class MyAccountPage extends StatelessWidget {
                                     await Share.share(
                                         'This app is very usefull.\n\n$url');
                                   },
-                                  child: const _ItemMyAccount(
+                                  child: _ItemMyAccount(
                                     icon: 'Star',
-                                    title: 'تقييم التطبيق',
+                                    title: LocaleKeys.my_account_rate_app.tr(),
                                   ),
                                 ),
                               ],
@@ -214,8 +243,8 @@ class MyAccountPage extends StatelessWidget {
                                     CacheHelper.clearUserData();
                                     navigateTo(toPage: const LoginView());
                                   },
-                                  child: const _ItemMyAccount(
-                                    title: 'تسجيل الخروج',
+                                  child: _ItemMyAccount(
+                                    title: LocaleKeys.my_account_log_out.tr(),
                                     icon: 'Turn_off',
                                     isLogout: true,
                                   ),
@@ -268,13 +297,16 @@ class _ItemMyAccount extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           const Spacer(),
-          AppImage(
-            !isLogout
-                ? 'assets/icon/svg/line_arrow_acount.svg'
-                : 'assets/icon/svg/account/$icon.svg',
-            height: 18,
-            width: 18,
-            fit: BoxFit.scaleDown,
+          Transform.flip(
+            flipX: context.locale.languageCode == 'ar' ? false : true,
+            child: AppImage(
+              !isLogout
+                  ? 'assets/icon/svg/line_arrow_acount.svg'
+                  : 'assets/icon/svg/account/$icon.svg',
+              height: 18,
+              width: 18,
+              fit: BoxFit.scaleDown,
+            ),
           ),
         ],
       ),
@@ -307,22 +339,22 @@ class _CustomAppBarAccountState extends State<_CustomAppBarAccount> {
               toolbarHeight: 210,
               backgroundColor: Theme.of(context).primaryColor,
               centerTitle: true,
-              title: const Column(
+              title: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Text(
-                    'حسابي',
-                    style: TextStyle(
+                    LocaleKeys.my_account_my_account.tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  CustomMyData(),
+                  const CustomMyData(),
                 ],
               ),
             ),

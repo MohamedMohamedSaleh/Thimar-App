@@ -72,8 +72,8 @@ class Unit {
 
   Unit.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    type = json['type'];
+    name = json['name']?? '';
+    type = json['type']?? '';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

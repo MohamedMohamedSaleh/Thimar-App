@@ -34,12 +34,11 @@ class CacheHelper {
   static Future<void> setCurrentLocation(String value) async {
     await _prefs.setString('currentLocation', value);
   }
+
   static Future<void> setLocation(String value) async {
     await _prefs.setString('location', value);
   }
   //////////////
-
-
 
   static String? getLat() {
     return _prefs.getString('lat');
@@ -52,6 +51,7 @@ class CacheHelper {
   static String? getCurrentLocation() {
     return _prefs.getString('currentLocation');
   }
+
   static String? getLocation() {
     return _prefs.getString('location');
   }
@@ -82,9 +82,11 @@ class CacheHelper {
   static String? getUserPhone() {
     return _prefs.getString('phone');
   }
+
   static String? getUserCity() {
     return _prefs.getString('city');
   }
+
   static int? getUserIsVip() {
     return _prefs.getInt('isVip');
   }
@@ -92,7 +94,6 @@ class CacheHelper {
   static String? getcityId() {
     return _prefs.getString('cityId');
   }
-
 
   static Future<void> saveUserData(Model model) async {
     await _prefs.setInt("id", model.id);
@@ -108,7 +109,6 @@ class CacheHelper {
     await _prefs.setInt("userCartCount", model.userCartCount);
     await _prefs.setString("cityId", model.city.id);
   }
-
 
   static Future<void> saveEditData(UserDataProfile model) async {
     await _prefs.setInt("id", model.id);

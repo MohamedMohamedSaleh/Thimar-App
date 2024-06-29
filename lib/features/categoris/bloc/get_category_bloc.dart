@@ -10,11 +10,13 @@ class GetCategoryBloc extends Bloc<GetCategoryEvents, GetCategoryStates> {
     on<GetCategoryEvent>(_getData);
   }
 
-  Future<void> _getData(GetCategoryEvent event, Emitter<GetCategoryStates> emit) async {
+  Future<void> _getData(
+      GetCategoryEvent event, Emitter<GetCategoryStates> emit) async {
     emit(GetCtegoryLoadingState());
     final response = await DioHelper().getData(endPoint: 'categories');
 
     if (response.isSuccess) {
+      print("loading");
       final model = CategoryData.fromJson(response.response!.data);
       emit(GetCtegorySuccessState(model: model.list));
     } else {

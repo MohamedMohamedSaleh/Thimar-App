@@ -1,12 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/views/auth/splash/splash_view.dart';
 import 'core/constants/my_colors.dart';
 import 'core/logic/helper_methods.dart';
+import 'generated/codegen_loader.g.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -19,7 +20,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   initKiwi();
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  runApp(
+    EasyLocalization(
+        supportedLocales: const [Locale('en'), Locale('ar')],
+        saveLocale: true,
+        startLocale: const Locale('ar'),
+        path: 'assets/translations',
+        assetLoader: const CodegenLoader(),
+        fallbackLocale: const Locale('en'),
+        child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,15 +44,12 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(330, 750),
       builder: (context, child) => MaterialApp(
-        localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ar'),
-        ],
+         localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+        
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
-        builder: (context, child) =>
-            Directionality(textDirection: TextDirection.rtl, child: child!),
         title: 'Orders App',
         theme: ThemeData(
           colorScheme:

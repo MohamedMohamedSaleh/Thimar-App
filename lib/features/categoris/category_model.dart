@@ -20,8 +20,8 @@ class CategoryModel {
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    media = json['media'];
+    name = json['name']?? "nnn";
+    description = json['description'] ?? '';
+    media = json['media']?? "";
   }
 }

@@ -35,6 +35,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
       );
 
       if (response.isSuccess) {
+       
         UserData model = UserData.fromJson(response.response!.data);
         await CacheHelper.saveUserData(model.model);
         if (!(navigatorKey.currentContext!.mounted)) return;

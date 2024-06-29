@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/product_details_view.dart';
 import '../../../features/products/products_model.dart';
 
@@ -27,7 +30,7 @@ class ItemProduct extends StatefulWidget {
 
 class ItemProductState extends State<ItemProduct> {
   final cartBloc = KiwiContainer().resolve<CartBloc>();
-  
+
   // final cubit = KiwiContainer().resolve<CartCubit>();
   @override
   initState() {
@@ -80,13 +83,14 @@ class ItemProductState extends State<ItemProduct> {
                                 height: 18,
                                 width: 55,
                                 padding: const EdgeInsets.only(
-                                    left: 10,right: 10, bottom: 4, top: 2),
+                                    left: 10, right: 10, bottom: 4, top: 2),
                                 alignment: Alignment.topCenter,
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).primaryColor,
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(11),
-                                      bottomRight: Radius.circular(11)),
+                                  borderRadius:
+                                      const BorderRadiusDirectional.only(
+                                          topEnd: Radius.circular(11),
+                                          bottomStart: Radius.circular(11)),
                                 ),
                                 child: Text(
                                   '${widget.isSearch ? widget.searchModel!.discount : widget.model!.discount}%',
@@ -106,21 +110,21 @@ class ItemProductState extends State<ItemProduct> {
                           ? widget.searchModel!.title
                           : widget.model!.title,
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor),
                     ),
                     Text(
-                      'السعر / ${widget.isSearch ? widget.searchModel!.unit.name : widget.model!.unit.name}',
-                      style: const TextStyle(
-                          fontSize: 12,
+                      '${LocaleKeys.price.tr()} / 1 ${widget.isSearch ? widget.searchModel!.unit.name : widget.model!.unit.name}',
+                      style: TextStyle(
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w300,
-                          color: Color(0Xff808080)),
+                          color: const Color(0Xff808080)),
                     ),
                     Row(
                       children: [
                         Text(
-                          '${widget.isSearch ? widget.searchModel!.price : widget.model!.price} ر.س',
+                          '${widget.isSearch ? widget.searchModel!.price : widget.model!.price} ${LocaleKeys.r_s.tr()}',
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -130,7 +134,7 @@ class ItemProductState extends State<ItemProduct> {
                           width: 3,
                         ),
                         Text(
-                          '${widget.isSearch ? widget.searchModel!.priceBeforeDiscount : widget.model!.priceBeforeDiscount} ر.س',
+                          '${widget.isSearch ? widget.searchModel!.priceBeforeDiscount : widget.model!.priceBeforeDiscount}${LocaleKeys.r_s.tr()}',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w300,
@@ -174,19 +178,31 @@ class ItemProductState extends State<ItemProduct> {
                                 builder: (context, state) {
                                   return FilledButton(
                                     style: FilledButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(11)),
                                         backgroundColor:
                                             const Color(0xff61B80C)),
                                     child: state is AddToCartLoadingState &&
-                                            (widget.isSearch?widget.searchModel!.id == state.id : widget.model!.id == state.id)
+                                            (widget.isSearch
+                                                ? widget.searchModel!.id ==
+                                                    state.id
+                                                : widget.model!.id == state.id)
                                         ? const Center(
                                             child: LinearProgressIndicator(),
                                           )
-                                        : const Text('أضف للسلة'),
+                                        : FittedBox(
+                                            child: Text(
+                                              LocaleKeys.add_to_cart.tr(),
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                          ),
                                     onPressed: () {
-                                      cartBloc.add(StorProductCartEvent(id: widget.isSearch
+                                      cartBloc.add(StorProductCartEvent(
+                                          id: widget.isSearch
                                               ? widget.searchModel!.id
                                               : widget.model!.id));
                                     },

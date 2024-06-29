@@ -1,11 +1,14 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import '../../../../../features/products/products/products_bloc.dart';
 import '../../../../../features/products/products_model.dart';
 import '../../../widgets/custom_plus_minus_product.dart';
@@ -113,35 +116,35 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     widget.model.title,
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,
-                                        fontSize: 21,
+                                        fontSize: 20.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const Spacer(),
                                   Text(
                                     '${widget.model.discount}%',
-                                    style: const TextStyle(
-                                        color: Color(0xffFF0000),
-                                        fontSize: 12,
+                                    style: TextStyle(
+                                        color: const Color(0xffFF0000),
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.w300),
                                   ),
                                   const SizedBox(
                                     width: 6,
                                   ),
                                   Text(
-                                    '${widget.model.price}ر.س',
+                                    '${widget.model.price}${LocaleKeys.r_s.tr()}',
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
                                     width: 2,
                                   ),
                                   Text(
-                                    '${widget.model.priceBeforeDiscount}ر.س',
+                                    '${widget.model.priceBeforeDiscount}${LocaleKeys.r_s.tr()}',
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,
-                                        fontSize: 12,
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.w300,
                                         decoration: TextDecoration.lineThrough),
                                   ),
@@ -156,11 +159,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               Row(
                                 children: [
                                   Text(
-                                    'السعر /  ${widget.model.unit.name}',
-                                    style: const TextStyle(
-                                      fontSize: 19,
+                                    '${LocaleKeys.price.tr()} / 1  ${widget.model.unit.name}',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w300,
-                                      color: Color(0xff808080),
+                                      color: const Color(0xff808080),
                                     ),
                                   ),
                                   const Spacer(),
@@ -182,17 +185,18 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             TextSpan(
                               children: [
                                 TextSpan(
-                                  text: "كود المنتج  ",
+                                  text:
+                                      "${LocaleKeys.product_details_product_code.tr()} ",
                                   style: TextStyle(
                                       color: Theme.of(context).primaryColor,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                const TextSpan(
-                                  text: "56638",
+                                TextSpan(
+                                  text: "${widget.model.id.toString()} #",
                                   style: TextStyle(
-                                    color: Color(0xff808080),
-                                    fontSize: 18,
+                                    color: const Color(0xff808080),
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.w300,
                                   ),
                                 ),
@@ -203,12 +207,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         const Divider(),
                         Padding(
                           padding: const EdgeInsets.only(
-                              right: 16, bottom: 5, top: 4),
+                              right: 16, bottom: 5, top: 4, left: 16),
                           child: Text(
-                            'تفاصيل المنتج',
+                            LocaleKeys.product_details_product_details.tr(),
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -227,7 +231,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 5),
                           child: Text(
-                            'التقييمات',
+                            LocaleKeys.product_details_ratings.tr(),
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 16,
@@ -237,9 +241,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         const CustomListComments(),
                         Padding(
                           padding: const EdgeInsets.only(
-                              right: 16, top: 10, bottom: 5),
+                              right: 16, top: 10, bottom: 5, left: 16),
                           child: Text(
-                            'منتجات مشابهة',
+                            LocaleKeys.product_details_similar_products.tr(),
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 16,
@@ -305,9 +309,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           const SizedBox(
                             width: 9,
                           ),
-                          const Text(
-                            'إضافة إلي السلة',
-                            style: TextStyle(
+                          Text(
+                            LocaleKeys.product_details_add_to_cart.tr(),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,

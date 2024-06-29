@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -12,6 +13,7 @@ import 'package:vegetable_orders_project/views/sheets/filtter_sheet.dart';
 import '../../../../../../core/constants/my_colors.dart';
 import '../../../../../../core/widgets/custom_app_input.dart';
 import '../../../../../../features/categoris/category_model.dart';
+import '../../../../../../generated/locale_keys.g.dart';
 
 class CategoryView extends StatefulWidget {
   const CategoryView({super.key, required this.id, required this.model});
@@ -78,7 +80,7 @@ class _CategoryViewState extends State<CategoryView> {
                         getSearchBloc.search.clear();
                       }
                     },
-                    labelText: "ابحث عن ماتريد؟",
+                    labelText: LocaleKeys.home_search_about_you_want.tr(),
                     prefixIcon: "assets/icon/svg/search.svg",
                     fillColor: const Color(0xff4C8613).withOpacity(.03),
                     paddingBottom: 0,
@@ -158,28 +160,28 @@ class _CategoryViewState extends State<CategoryView> {
                               ),
                             );
                           } else {
-                            return const SizedBox(
+                            return SizedBox(
                               width: double.infinity,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  AppImage(
+                                  const AppImage(
                                     'assets/icon/no_data_category.png',
                                     width: 200,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   Text(
-                                    'لا توجد بيانات',
-                                    style: TextStyle(
+                                    LocaleKeys.home_data_not_found.tr(),
+                                    style: const TextStyle(
                                       fontSize: 25,
                                       color: mainColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 80,
                                   ),
                                 ],

@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_item_product.dart';
 
 import '../../../../core/constants/my_colors.dart';
@@ -29,8 +31,8 @@ class _FavsPageState extends State<FavsPage> {
     return FadeIn(
       duration: const Duration(milliseconds: 500),
       child: Scaffold(
-        appBar: const CustomAppBar(
-          title: 'المفضلة',
+        appBar: CustomAppBar(
+          title: LocaleKeys.home_nav_favs.tr(),
           thereIsIcon: false,
         ),
         body: BlocBuilder(
@@ -44,21 +46,21 @@ class _FavsPageState extends State<FavsPage> {
                 ),
               );
             } else if (bloc.favsList.isEmpty) {
-              return const SizedBox(
+              return SizedBox(
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AppImage(
+                    const AppImage(
                       'assets/icon/no_data_favs.png',
                       width: 200,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
-                      'لا توجد بيانات',
-                      style: TextStyle(
+                      LocaleKeys.home_data_not_found.tr(),
+                      style: const TextStyle(
                         fontSize: 25,
                         color: mainColor,
                         fontWeight: FontWeight.bold,

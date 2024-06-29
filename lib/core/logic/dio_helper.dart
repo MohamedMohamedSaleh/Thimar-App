@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 
 class DioHelper {
   final Dio _dio =
       Dio(BaseOptions(baseUrl: "https://thimar.amr.aait-d.com/api/", headers: {
     'Accept': 'application/json',
     'Authorization': "Bearer ${CacheHelper.getUserToken()}",
+    'Accept-Language': LocaleKeys.lang.tr(),
   }));
 
   Future<ResponseData> sendData({
@@ -31,7 +34,7 @@ class DioHelper {
     }
   }
 
- static MultipartFile convertPathToMultiPart({required String imagePath}) {
+  static MultipartFile convertPathToMultiPart({required String imagePath}) {
     return MultipartFile.fromFileSync(imagePath,
         filename: imagePath.split('/').last);
   }

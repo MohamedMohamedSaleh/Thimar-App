@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
@@ -10,6 +12,7 @@ import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
 import 'package:vegetable_orders_project/features/slider/bloc/get_slider_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/main/screens/categories/category_view.dart';
 import '../../../../features/categoris/category_model.dart';
 import '../../../../features/products/products/products_bloc.dart';
@@ -97,7 +100,7 @@ class _MainPageState extends State<MainPage> {
                           },
 
                           // controller: searchProducts.textController,
-                          labelText: "ابحث عن ماتريد؟",
+                          labelText: LocaleKeys.home_search_about_you_want.tr(),
                           prefixIcon: "assets/icon/svg/search.svg",
                           fillColor: const Color(0xff4C8613).withOpacity(.03),
                           paddingBottom: 0,
@@ -179,29 +182,17 @@ class _MainPageState extends State<MainPage> {
                                 },
                               );
                             } else {
-                              return const Text("failed");
+                              return const Text("failed....");
                             }
                           },
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
                               right: 16, top: 27, left: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "الأقسام",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w800),
-                              ),
-                              Text(
-                                "عرض الكل",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w300,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                            ],
+                          child: Text(
+                            LocaleKeys.home_categories.tr(),
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w800),
                           ),
                         ),
                         const SizedBox(
@@ -245,15 +236,16 @@ class _MainPageState extends State<MainPage> {
                                 ),
                               );
                             } else {
-                              return const Text("failed");
+                              return const Text("failed...");
                             }
                           },
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 5, right: 16),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 5, right: 16, left: 16),
                           child: Text(
-                            'الأصناف',
-                            style: TextStyle(
+                            LocaleKeys.home_items.tr(),
+                            style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w800),
                           ),
                         ),
@@ -372,7 +364,7 @@ class _ItemCategoryState extends State<_ItemCategory> {
           ),
           Text(
             widget.model.name,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
           ),
         ],
       ),

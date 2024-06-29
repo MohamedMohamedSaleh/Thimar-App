@@ -26,16 +26,20 @@ class GetLocationn {
     initialPosition = myLocation != null
         ? LatLng(myLocation.latitude, myLocation.longitude)
         : null;
-
-    List<Placemark>? placemarks = myLocation != null
-        ? await placemarkFromCoordinates(
-            myLocation.latitude, myLocation.longitude)
-        : null;
-    if (placemarks != null) {
-      var myPlace = placemarks.first;
-      await CacheHelper.setCurrentLocation(myPlace.subAdministrativeArea ?? '');
-      controller.add(true);
-      isGetMyLocation = true;
+    try {
+      List<Placemark>? placemarks = myLocation != null
+          ? await placemarkFromCoordinates(
+              myLocation.latitude, myLocation.longitude)
+          : null;
+      if (placemarks != null) {
+        var myPlace = placemarks.first;
+        await CacheHelper.setCurrentLocation(
+            myPlace.subAdministrativeArea ?? '');
+        controller.add(true);
+        isGetMyLocation = true;
+      }
+    } catch (e) {
+      print(e);
     }
     return myLocation;
   }

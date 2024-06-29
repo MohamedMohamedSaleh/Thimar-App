@@ -1,21 +1,17 @@
+
 import 'package:flutter/material.dart';
 
 class CustomAppBarIcon extends StatelessWidget {
   const CustomAppBarIcon({
     super.key,
-    this.child = const Icon(
-      Icons.arrow_back_ios_rounded,
-      size: 20,
-      textDirection: TextDirection.rtl,
-      color: Color(0xff4C8613),
-    ),
+    this.child,
     this.isBack = true,
     this.height = 30,
     this.width = 30,
     this.color,
     this.onTap,
   });
-  final Widget child;
+  final Widget? child;
   final bool isBack;
   final double height;
   final double width;
@@ -40,7 +36,13 @@ class CustomAppBarIcon extends StatelessWidget {
         ),
         height: height,
         width: width,
-        child: child,
+        child: child ??
+            const Icon(
+              Icons.arrow_back_ios_rounded,
+              size: 20,
+              // textDirection:context.locale.languageCode == 'ar'? TextDirection.ltr,
+              color: Color(0xff4C8613),
+            ),
       ),
     );
   }

@@ -40,12 +40,14 @@ class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
         bloc: bloc,
         builder: (context, state) {
           if (state is GetSimilarProductLoadingState) {
-            return const ShimmerLoadingProduct(isMain: false,);
+            return const ShimmerLoadingProduct(
+              isMain: false,
+            );
           } else if (state is GetSimilarProductSuccrssState) {
             return SizedBox(
               height: 180,
               child: ListView.separated(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.only(right: 16, left: 16),
                 separatorBuilder: (context, index) {
                   return const SizedBox(
                     width: 18,
