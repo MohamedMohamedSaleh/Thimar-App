@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
@@ -36,14 +37,20 @@ class _CustomTabBarState extends State<CustomTabBar> {
           indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Theme.of(context).primaryColor),
-          tabs: const [
+          tabs: [
             Tab(
               height: 40,
-              child: Text('الحاليه'),
+              child: Text(
+                context.locale.languageCode == "en" ? "Active" : "الحاليه",
+                style: const TextStyle(fontSize: 14),
+              ),
             ),
             Tab(
               height: 40,
-              child: Text('المنتهية'),
+              child: Text(
+                context.locale.languageCode == "en" ? "Expired" : 'المنتهية',
+                style: const TextStyle(fontSize: 14),
+              ),
             ),
           ],
         ),

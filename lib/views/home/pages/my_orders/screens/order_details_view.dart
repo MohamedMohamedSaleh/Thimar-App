@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -6,6 +7,7 @@ import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/features/my_orders/all_orders_model.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/widget/custom_orders_mony.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/screens/product_evaluation_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/widgets/custom_orders_item.dart';
@@ -39,8 +41,8 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'تفاصيل المنتج',
+      appBar: CustomAppBar(
+        title: LocaleKeys.orders_order_details.tr(),
       ),
       body: BlocBuilder(
         bloc: bloc,
@@ -61,7 +63,8 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                 const SizedBox(
                   height: 16,
                 ),
-                const Text('عنوان التوصيل', style: _textStyle),
+                Text(LocaleKeys.orders_delivery_address.tr(),
+                    style: _textStyle),
                 const SizedBox(
                   height: 18,
                 ),
@@ -85,7 +88,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'المنزل',
+                              LocaleKeys.addresses_home.tr(),
                               style: _textStyle.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 15),
                             ),
@@ -123,7 +126,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                 const SizedBox(
                   height: 16,
                 ),
-                const Text('ملخص الطلب', style: _textStyle),
+                Text(LocaleKeys.orders_order_summary.tr(), style: _textStyle),
                 CustomOrdersMony(
                   orderModel: bloc.orderModel,
                   isDetailsOrder: true,
@@ -147,7 +150,9 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                   child: SizedBox(
                     width: double.infinity,
                     child: CustomFillButton(
-                      title: 'تقييم المنتجات',
+                      title: context.locale.languageCode == "en"
+                          ? "Product Evaluation"
+                          : 'تقييم المنتجات',
                       onPress: () {
                         navigateTo(toPage: const ProductEvaluationView());
                       },
@@ -159,27 +164,31 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
               child: SizedBox(
-                height: 55,
+                height: 45,
                 child: BlocBuilder(
                   bloc: bloc,
                   builder: (context, state) {
                     if (state is CancelOrderLoadingState) {
                       return const Center(
-                        child: CircularProgressIndicator(color: Color(0xffff0000),),
+                        child: CircularProgressIndicator(
+                          color: Color(0xffff0000),
+                        ),
                       );
                     }
                     return FilledButton(
                       style: FilledButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                            borderRadius: BorderRadius.circular(11)),
                         backgroundColor: const Color(0xffFFE1E1),
                       ),
                       onPressed: () {
                         bloc.add(CancelOrderEvent(id: widget.id));
                       },
-                      child: const Text(
-                        'إلغاء الطلب',
-                        style: TextStyle(
+                      child: Text(
+                        context.locale.languageCode == "en"
+                            ? "Cancel Order"
+                            : 'إلغاء الطلب',
+                        style: const TextStyle(
                             color: Color(0xffFF0000),
                             fontSize: 15,
                             fontWeight: FontWeight.bold),

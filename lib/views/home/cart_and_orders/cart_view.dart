@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -10,6 +11,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/complet_order_view.dart';
 import 'package:vegetable_orders_project/views/home/widgets/custom_plus_minus_product.dart';
 
@@ -47,9 +49,9 @@ class _CartViewState extends State<CartView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppImage('assets/icon/no_data_cart.png',
-                            width: 200,
-                  
+                  AppImage(
+                    'assets/icon/no_data_cart.png',
+                    width: 200,
                   ),
                   SizedBox(
                     height: 8,
@@ -75,7 +77,8 @@ class _CartViewState extends State<CartView> {
               },
               child: Scaffold(
                 // extendBody: true,
-                appBar: const CustomAppBar(title: 'السلة', thereIsIcon: true),
+                appBar: CustomAppBar(
+                    title: LocaleKeys.cart_cart.tr(), thereIsIcon: true),
                 body: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -129,8 +132,9 @@ class _CartViewState extends State<CartView> {
                                             borderSide: const BorderSide(
                                                 color: mainColor),
                                           ),
-                                          labelText:
-                                              'عندك كوبون ؟ ادخل رقم الكوبون',
+                                          labelText: LocaleKeys
+                                              .cart_you_have_coupon
+                                              .tr(),
                                           labelStyle: const TextStyle(
                                             fontSize: 12,
                                             color: Color(0xffB9C9A8),
@@ -146,7 +150,7 @@ class _CartViewState extends State<CartView> {
                                   SizedBox(
                                     height: 37,
                                     child: CustomFillButton(
-                                      title: 'تطبيق',
+                                      title: LocaleKeys.categories_apply.tr(),
                                       onPress: () {},
                                       radius: 10,
                                     ),
@@ -159,10 +163,11 @@ class _CartViewState extends State<CartView> {
                             height: 8,
                           ),
                           Text(
-                            'جميع الأسعار تشمل قيمة الضريبة المضافة 15%',
+                            // bloc.cartData!.vipMessage,
+                            LocaleKeys.cart_all_prices.tr(),
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
                             textAlign: TextAlign.center,
@@ -187,7 +192,7 @@ class _CartViewState extends State<CartView> {
                       child: SizedBox(
                         width: double.infinity,
                         child: CustomFillButton(
-                          title: 'الانتقال لإتمام الطلب',
+                          title: LocaleKeys.cart_move_to_complete_order.tr(),
                           onPress: () {
                             navigateTo(toPage: const CompletOrderView());
                           },
@@ -266,7 +271,7 @@ class _ItemOrderState extends State<_ItemOrder> {
                     ),
                   ),
                   Text(
-                    '${widget.model.price} ر.س',
+                    '${widget.model.price} ${LocaleKeys.r_s.tr()}',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 12,

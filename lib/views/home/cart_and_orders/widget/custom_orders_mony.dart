@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
 import 'package:vegetable_orders_project/features/my_orders/my_order_model.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 
 class CustomOrdersMony extends StatefulWidget {
   const CustomOrdersMony({
@@ -36,7 +38,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
             Row(
               children: [
                 Text(
-                  'إجمالي المنتجات',
+                  LocaleKeys.orders_total_products.tr(),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15.sp,
@@ -45,7 +47,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                 ),
                 const Spacer(),
                 Text(
-                  "${widget.isDetailsOrder ? widget.orderModel?.priceBeforeDiscount.toString() : widget.model?.totalPriceBeforeDiscount.toString() ?? '00'}ر.س",
+                  "${widget.isDetailsOrder ? widget.orderModel?.priceBeforeDiscount.toString() : widget.model?.totalPriceBeforeDiscount.toString() ?? '00'} ${LocaleKeys.r_s.tr()}",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15.sp,
@@ -60,7 +62,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
             Row(
               children: [
                 Text(
-                  'الخصم',
+                  LocaleKeys.orders_discount.tr(),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15.sp,
@@ -69,7 +71,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                 ),
                 const Spacer(),
                 Text(
-                  '-${widget.isDetailsOrder ? widget.orderModel?.discount.toString() : widget.model?.totalDiscount.toDouble().toStringAsFixed(2)}ر.س',
+                  '-${widget.isDetailsOrder ? widget.orderModel?.discount.toString() : widget.model?.totalDiscount.toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15.sp,
@@ -93,7 +95,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                       Row(
                         children: [
                           Text(
-                            'الاجمالي بعد خصم المنتجات',
+                            LocaleKeys.orders_total_after_discount.tr(),
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15.sp,
@@ -102,7 +104,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                           ),
                           const Spacer(),
                           Text(
-                            "${widget.isDetailsOrder ? widget.orderModel?.orderPrice.toString() : widget.model?.totalPriceWithVat.toDouble().toStringAsFixed(2) ?? ''}ر.س",
+                            "${widget.isDetailsOrder ? widget.orderModel?.orderPrice.toString() : widget.model?.totalPriceWithVat.toDouble().toStringAsFixed(2) ?? ''} ${LocaleKeys.r_s.tr()}",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15.sp,
@@ -117,7 +119,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                       Row(
                         children: [
                           Text(
-                            'سعر التوصيل',
+                            LocaleKeys.orders_delivery_price.tr(),
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15.sp,
@@ -126,7 +128,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                           ),
                           const Spacer(),
                           Text(
-                            "${widget.isDetailsOrder ? widget.orderModel?.deliveryPrice.toString() : widget.model?.deliveryCost.toString() ?? ''}ر.س",
+                            "${widget.isDetailsOrder ? widget.orderModel?.deliveryPrice.toString() : widget.model?.deliveryCost.toString() ?? ''} ${LocaleKeys.r_s.tr()}",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15.sp,
@@ -142,7 +144,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                           ? Row(
                               children: [
                                 Text(
-                                  'خصم عميل مميز',
+                                  LocaleKeys.orders_special_dicount.tr(),
                                   style: TextStyle(
                                     color: Colors.orange,
                                     fontSize: 15.sp,
@@ -151,7 +153,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  "${widget.isDetailsOrder ? widget.orderModel?.vipDiscount.toString() : widget.model?.vipDiscount.toString() ?? ''}ر.س",
+                                  "${widget.isDetailsOrder ? widget.orderModel?.vipDiscount.toString() : widget.model?.vipDiscount.toString() ?? ''} ${LocaleKeys.r_s.tr()}",
                                   style: TextStyle(
                                     color: Colors.orange,
                                     fontSize: 15.sp,
@@ -176,7 +178,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
             Row(
               children: [
                 Text(
-                  'المجموع',
+                  LocaleKeys.orders_total.tr(),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15.sp,
@@ -185,7 +187,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                 ),
                 const Spacer(),
                 Text(
-                  '${widget.isDetailsOrder ? widget.orderModel?.totalPrice.toString() : widget.isCompletOrder ? widget.model?.sum.toDouble().toStringAsFixed(2) : widget.model?.totalPriceWithVat.toDouble().toStringAsFixed(2)}ر.س',
+                  '${widget.isDetailsOrder ? widget.orderModel?.totalPrice.toString() : widget.isCompletOrder ? widget.model?.sum.toDouble().toStringAsFixed(2) : widget.model?.totalPriceWithVat.toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15.sp,
@@ -200,7 +202,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'تم الدفع بواسطة',
+                        LocaleKeys.orders_paid_by.tr(),
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 15.sp,
@@ -210,7 +212,7 @@ class _CustomOrdersMonyState extends State<CustomOrdersMony> {
                       SizedBox(
                         width: 16.sp,
                       ),
-                      const AppImage('assets/icon/svg/blue_visa.svg'),
+                      const AppImage('assets/icon/svg/money.svg'),
                     ],
                   )
                 : const SizedBox(),

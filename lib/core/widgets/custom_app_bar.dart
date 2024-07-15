@@ -26,7 +26,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               automaticallyImplyLeading: false,
               title: Padding(
                 padding: const EdgeInsets.only(top: 14),
-                child: Text(title),
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 17),
+                ),
               ),
               bottom: bottom,
             ),

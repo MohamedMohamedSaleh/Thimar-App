@@ -338,7 +338,7 @@ static const Map<String,dynamic> en = {
     "amount_information": "Amount Information",
     "your_amount": "Your amount",
     "card_information": "Card Information",
-    "name": "name",
+    "name": "Name",
     "card_credit_number": "Credit Card Number",
     "expiry_date": "Expiry date",
     "serial_number": "serial number",
@@ -405,7 +405,7 @@ static const Map<String,dynamic> en = {
     "cart": "Cart",
     "add_some_products_to_cart": "Add some products to the cart",
     "you_have_coupon": "Do you have a coupon? Enter the coupon number",
-    "all_prices": "All prices include 15% value added tax",
+    "all_prices": "All prices include value added tax 15%",
     "move_to_complete_order": "Move to complete the order"
   },
   "complete_order": {
@@ -414,8 +414,8 @@ static const Map<String,dynamic> en = {
     "choose_the_delivery_address": "Choose the delivery address",
     "place": "Place",
     "delivery_time": "Determine delivery time",
-    "choose_date_and_day": "Choose date and day",
-    "choose_time": "Choose Time",
+    "choose_date_and_day": "Select Date",
+    "choose_time": "Select Time",
     "notes_and_instructions": "Notes and instructions",
     "choose_payment_way": "Choose payment way",
     "cash": "Cash",

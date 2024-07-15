@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
 import 'package:vegetable_orders_project/features/get_location.dart';
 import 'package:vegetable_orders_project/features/my_orders/get_my_orders/my_orders_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/widget/custom_orders_mony.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
@@ -42,8 +44,8 @@ class _CompletOrderViewState extends State<CompletOrderView> {
       child: FadeIn(
         duration: const Duration(milliseconds: 500),
         child: Scaffold(
-          appBar: const CustomAppBar(
-            title: 'إتمام الطلب',
+          appBar: CustomAppBar(
+            title: LocaleKeys.complete_order_complete_order.tr(),
           ),
           body: GestureDetector(
             onTap: () {
@@ -54,14 +56,14 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                 padding: const EdgeInsets.all(16),
                 children: [
                   Text(
-                    'الإسم : ${CacheHelper.getUserName()}',
+                    '${LocaleKeys.charge_now_name.tr()} : ${CacheHelper.getUserName()}',
                     style: _textStyle,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'الجوال : ${CacheHelper.getUserPhone()}',
+                    '${LocaleKeys.complete_order_phone.tr()} : ${CacheHelper.getUserPhone()}',
                     style: _textStyle,
                   ),
                   const SizedBox(
@@ -69,8 +71,9 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                   ),
                   Row(
                     children: [
-                      const Text(
-                        'اختر عنوان التوصيل',
+                      Text(
+                        LocaleKeys.complete_order_choose_the_delivery_address
+                            .tr(),
                         style: _textStyle,
                       ),
                       const Spacer(),
@@ -135,7 +138,9 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                                 width: 230.w,
                                 child: Text(
                                   CacheHelper.getCurrentLocation() ??
-                                      "اختر عنوان",
+                                      (context.locale.languageCode == "en"
+                                          ? "Select address"
+                                          : "اختر عنوان"),
                                   style: _textStyle.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -156,8 +161,8 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                   const SizedBox(
                     height: 32,
                   ),
-                  const Text(
-                    'تحديد وقت التوصيل',
+                  Text(
+                    LocaleKeys.complete_order_delivery_time.tr(),
                     style: _textStyle,
                   ),
                   const SizedBox(
@@ -169,13 +174,10 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                         child: InkWell(
                           onTap: () async {
                             datePicker = await showDatePicker(
-                              locale: const Locale('ar', 'AR'),
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2025),
-                              cancelText: 'إلغاء',
-                              confirmText: 'حسنا',
                             );
                             setState(() {});
                           },
@@ -187,7 +189,7 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 19),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -196,10 +198,12 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                                   ),
                                   Text(
                                     datePicker == null
-                                        ? 'اختر اليوم والتاريخ'
+                                        ? LocaleKeys
+                                            .complete_order_choose_date_and_day
+                                            .tr()
                                         : datePicker.toString().split(" ")[0],
                                     style: _textStyle.copyWith(
-                                      fontSize: 15,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
@@ -230,8 +234,6 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                               },
                               context: context,
                               initialTime: TimeOfDay.now(),
-                              cancelText: 'إلغاء',
-                              confirmText: 'حسنا',
                             );
                             setState(() {});
                           },
@@ -243,7 +245,7 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 19),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -252,10 +254,11 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                                   ),
                                   Text(
                                     timePicker == null
-                                        ? 'اختر الوقت'
+                                        ? LocaleKeys.complete_order_choose_time
+                                            .tr()
                                         : "${timePicker?.minute.toString()} : ${timePicker?.hour.toString()} ",
                                     style: _textStyle.copyWith(
-                                      fontSize: 15,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
@@ -275,8 +278,8 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                   const SizedBox(
                     height: 21,
                   ),
-                  const Text(
-                    'ملاحظات وتعليمات',
+                  Text(
+                    LocaleKeys.complete_order_notes_and_instructions.tr(),
                     style: _textStyle,
                   ),
                   TextField(
@@ -294,8 +297,8 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                   const SizedBox(
                     height: 24.5,
                   ),
-                  const Text(
-                    'اختر طريقة الدفع',
+                  Text(
+                    LocaleKeys.complete_order_choose_payment_way.tr(),
                     style: _textStyle,
                   ),
                   const SizedBox(
@@ -315,7 +318,7 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                           },
                           isTrue: isKash,
                           imagePath: 'assets/icon/svg/money.svg',
-                          title: 'كاش',
+                          title: LocaleKeys.complete_order_cash.tr(),
                         ),
                         SizedBox(
                           width: 15.w,
@@ -333,7 +336,9 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                           fontSize: isCards ? 11 : 10,
                           isTrue: isCards,
                           imagePath: 'assets/images/card_payments.png',
-                          title: 'بطاقات الدفع',
+                          title: context.locale.languageCode == "en"
+                              ? "Credit Cart"
+                              : 'بطاقات الدفع',
                         ),
                         SizedBox(
                           width: 15.w,
@@ -349,7 +354,7 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                           },
                           isTrue: isWallet,
                           imagePath: 'assets/icon/svg/account/Wallet.svg',
-                          title: 'المحفظة',
+                          title: LocaleKeys.my_account_wallet.tr(),
                         ),
                       ],
                     ),
@@ -357,8 +362,8 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const Text(
-                    'ملخص الطلب',
+                  Text(
+                    LocaleKeys.orders_order_summary.tr(),
                     style: _textStyle,
                   ),
                   SizedBox(
@@ -396,7 +401,7 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                         );
                       }
                       return CustomFillButton(
-                        title: 'إنهاء الطلب',
+                        title: LocaleKeys.complete_order_finish_order.tr(),
                         onPress: () {
                           bloc.add(
                             AddOrderEvent(
@@ -483,7 +488,7 @@ class __CustomPayWayState extends State<_CustomPayWay> {
                                 ? widget.fontSize.sp
                                 : widget.isCard
                                     ? 9
-                                    : 14.sp,
+                                    : 12.sp,
                             fontWeight: FontWeight.bold),
                       ),
                     ),

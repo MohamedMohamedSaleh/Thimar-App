@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/features/my_orders/get_my_orders/my_orders_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/widgets/shimmer_loading.dart';
 
 import 'widgets/custom_orders_item.dart';
@@ -31,11 +34,11 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           height: 120,
           thereIsIcon: false,
-          title: 'طلباتي',
-          bottom: CustomTabBar(),
+          title: LocaleKeys.home_nav_my_orders.tr(),
+          bottom: const CustomTabBar(),
         ),
         body: TabBarView(
           children: [

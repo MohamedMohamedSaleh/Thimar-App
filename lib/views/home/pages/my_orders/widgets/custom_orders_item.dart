@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_orders/screens/order_details_view.dart';
 
 import '../../../../../features/my_orders/all_orders_model.dart';
@@ -63,13 +65,14 @@ class _CustomOrdersItemState extends State<CustomOrdersItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 4, right: 14),
+                    padding:
+                        const EdgeInsetsDirectional.only(top: 4, start: 14),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "طلب #${widget.ordersModel!.id}",
+                          "${LocaleKeys.orders_order.tr()} #${widget.ordersModel!.id}",
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 17,
@@ -87,8 +90,8 @@ class _CustomOrdersItemState extends State<CustomOrdersItem> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: widget.isDetailsOrder ? 5 : 9,
+                    padding: EdgeInsetsDirectional.only(
+                        end: widget.isDetailsOrder ? 5 : 9,
                         top: widget.isDetailsOrder ? 4 : 9),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -107,8 +110,12 @@ class _CustomOrdersItemState extends State<CustomOrdersItem> {
                                 vertical: widget.isDetailsOrder ? 3 : 4),
                             child: Text(
                               widget.ordersModel!.status == 'pending'
-                                  ? 'بإنتظار الموافقة'
-                                  : 'طلب ملغي',
+                                  ? context.locale.languageCode == "en"
+                                      ? "Pending"
+                                      : 'بإنتظار الموافقة'
+                                  : context.locale.languageCode == "en"
+                                      ? "Order canceled"
+                                      : 'طلب ملغي',
                               style: TextStyle(
                                   color: widget.ordersModel!.status == 'pending'
                                       ? mainColor
@@ -122,7 +129,7 @@ class _CustomOrdersItemState extends State<CustomOrdersItem> {
                             ? Padding(
                                 padding: const EdgeInsets.only(left: 8, top: 5),
                                 child: Text(
-                                  '${widget.ordersModel!.totalPrice}ر.س',
+                                  '${widget.ordersModel!.totalPrice} ${LocaleKeys.r_s.tr()}',
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 15,
@@ -144,7 +151,7 @@ class _CustomOrdersItemState extends State<CustomOrdersItem> {
                 height: 5,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 10),
+                padding: const EdgeInsetsDirectional.only(end: 16, start: 10),
                 child: Row(
                   children: [
                     ...List.generate(
@@ -168,14 +175,13 @@ class _CustomOrdersItemState extends State<CustomOrdersItem> {
                             isBack: false,
                             color: Color(0xffEDF5E6),
                             child: Icon(
-                              Icons.arrow_back_ios_new_outlined,
-                              textDirection: TextDirection.ltr,
+                              Icons.arrow_forward_ios_rounded,
                               color: mainColor,
-                              size: 15,
+                              size: 16,
                             ),
                           )
                         : Text(
-                            '${widget.ordersModel!.totalPrice}ر.س',
+                            '${widget.ordersModel!.totalPrice} ${LocaleKeys.r_s.tr()}',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15,
