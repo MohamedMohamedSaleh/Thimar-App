@@ -14,6 +14,7 @@ import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_
 import 'package:vegetable_orders_project/views/auth/confirm_code/bloc/confirm_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/register/bloc/register_bloc.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/contact_us/contact_us_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/edit_password/edit_password_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/get_profile/profile_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy_about_terms/policy_bloc.dart';
@@ -24,6 +25,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/sugges
 import '../features/categori_products/category_products_bloc.dart';
 import '../features/products/search_products/search_products_bloc.dart';
 import '../views/home/pages/my_account/bloc/edit_profile/edit_profile_bloc.dart';
+import '../views/home/pages/my_account/bloc/wallet/wallet_bloc.dart';
 
 void initKiwi() {
   KiwiContainer container = KiwiContainer();
@@ -55,5 +57,7 @@ void initKiwi() {
   container.registerSingleton((container) => EditProfilBloc());
   container.registerSingleton((container) => MyOrdersBloc());
   container.registerFactory((container) => ChangePasswordBloc());
+  container.registerFactory((container) => ContactUsBloc());
+  container.registerFactory((container) => WalletBloc());
   container.registerFactory((container) => NotificationsBloc());
 }

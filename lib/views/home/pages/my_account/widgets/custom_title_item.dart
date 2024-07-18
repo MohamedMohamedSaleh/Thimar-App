@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -8,6 +9,7 @@ import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/addresses/addresses_model.dart';
 import 'package:vegetable_orders_project/features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 
 class CustomTitleItem extends StatefulWidget {
@@ -53,7 +55,9 @@ class _CustomTitleItemState extends State<CustomTitleItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.model.type == 'home' ? 'المنزل' : 'العمل',
+                      widget.model.type == 'home'
+                          ? LocaleKeys.addresses_home.tr()
+                          : LocaleKeys.addresses_work.tr(),
                       style: const TextStyle(
                         color: mainColor,
                         fontSize: 15,
@@ -61,7 +65,7 @@ class _CustomTitleItemState extends State<CustomTitleItem> {
                       ),
                     ),
                     Text(
-                      'العنوان : ${widget.model.location}',
+                      '${LocaleKeys.home_address.tr()} : ${widget.model.location}',
                       style: const TextStyle(
                         color: mainColor,
                         fontSize: 15,
@@ -69,7 +73,7 @@ class _CustomTitleItemState extends State<CustomTitleItem> {
                       ),
                     ),
                     Text(
-                      'الوصف: ${widget.model.description}',
+                      '${LocaleKeys.addresses_description.tr()}: ${widget.model.description}',
                       style: const TextStyle(
                         color: Color(0xff999797),
                         fontSize: 15,
@@ -77,7 +81,7 @@ class _CustomTitleItemState extends State<CustomTitleItem> {
                       ),
                     ),
                     Text(
-                      'رقم الجوال: ${widget.model.phone}',
+                      '${LocaleKeys.log_in_phone_number.tr()}: ${widget.model.phone}',
                       style: const TextStyle(
                         color: Color(0xff999797),
                         fontSize: 15,
@@ -96,7 +100,9 @@ class _CustomTitleItemState extends State<CustomTitleItem> {
                         bloc: bloc,
                         builder: (context, state) {
                           if (state is DeleteAddressesLoadingState &&
-                              state.id == widget.model.id || state is DeleteAddressesSuccessState && state.id == widget.model.id) {
+                                  state.id == widget.model.id ||
+                              state is DeleteAddressesSuccessState &&
+                                  state.id == widget.model.id) {
                             return const Center(
                               child: SizedBox(
                                   height: 20,

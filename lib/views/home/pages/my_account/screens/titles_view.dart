@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
@@ -28,8 +30,8 @@ class _TitlesViewState extends State<TitlesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'العناوين',
+      appBar: CustomAppBar(
+        title: LocaleKeys.home_addresses.tr(),
       ),
       body: BlocBuilder(
         bloc: bloc,
@@ -72,7 +74,7 @@ class _TitlesViewState extends State<TitlesView> {
                 CacheHelper.removeLocation();
                 navigateTo(toPage: const AddTitleView());
               },
-              title: 'إضافة عنوان'),
+              title: LocaleKeys.addresses_add_address.tr()),
         ),
       ),
     );

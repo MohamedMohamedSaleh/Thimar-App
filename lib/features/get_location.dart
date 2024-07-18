@@ -17,15 +17,13 @@ class GetLocationn {
     Position? myLocation;
     try {
       myLocation = await Geolocator.getCurrentPosition();
+      initialPosition = LatLng(myLocation.latitude, myLocation.longitude);
     } catch (e) {
       // ignore: avoid_print
       print(e.toString());
     }
     // await goToLocation(
     //     latitude: myLocation.latitude, longitude: myLocation.longitude);
-    initialPosition = myLocation != null
-        ? LatLng(myLocation.latitude, myLocation.longitude)
-        : null;
     try {
       List<Placemark>? placemarks = myLocation != null
           ? await placemarkFromCoordinates(

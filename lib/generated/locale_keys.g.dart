@@ -66,6 +66,8 @@ abstract class LocaleKeys {
       'check_code.you_can_receive_code_after';
   static const check_code_resend = 'check_code.resend';
   static const check_code = 'check_code';
+  static const reset_password_current_password =
+      'reset_password.current_password';
   static const reset_password_enter_new_password =
       'reset_password.enter_new_password';
   static const reset_password_please_enter_new_password_in_6_letters_at_min =
@@ -147,6 +149,8 @@ abstract class LocaleKeys {
   static const addresses_description = 'addresses.description';
   static const addresses_please_enter_description =
       'addresses.please_enter_description';
+  static const addresses_edit_address =
+      'addresses.edit_address';
   static const addresses = 'addresses';
   static const contact_us_or_you_can_send_message =
       'contact_us.or_you_can_send_message';

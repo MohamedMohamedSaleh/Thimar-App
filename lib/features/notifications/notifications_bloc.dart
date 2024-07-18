@@ -11,6 +11,7 @@ class NotificationsBloc extends Bloc<NotificationsEvents, NotificationsStates> {
   }
   bool isLoading = true;
   List<dynamic> list = [];
+  
   Future<void> _getNotifications(
       GetNotificationsEvent event, Emitter<NotificationsStates> emit) async {
     emit(GetNotificationsLoading());

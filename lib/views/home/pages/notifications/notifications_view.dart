@@ -8,7 +8,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/features/notifications/notifications_bloc.dart';
 import 'package:vegetable_orders_project/views/home/widgets/shimmer_loading.dart';
 
-import 'notification_model.dart';
+import '../../../../features/notifications/model.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -22,6 +22,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
     ..add(GetNotificationsEvent());
 
   @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  Future<void> refreshCallback() async {
+    bloc.add(GetNotificationsEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
@@ -32,7 +42,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         bloc: bloc,
         builder: (context, state) {
           return Padding(
-            padding: const EdgeInsets.only(left: 26, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             child: state is GetNotificationsLoading || bloc.isLoading
                 ? ListView.separated(
                     separatorBuilder: (context, index) => const SizedBox(
@@ -67,14 +77,19 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           ],
                         ),
                       )
-                    : ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 22, bottom: 15),
-                        itemBuilder: (context, index) => const SizedBox(),
-                        /*  _Item(
-                          model: bloc.list[index], */
-                        // ),
-                        itemCount: bloc.list.length,
+                    : RefreshIndicator(
+                        displacement: 20,
+                        strokeWidth: 3,
+                        backgroundColor: Colors.green[100],
+                        onRefresh: refreshCallback,
+                        child: ListView.builder(
+                          // physics: ,
+                          padding: const EdgeInsets.only(top: 22, bottom: 15),
+                          itemBuilder: (context, index) => _Item(
+                            model: bloc.list[index],
+                          ),
+                          itemCount: bloc.list.length,
+                        ),
                       ),
           );
         },
@@ -85,137 +100,74 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
 class _Item extends StatelessWidget {
   const _Item({required this.model});
-  final NotificationModel model;
+  final Notifications model;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        bottom: 28,
+        bottom: 20,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            height: 33,
-            width: 33,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                color: const Color(0xff4C8613).withAlpha(13)),
-            child: Padding(
-              padding: const EdgeInsets.all(6),
-              child: Image.network(
-                model.image,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(11),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.035),
+                blurRadius: 20,
+              )
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsetsDirectional.only(end: 10),
+                height: 33,
+                width: 33,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9),
+                    color: const Color(0xff4C8613).withAlpha(13)),
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Image.network(
+                    model.image ?? "assets/images/vegetable_basket.png",
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.title,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      model.body,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff989898),
+                      ),
+                    ),
+                    Text(
+                      model.createdAt,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff091022),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  model.title,
-                  style: const TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  model.details,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff989898),
-                  ),
-                ),
-                Text(
-                  model.time,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff091022),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
-
-
-
-  // List<NotificationModel> list = [
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  //   NotificationModel(
-  //     title: "تم قبول طلبك وجاري تحضيره الأن",
-  //     image:
-  //         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/2500px-Google_Messages_logo.svg.png",
-  //     time: "منذ ساعتان",
-  //     details:
-  //         "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-  //   ),
-  // ];

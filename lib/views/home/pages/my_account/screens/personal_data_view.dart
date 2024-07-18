@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -8,6 +9,7 @@ import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/get_profile/profile_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/change_password_account_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
@@ -46,7 +48,8 @@ class _PersonalDataViewState extends State<PersonalDataView> {
         child: FadeIn(
           duration: const Duration(milliseconds: 500),
           child: Scaffold(
-            appBar: const CustomAppBar(title: 'البيانات الشخصية'),
+            appBar:
+                CustomAppBar(title: LocaleKeys.my_account_personal_data.tr()),
             body: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Form(
@@ -69,23 +72,27 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                     CustomAppInput(
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return "اسم المستخدم مطلوب";
+                          return LocaleKeys.register_please_enter_full_name
+                              .tr();
                         }
                         return null;
                       },
                       isData: true,
                       controller: bloc.nameController,
                       fillColor: const Color(0xffFAFFF5),
-                      labelText: 'اسم المستخدم',
+                      labelText: LocaleKeys.register_user_name.tr(),
                       prefixIcon: 'assets/icon/svg/account/User.svg',
                     ),
                     // SizedBox(height: 16,),
                     CustomAppInput(
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return "رقم الجوال مطلوب";
+                          return LocaleKeys
+                              .log_in_please_enter_your_mobile_number
+                              .tr();
                         } else if (value!.length < 10) {
-                          return "رقم الهاتف يجب أن يكون أكبر من 10 أرقام";
+                          return LocaleKeys.log_in_please_enter_nine_number
+                              .tr();
                         }
                         return null;
                       },
@@ -93,7 +100,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                       isData: true,
                       controller: bloc.phoneController,
                       fillColor: const Color(0xffFAFFF5),
-                      labelText: 'رقم الجوال',
+                      labelText: LocaleKeys.log_in_phone_number.tr(),
                       prefixIcon: 'assets/icon/svg/account/Phone.svg',
                     ),
                     // SizedBox(height: 16,),
@@ -127,14 +134,16 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                                 child: CustomAppInput(
                                   validator: (value) {
                                     if (bloc.cityController.text.isEmpty) {
-                                      return "المدينة مطلوبة";
+                                      return LocaleKeys
+                                          .register_please_enter_your_city
+                                          .tr();
                                     }
                                     return null;
                                   },
                                   isData: true,
                                   controller: bloc.cityController,
                                   fillColor: const Color(0xffFAFFF5),
-                                  labelText: 'المدينة',
+                                  labelText: LocaleKeys.register_city.tr(),
                                   prefixIcon:
                                       'assets/icon/svg/account/Report.svg',
                                 ),
@@ -163,13 +172,13 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                     GestureDetector(
                       onTap: () =>
                           navigateTo(toPage: const ChangePasswordAccountView()),
-                      child: const CustomAppInput(
+                      child: CustomAppInput(
                         isEnabled: false,
-                        suffixIcon:
-                            AppImage('assets/icon/svg/line_arrow_acount.svg'),
+                        suffixIcon: const AppImage(
+                            'assets/icon/svg/line_arrow_acount.svg'),
                         isData: true,
-                        fillColor: Color(0xffFAFFF5),
-                        labelText: 'كلمة المرور',
+                        fillColor: const Color(0xffFAFFF5),
+                        labelText: LocaleKeys.log_in_password.tr(),
                         prefixIcon: 'assets/icon/svg/account/Unlock.svg',
                       ),
                     ),
@@ -193,7 +202,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                     );
                   } else {
                     return CustomFillButton(
-                        title: 'تعديل البيانات',
+                        title: LocaleKeys.profile_edit_data.tr(),
                         onPress: () {
                           editProfileBloc.add(EditProfileEvent(
                               fullName: bloc.nameController.text,

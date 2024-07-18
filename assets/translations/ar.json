@@ -55,6 +55,7 @@
       "resend": "أعادة الارسال"
     },
     "reset_password": {
+      "current_password": "كلمة المرور الحاليه",
       "enter_new_password": "أدخل كلمة المرور الجديدة",
       "please_enter_new_password_in_6_letters_at_min": "بالرجاء ادخال كلمة المرور الجديدة من ٦ حروف",
       "new_password": "كلمة المرور الجديدة",
@@ -130,7 +131,8 @@
       "add_address": "إضافة عنوان",
       "address_type": "نوع العنوان",
       "description": "الوصف",
-      "please_enter_description": "برجاء ادخال الوصف"
+      "please_enter_description": "برجاء ادخال الوصف",
+      "edit_address": "تعديل العنوان"
     },
     "contact_us": {
       "or_you_can_send_message": "أو يمكنك إرسال رسالة",

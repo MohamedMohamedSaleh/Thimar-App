@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/suggestions/suggestions_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_form_input.dart';
 
@@ -26,7 +28,7 @@ class _SuggestionsComplaintsViewState extends State<SuggestionsComplaintsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'الأقتراحات والشكاوي'),
+      appBar: CustomAppBar(title: LocaleKeys.my_account_complaints.tr()),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: GestureDetector(
@@ -37,14 +39,14 @@ class _SuggestionsComplaintsViewState extends State<SuggestionsComplaintsView> {
               CustomFormInput(
                   controller: bloc.name,
                   isFillColor: false,
-                  labelText: 'الإسم'),
+                  labelText: LocaleKeys.register_user_name.tr()),
               const SizedBox(
                 height: 10,
               ),
               CustomFormInput(
                 controller: bloc.phone,
                 isFillColor: false,
-                labelText: 'رقم الموبايل',
+                labelText: LocaleKeys.log_in_phone_number.tr(),
                 isPhone: true,
               ),
               const SizedBox(
@@ -53,7 +55,7 @@ class _SuggestionsComplaintsViewState extends State<SuggestionsComplaintsView> {
               CustomFormInput(
                 controller: bloc.content,
                 isFillColor: false,
-                labelText: 'الموضوع',
+                labelText: LocaleKeys.contact_us_subject.tr(),
                 maxLines: 3,
               ),
               const SizedBox(
@@ -75,7 +77,7 @@ class _SuggestionsComplaintsViewState extends State<SuggestionsComplaintsView> {
                     );
                   }
                   return CustomFillButton(
-                      title: 'إرسال',
+                      title: LocaleKeys.contact_us_send.tr(),
                       onPress: () {
                         FocusScope.of(context).unfocus();
                         bloc.add(SendSuggestionsEvent());

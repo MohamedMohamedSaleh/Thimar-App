@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/model.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/questions/questions_bloc.dart';
 
@@ -29,8 +31,8 @@ class _FrequentlyQuestionsViewState extends State<FrequentlyQuestionsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'أسئلة متكررة',
+      appBar: CustomAppBar(
+        title: LocaleKeys.my_account_faqs.tr(),
       ),
       body: BlocBuilder(
           bloc: bloc,

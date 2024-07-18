@@ -5,11 +5,28 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'shimmer_widget.dart';
 
 class ShimmerLoadingProduct extends StatelessWidget {
-  const ShimmerLoadingProduct({super.key, this.isMain = true});
+  const ShimmerLoadingProduct(
+      {super.key, this.isMain = true, this.isSimilar = false});
   final bool isMain;
+  final bool isSimilar;
 
   @override
   Widget build(BuildContext context) {
+    if (isSimilar) {
+      return ListView.separated(
+        padding: const EdgeInsetsDirectional.only(start: 16),
+        separatorBuilder: (context, index) => const SizedBox(
+          width: 10,
+        ),
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => SizedBox(
+            height: 180,
+            width: 120,
+            child: _productShimmerWidget(isMain: isMain)),
+        itemCount: 4,
+      );
+    }
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -34,36 +34,37 @@ class _CustomListSimilarPrductState extends State<CustomListSimilarPrduct> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180,
-      child: BlocBuilder(
-        bloc: bloc,
-        builder: (context, state) {
-          if (state is GetSimilarProductLoadingState) {
-            return const ShimmerLoadingProduct(
+    return BlocBuilder(
+      bloc: bloc,
+      builder: (context, state) {
+        if (state is GetSimilarProductLoadingState) {
+          return const SizedBox(
+            height: 180,
+            child: ShimmerLoadingProduct(
+              isSimilar: true,
               isMain: false,
-            );
-          } else if (state is GetSimilarProductSuccrssState) {
-            return SizedBox(
-              height: 180,
-              child: ListView.separated(
-                padding: const EdgeInsets.only(right: 16, left: 16),
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    width: 18,
-                  );
-                },
-                scrollDirection: Axis.horizontal,
-                itemCount: state.model.length,
-                itemBuilder: (context, index) =>
-                    ItemProduct(model: state.model[index]),
-              ),
-            );
-          } else {
-            return const Text('Failed!');
-          }
-        },
-      ),
+            ),
+          );
+        } else if (state is GetSimilarProductSuccrssState) {
+          return SizedBox(
+            height: 180,
+            child: ListView.separated(
+              padding: const EdgeInsets.only(right: 16, left: 16),
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  width: 18,
+                );
+              },
+              scrollDirection: Axis.horizontal,
+              itemCount: state.model.length,
+              itemBuilder: (context, index) =>
+                  ItemProduct(model: state.model[index]),
+            ),
+          );
+        } else {
+          return const Text('Failed!');
+        }
+      },
     );
   }
 }

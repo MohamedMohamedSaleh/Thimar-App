@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -5,6 +6,7 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/features/addresses/set_address/set_address_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_form_input.dart';
 
 import '../widgets/custom_google_map.dart';
@@ -36,6 +38,8 @@ class _AddTitleViewState extends State<AddTitleView> {
   final bloc = KiwiContainer().resolve<SetUpdateAdressBloc>();
   TextEditingController phoneController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
   void initState() {
@@ -54,7 +58,9 @@ class _AddTitleViewState extends State<AddTitleView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: widget.isAddTitle ? 'إضافة عنوان' : 'تعديل عنوان'),
+          title: widget.isAddTitle
+              ? LocaleKeys.addresses_add_address.tr()
+              : LocaleKeys.addresses),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Padding(
@@ -94,9 +100,9 @@ class _AddTitleViewState extends State<AddTitleView> {
                         right: 14, left: 14, top: 8, bottom: 8),
                     child: Row(
                       children: [
-                        const Text(
-                          'نوع العنوان',
-                          style: TextStyle(
+                        Text(
+                          LocaleKeys.addresses_address_type.tr(),
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w300,
                             color: Color(0xff8B8B8B),
@@ -113,7 +119,7 @@ class _AddTitleViewState extends State<AddTitleView> {
                                 },
                                 child: _typeOfTitle(
                                   fillColor: isHome ? mainColor : Colors.white,
-                                  title: 'المنزل',
+                                  title: LocaleKeys.addresses_home.tr(),
                                   titleColor: isHome
                                       ? Colors.white
                                       : const Color(0xff8B8B8B),
@@ -129,7 +135,7 @@ class _AddTitleViewState extends State<AddTitleView> {
                                 },
                                 child: _typeOfTitle(
                                   fillColor: isHome ? Colors.white : mainColor,
-                                  title: 'العمل',
+                                  title: LocaleKeys.addresses_work.tr(),
                                   titleColor: !isHome
                                       ? Colors.white
                                       : const Color(0xff8B8B8B),
@@ -145,68 +151,84 @@ class _AddTitleViewState extends State<AddTitleView> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.04),
-                                blurRadius: 17)
-                          ],
-                          borderRadius: BorderRadius.circular(15)),
-                      child: SizedBox(
-                          height: 50,
-                          child: CustomFormInput(
-                            controller: phoneController,
-                            labelText: 'أدخل رقم الجوال',
-                            isPhone: true,
-                            isTitl: true,
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 17)
-                          ],
-                          borderRadius: BorderRadius.circular(15)),
-                      child: SizedBox(
-                          height: 50,
-                          child: CustomFormInput(
-                            controller: descriptionController,
-                            labelText: 'الوصف',
-                            isTitl: true,
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 26,
-                    ),
-                    BlocBuilder(
-                      bloc: bloc,
-                      builder: (context, state) {
-                        if (state is SetAddressLoadingState ||
-                            state is UpdateAddressLoadingState) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return SizedBox(
+                child: Form(
+                  key: formKey,
+                  autovalidateMode: autovalidateMode,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.04),
+                                  blurRadius: 17)
+                            ],
+                            borderRadius: BorderRadius.circular(15)),
+                        child: CustomFormInput(
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return LocaleKeys
+                                  .log_in_please_enter_your_mobile_number
+                                  .tr();
+                            }
+                            return null;
+                          },
+                          controller: phoneController,
+                          labelText: LocaleKeys.log_in_phone_number.tr(),
+                          isPhone: true,
+                          isTitl: true,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 17)
+                            ],
+                            borderRadius: BorderRadius.circular(15)),
+                        child: CustomFormInput(
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return LocaleKeys
+                                  .addresses_please_enter_description
+                                  .tr();
+                            }
+                            return null;
+                          },
+                          controller: descriptionController,
+                          labelText: LocaleKeys.addresses_description.tr(),
+                          isTitl: true,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 26,
+                      ),
+                      BlocBuilder(
+                        bloc: bloc,
+                        builder: (context, state) {
+                          if (state is SetAddressLoadingState ||
+                              state is UpdateAddressLoadingState) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return SizedBox(
                             width: double.infinity,
                             child: CustomFillButton(
-                                title: widget.isAddTitle
-                                    ? 'إضافة العنوان'
-                                    : 'تعديل العنون',
-                                onPress: () {
+                              title: widget.isAddTitle
+                                  ? LocaleKeys.addresses_add_address.tr()
+                                  : LocaleKeys.addresses_edit_address.tr(),
+                              onPress: () {
+                                if (formKey.currentState!.validate()) {
                                   widget.isAddTitle
                                       ? bloc.add(
                                           SetAddressEvent(
@@ -226,10 +248,17 @@ class _AddTitleViewState extends State<AddTitleView> {
                                             id: widget.id!,
                                           ),
                                         );
-                                }));
-                      },
-                    )
-                  ],
+                                } else {
+                                  autovalidateMode =
+                                      AutovalidateMode.onUserInteraction;
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ]),

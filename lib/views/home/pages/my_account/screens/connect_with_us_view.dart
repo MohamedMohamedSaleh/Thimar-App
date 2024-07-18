@@ -1,17 +1,35 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
+import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/contact_us/contact_us_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_form_input.dart';
 
-class ConnectWithUsView extends StatelessWidget {
+class ConnectWithUsView extends StatefulWidget {
   const ConnectWithUsView({super.key});
+
+  @override
+  State<ConnectWithUsView> createState() => _ConnectWithUsViewState();
+}
+
+class _ConnectWithUsViewState extends State<ConnectWithUsView> {
+  final bloc = KiwiContainer().resolve<ContactUsBloc>();
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'تواصل معنا'),
+      appBar: CustomAppBar(title: LocaleKeys.my_account_call_us.tr()),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: GestureDetector(
@@ -131,9 +149,9 @@ class ConnectWithUsView extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                'أو يمكنك إرسال رسالة ',
-                style: TextStyle(
+              Text(
+                LocaleKeys.contact_us_or_you_can_send_message.tr(),
+                style: const TextStyle(
                   color: mainColor,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -157,20 +175,22 @@ class ConnectWithUsView extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           height: 50,
                           child: CustomFormInput(
-                            labelText: 'الإسم',
+                            controller: bloc.nameController,
+                            labelText: LocaleKeys.register_user_name.tr(),
                             isFillColor: false,
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 50,
                           child: CustomFormInput(
-                            labelText: 'رقم الموبايل',
+                            controller: bloc.phoneController,
+                            labelText: LocaleKeys.log_in_phone_number.tr(),
                             isFillColor: false,
                             isPhone: true,
                           ),
@@ -178,10 +198,11 @@ class ConnectWithUsView extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 78,
                           child: CustomFormInput(
-                            labelText: 'الموضوع',
+                            controller: bloc.contentController,
+                            labelText: LocaleKeys.contact_us_subject.tr(),
                             isFillColor: false,
                             maxLines: 3,
                           ),
@@ -189,10 +210,27 @@ class ConnectWithUsView extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
-                        SizedBox(
-                            width: double.infinity,
-                            child: CustomFillButton(
-                                title: 'إرسال', onPress: () {}))
+                        BlocBuilder(
+                          bloc: bloc,
+                          builder: (context, state) {
+                            if (state is ContactUsLoading) {
+                              return const SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return SizedBox(
+                                width: double.infinity,
+                                child: CustomFillButton(
+                                    title: LocaleKeys.contact_us_send.tr(),
+                                    onPress: () {
+                                      FocusScope.of(context).unfocus();
+
+                                      bloc.add(ContactUsEvent());
+                                    }));
+                          },
+                        )
                       ],
                     ),
                   ),

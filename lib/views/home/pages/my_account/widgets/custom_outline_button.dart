@@ -6,7 +6,8 @@ import '../../../../../core/constants/my_colors.dart';
 class CustomOutlineButton extends StatelessWidget {
   const CustomOutlineButton({
     super.key,
-    required this.onTap, required this.title,
+    required this.onTap,
+    required this.title,
   });
   final void Function() onTap;
   final String title;
@@ -32,7 +33,7 @@ class CustomOutlineButton extends StatelessWidget {
               width: double.infinity,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                    color: const Color(0xffF9FCF5),
+                    color: const Color.fromARGB(255, 239, 255, 218),
                     borderRadius: BorderRadius.circular(15)),
                 child: Center(
                     child: Text(

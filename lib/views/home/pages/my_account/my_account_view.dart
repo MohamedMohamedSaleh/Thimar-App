@@ -21,6 +21,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/tit
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/wallet_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_my_data.dart';
 
+import 'bloc/get_profile/profile_bloc.dart';
 import 'screens/frequently_questions_view.dart';
 
 class MyAccountPage extends StatefulWidget {
@@ -193,6 +194,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                     KiwiContainer()
                                         .resolve<ProductsBloc>()
                                         .add(GetProductsEvent());
+                                    KiwiContainer()
+                                        .resolve<ProfileBloc>()
+                                        .add(GetProfileEvent());
                                   },
                                   child: _ItemMyAccount(
                                     icon: 'language',

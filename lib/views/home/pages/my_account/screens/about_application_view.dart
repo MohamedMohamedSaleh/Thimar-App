@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html/parser.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/policy_about_terms/policy_bloc.dart';
 
 import '../../../../../core/constants/my_colors.dart';
@@ -26,7 +28,7 @@ class _AboutApplicationViewState extends State<AboutApplicationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'عن التطبيق'),
+      appBar: CustomAppBar(title: LocaleKeys.my_account_about_app.tr()),
       body: BlocBuilder(
         bloc: bloc,
         builder: (context, state) {

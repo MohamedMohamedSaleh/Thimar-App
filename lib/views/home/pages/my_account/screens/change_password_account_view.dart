@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/edit_password/edit_password_bloc.dart';
 
 import '../../../../../core/widgets/custom_app_input.dart';
@@ -37,7 +39,8 @@ class _ChangePasswordAccountViewState extends State<ChangePasswordAccountView> {
         child: FadeIn(
           duration: const Duration(milliseconds: 500),
           child: Scaffold(
-              appBar: const CustomAppBar(title: 'تغيير كلمة المرور'),
+              appBar: CustomAppBar(
+                  title: LocaleKeys.reset_password_change_password.tr()),
               body: GestureDetector(
                 onTap: () {
                   if (FocusScope.of(context).hasFocus) {
@@ -56,7 +59,9 @@ class _ChangePasswordAccountViewState extends State<ChangePasswordAccountView> {
                       CustomAppInput(
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
-                            return 'كلمة المرور الحالية مطلوبة!';
+                            return LocaleKeys
+                                .reset_password_please_enter_new_password_again
+                                .tr();
                           }
                           return null;
                         },
@@ -64,13 +69,16 @@ class _ChangePasswordAccountViewState extends State<ChangePasswordAccountView> {
                         isPassword: true,
                         isData: true,
                         fillColor: const Color(0xffFAFFF5),
-                        labelText: 'كلمة المرور الحالية',
+                        labelText:
+                            LocaleKeys.reset_password_current_password.tr(),
                         prefixIcon: 'assets/icon/svg/account/Unlock.svg',
                       ),
                       CustomAppInput(
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
-                            return 'كلمة المرور الجديدة مطلوبة!';
+                            return LocaleKeys
+                                .reset_password_please_enter_new_password_in_6_letters_at_min
+                                .tr();
                           }
                           return null;
                         },
@@ -78,17 +86,19 @@ class _ChangePasswordAccountViewState extends State<ChangePasswordAccountView> {
                         isPassword: true,
                         isData: true,
                         fillColor: const Color(0xffFAFFF5),
-                        labelText: 'كلمة المرور الجديدة',
+                        labelText: LocaleKeys.reset_password_new_password.tr(),
                         prefixIcon: 'assets/icon/svg/account/Unlock.svg',
                       ),
                       CustomAppInput(
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
-                            return 'تأكيد كلمة المرور الجديدة  مطلوبة!';
-                          } else if (bloc.newPassword.text !=
+                            return LocaleKeys
+                                .reset_password_please_enter_new_password_again
+                                .tr();
+                          } /* else if (bloc.newPassword.text !=
                               bloc.confirmNewPassword.text) {
                             return 'كلمة الممرور الجديدة غير متطابقة!';
-                          }
+                          } */
 
                           return null;
                         },
@@ -96,7 +106,8 @@ class _ChangePasswordAccountViewState extends State<ChangePasswordAccountView> {
                         isPassword: true,
                         isData: true,
                         fillColor: const Color(0xffFAFFF5),
-                        labelText: 'تأكيد كلمة المرور الجديدة',
+                        labelText:
+                            LocaleKeys.reset_password_confirm_new_password.tr(),
                         prefixIcon: 'assets/icon/svg/account/Unlock.svg',
                       ),
                     ],
@@ -125,7 +136,8 @@ class _ChangePasswordAccountViewState extends State<ChangePasswordAccountView> {
                         child: SizedBox(
                           width: double.infinity,
                           child: CustomFillButton(
-                            title: 'تغيير كلمة المرور',
+                            title:
+                                LocaleKeys.reset_password_change_password.tr(),
                             onPress: () {
                               FocusScope.of(context).unfocus();
                               bloc.add(EditPasswordEvent());

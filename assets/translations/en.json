@@ -56,6 +56,7 @@
       "resend": "Resend"
     },
     "reset_password": {
+      "current_password": "Current Password",
       "enter_new_password": "Enter new password",
       "please_enter_new_password_in_6_letters_at_min": "Please enter a new password of 6 characters",
       "new_password": "New password",
@@ -89,7 +90,7 @@
       "delivery_to": "Delivery to",
       "addresses": "Addresses",
       "address": "Address",
-      "add_addresses": "Add Addresses"
+      "add_addresses": "Add Address"
     },
     "profile": {
       "select_image_from": "Select an image from",
@@ -131,7 +132,8 @@
       "add_address": "Add Address",
       "address_type": "Address Type",
       "description": "Description",
-      "please_enter_description": "Please enter the description"
+      "please_enter_description": "Please enter the description",
+      "edit_address": "Edit Address"
     },
     "contact_us": {
       "or_you_can_send_message": "Or you can send a message",

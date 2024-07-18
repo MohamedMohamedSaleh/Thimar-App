@@ -142,6 +142,7 @@ class _MainPageState extends State<MainPage> {
                                           height: 164,
                                           viewportFraction: 1,
                                           onPageChanged: (index, reason) {
+                                            if (!mounted) return;
                                             currentIndex = index;
                                             setState1(() {});
                                           },

@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,6 @@ import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/widget/custom_orders_mony.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/sheets/titles_sheet.dart';
-
 import '../../../core/widgets/custom_fill_button.dart';
 import '../../../features/addresses/addresses_model.dart';
 
@@ -36,6 +35,7 @@ class _CompletOrderViewState extends State<CompletOrderView> {
   bool isWallet = false;
   DateTime? datePicker;
   TimeOfDay? timePicker;
+  String? time;
   @override
   Widget build(BuildContext context) {
     isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0.0;
@@ -225,13 +225,6 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                         child: InkWell(
                           onTap: () async {
                             timePicker = await showTimePicker(
-                              builder: (context, child) {
-                                return MediaQuery(
-                                  data: MediaQuery.of(context)
-                                      .copyWith(alwaysUse24HourFormat: false),
-                                  child: child!,
-                                );
-                              },
                               context: context,
                               initialTime: TimeOfDay.now(),
                             );
@@ -256,11 +249,12 @@ class _CompletOrderViewState extends State<CompletOrderView> {
                                     timePicker == null
                                         ? LocaleKeys.complete_order_choose_time
                                             .tr()
-                                        : "${timePicker?.minute.toString()} : ${timePicker?.hour.toString()} ",
+                                        : " ${timePicker?.minute.toString()} : ${timePicker?.hour.toString()}",
                                     style: _textStyle.copyWith(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w400,
                                     ),
+                                    textDirection: TextDirection.rtl,
                                   ),
                                   const Spacer(),
                                   const AppImage('assets/icon/svg/time.svg'),

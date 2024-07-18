@@ -115,8 +115,8 @@ class _CartViewState extends State<CartView> {
                               ],
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 17, top: 7, left: 7, bottom: 7),
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 17, top: 7, end: 7, bottom: 7),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -147,12 +147,21 @@ class _CartViewState extends State<CartView> {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  SizedBox(
+                                  Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(6),
                                     height: 37,
-                                    child: CustomFillButton(
-                                      title: LocaleKeys.categories_apply.tr(),
-                                      onPress: () {},
-                                      radius: 10,
+                                    width: 56,
+                                    decoration: BoxDecoration(
+                                        color: mainColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Text(
+                                      LocaleKeys.categories_apply.tr(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Colors.white),
                                     ),
                                   ),
                                 ],
