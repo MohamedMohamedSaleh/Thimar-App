@@ -306,41 +306,61 @@ class _ItemOrderState extends State<_ItemOrder> {
                         return ZoomIn(
                           duration: const Duration(milliseconds: 500),
                           child: AlertDialog(
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 8),
+                            content: const SizedBox.shrink(
+                                // height: 20,
+                                ),
                             surfaceTintColor: Colors.white,
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
-                            title: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'هل متأكد من حذف الطلب؟',
-                                style: TextStyle(fontSize: 18),
-                                textAlign: TextAlign.center,
-                              ),
+                            titlePadding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 16),
+                            title: Text(
+                              LocaleKeys.cart_Are_you_sure_to_delete_the_request
+                                  .tr(),
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
                             ),
-                            actionsAlignment: MainAxisAlignment.center,
+                            actionsAlignment: MainAxisAlignment.spaceAround,
                             actions: [
                               FilledButton(
                                 style: FilledButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 6),
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15))),
-                                child: const Text('حذف'),
+                                child: Text(
+                                  LocaleKeys.cart_delete.tr(),
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500),
+                                ),
                                 onPressed: () async {
                                   bloc.add(DeletProductCartEvent(
                                       id: widget.model.id));
                                 },
                               ),
-                              const SizedBox(
-                                width: 16,
-                              ),
+                              // const SizedBox(
+                              //   width: 16,
+                              // ),
                               FilledButton(
                                 style: FilledButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 6),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15))),
-                                child: const Text('إلغاء'),
+                                child: Text(
+                                  LocaleKeys.cart_cancel.tr(),
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500),
+                                ),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },

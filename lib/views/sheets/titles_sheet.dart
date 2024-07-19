@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add_title_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
@@ -41,7 +43,7 @@ class _TitlesSheetState extends State<TitlesSheet> {
               ),
               Center(
                 child: Text(
-                  'العناوين',
+                  LocaleKeys.my_account_addresses.tr(),
                   style: TextStyle(
                       color: mainColor,
                       fontSize: 17.sp,
@@ -80,7 +82,7 @@ class _TitlesSheetState extends State<TitlesSheet> {
                   onTap: () {
                     navigateTo(toPage: const AddTitleView());
                   },
-                  title: 'إضافة عنوان جديد'),
+                  title: LocaleKeys.addresses_add_address.tr()),
               SizedBox(
                 height: 20.h,
               ),

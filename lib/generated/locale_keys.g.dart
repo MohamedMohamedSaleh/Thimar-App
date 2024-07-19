@@ -206,6 +206,9 @@ abstract class LocaleKeys {
   static const cart_you_have_coupon = 'cart.you_have_coupon';
   static const cart_all_prices = 'cart.all_prices';
   static const cart_move_to_complete_order = 'cart.move_to_complete_order';
+  static const cart_Are_you_sure_to_delete_the_request = 'cart.Are_you_sure_to_delete_the_request';
+  static const cart_delete = 'cart.delete';
+  static const cart_cancel = 'cart.cancel';
   static const cart = 'cart';
   static const complete_order_complete_order = 'complete_order.complete_order';
   static const complete_order_phone = 'complete_order.phone';

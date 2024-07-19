@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/features/products/search_category/search_category_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 
 class FiltterSheet extends StatefulWidget {
   const FiltterSheet({super.key, required this.id});
@@ -27,7 +29,7 @@ class _FiltterSheetState extends State<FiltterSheet> {
               children: [
                 Center(
                   child: Text(
-                    'تصفية',
+                    LocaleKeys.categories_filter.tr(),
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 17.sp,
@@ -40,14 +42,14 @@ class _FiltterSheetState extends State<FiltterSheet> {
                   height: 4.h,
                 ),
                 Text(
-                  'السعر',
+                  LocaleKeys.price.tr(),
                   style:
                       TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
                 const _CustomSliderPrice(),
                 const Divider(),
                 Text(
-                  'الترتيب',
+                  LocaleKeys.categories_sort.tr(),
                   style:
                       TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
@@ -61,7 +63,7 @@ class _FiltterSheetState extends State<FiltterSheet> {
                 SizedBox(
                     width: double.infinity,
                     child: CustomFillButton(
-                        title: 'تطبيق',
+                        title: LocaleKeys.categories_apply.tr(),
                         onPress: () {
                           cubit.add(GetSearchCategoryEvent(id: widget.id));
                           Navigator.pop(context);
@@ -90,8 +92,9 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
 
   @override
   Widget build(BuildContext context) {
-    RangeLabels labels =
-        RangeLabels('${values.start.ceil()} ر.س', '${values.end.ceil()} ر.س');
+    RangeLabels labels = RangeLabels(
+        '${values.start.ceil()} ${LocaleKeys.r_s.tr()}',
+        '${values.end.ceil()} ${LocaleKeys.r_s.tr()}');
     return BlocProvider(
       create: (context) => GetSearchCategoryBloc(),
       child: Builder(builder: (context) {
@@ -125,7 +128,7 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
               child: Row(
                 children: [
                   Text(
-                    'من:',
+                    context.locale.languageCode == 'ar' ? 'من:' : "From:",
                     style: TextStyle(
                         color: mainColor,
                         fontSize: 15.sp,
@@ -135,7 +138,7 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
                     width: 2,
                   ),
                   Text(
-                    '${values.start.ceil()}ر.س',
+                    '${values.start.ceil()} ${LocaleKeys.r_s.tr()}',
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 15.sp,
@@ -144,7 +147,7 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
                   ),
                   const Spacer(),
                   Text(
-                    'إلى:',
+                    context.locale.languageCode == 'ar' ? 'إلى:' : "To:",
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 15.sp,
@@ -155,7 +158,7 @@ class __CustomSliderPriceState extends State<_CustomSliderPrice> {
                     width: 2,
                   ),
                   Text(
-                    '${values.end.ceil()}ر.س',
+                    '${values.end.ceil()} ${LocaleKeys.r_s.tr()}',
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 15.sp,
@@ -218,7 +221,7 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
                   ),
                 ),
                 Text(
-                  'من السعر الأقل للأعلي',
+                  LocaleKeys.categories_from_min_to_high.tr(),
                   style: TextStyle(
                       color: mainColor,
                       fontSize: 15.sp,
@@ -250,7 +253,7 @@ class __CustomCheckPriceState extends State<_CustomCheckPrice> {
                   ),
                 ),
                 Text(
-                  'من السعر الأعلى للأقل',
+                  LocaleKeys.categories_from_high_to_min.tr(),
                   style: TextStyle(
                       color: mainColor,
                       fontSize: 15.sp,

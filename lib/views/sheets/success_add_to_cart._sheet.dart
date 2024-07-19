@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
@@ -8,6 +10,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_outline_send_button.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
 import '../../features/products/products_model.dart';
@@ -18,83 +21,92 @@ class SuccessAddToCartSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 215.h,
-      child: Padding(
-        padding: EdgeInsets.only(top: 16.h, right: 20.w, left: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return SafeArea(
+      child: SizedBox(
+        height: 215.h,
+        child: Padding(
+          padding: EdgeInsets.only(top: 16.h, right: 20.w, left: 20.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBarIcon(
-                  isBack: false,
-                  height: 18.w,
-                  width: 18.w,
-                  child: Icon(
-                    Icons.check_rounded,
-                    size: 14.h,
-                    color: mainColor,
-                  ),
-                ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                Text(
-                  'تم إضافة المنتج بنجاح',
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
-                      color: mainColor),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            _Item(
-              model: model,
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 47.h,
-                    child: CustomFillButton(
-                        title: 'التحويل إلى السلة',
-                        onPress: () {
-                          KiwiContainer().resolve<CartBloc>().amountProduct = 1;
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          navigateTo(toPage: const CartView());
-                        }),
-                  ),
-                ),
-                SizedBox(
-                  width: 16.w,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: SizedBox(
-                      height: 47.h,
-                      child: CustomOutlineButton(
-                        onPress: () {
-                          KiwiContainer().resolve<CartBloc>().amountProduct = 1;
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        title: 'تصفح العروض',
+                Wrap(
+                  children: [
+                    CustomAppBarIcon(
+                      isBack: false,
+                      height: 18.w,
+                      width: 18.w,
+                      child: Icon(
+                        Icons.check_rounded,
+                        size: 14.h,
+                        color: mainColor,
                       ),
                     ),
-                  ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      LocaleKeys.product_details_product_added_to_cart.tr(),
+                      style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: mainColor),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                _Item(
+                  model: model,
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 47.h,
+                        child: CustomFillButton(
+                            title: LocaleKeys.product_details_go_to_cart.tr(),
+                            onPress: () {
+                              KiwiContainer()
+                                  .resolve<CartBloc>()
+                                  .amountProduct = 1;
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              navigateTo(toPage: const CartView());
+                            }),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16.w,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: SizedBox(
+                          height: 47.h,
+                          child: CustomOutlineButton(
+                            onPress: () {
+                              KiwiContainer()
+                                  .resolve<CartBloc>()
+                                  .amountProduct = 1;
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            title:
+                                LocaleKeys.product_details_browse_offers.tr(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -142,7 +154,7 @@ class _ItemState extends State<_Item> {
               height: 5.h,
             ),
             Text(
-              'الكمية : ${bloc.amountProduct}',
+              '${LocaleKeys.product_details_amount.tr()} : ${bloc.amountProduct}',
               style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w300,
@@ -152,7 +164,7 @@ class _ItemState extends State<_Item> {
               height: 2,
             ),
             Text(
-              '${widget.model.price} ر.س',
+              '${widget.model.price} ${LocaleKeys.r_s.tr()}',
               style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,

@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/features/get_cities/bloc/get_cities_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/models/cities_model.dart';
 
 class CitiesSheet extends StatefulWidget {
@@ -32,7 +34,7 @@ class _CitiesSheetState extends State<CitiesSheet> {
           child: Column(
             children: [
               Text(
-                "اختر مدينتك",
+                LocaleKeys.register_choose_your_city.tr(),
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 16.sp,

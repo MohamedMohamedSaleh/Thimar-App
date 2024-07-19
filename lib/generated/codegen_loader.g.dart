@@ -206,7 +206,10 @@ class CodegenLoader extends AssetLoader {
       "add_some_products_to_cart": "أضف بعض المنتجات الي السلة",
       "you_have_coupon": "عندك كوبون ؟ ادخل رقم الكوبون",
       "all_prices": "جميع الأسعار تشمل قيمة الضريبة المضافة %15",
-      "move_to_complete_order": "الانتقال لإتمام الطلب"
+      "move_to_complete_order": "الانتقال لإتمام الطلب",
+      "Are_you_sure_to_delete_the_request": "هل متأكد من حذف المنتج؟",
+      "delete": "حذف",
+      "cancel": "إلغاء"
     },
     "complete_order": {
       "complete_order": "إتمام الطلب",
@@ -416,7 +419,10 @@ class CodegenLoader extends AssetLoader {
       "add_some_products_to_cart": "Add some products to the cart",
       "you_have_coupon": "Do you have a coupon? Enter the coupon number",
       "all_prices": "All prices include value added tax 15%",
-      "move_to_complete_order": "Move to complete the order"
+      "move_to_complete_order": "Move to complete the order",
+      "Are_you_sure_to_delete_the_request": "Are you sure?",
+      "delete": "Delete",
+      "cancel": "Cancel"
     },
     "complete_order": {
       "complete_order": "Complete Order",
