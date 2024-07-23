@@ -102,12 +102,12 @@ class CacheHelper {
     await _prefs.setString("email", model.email);
     await _prefs.setString("phone", model.phone);
     await _prefs.setString("image", model.image);
-    await _prefs.setString("city", model.city.name);
+    await _prefs.setString("city", model.city.name ?? '');
     await _prefs.setBool("isActive", model.isActive);
     await _prefs.setInt("isBan", model.isBan);
     await _prefs.setString("userType", model.userType);
     await _prefs.setInt("userCartCount", model.userCartCount);
-    await _prefs.setString("cityId", model.city.id);
+    await _prefs.setString("cityId", model.city.id ?? '');
   }
 
   static Future<void> saveEditData(UserDataProfile model) async {
@@ -116,7 +116,7 @@ class CacheHelper {
     await _prefs.setString("phone", model.phone);
     await _prefs.setString("image", model.image);
     await _prefs.setInt("isVip", model.isVip);
-    await _prefs.setString("city", model.city.name);
+    await _prefs.setString("city", model.city.name ?? '');
     await _prefs.setString("cityId", model.city.id.toString());
   }
 

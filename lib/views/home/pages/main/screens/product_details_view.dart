@@ -8,6 +8,7 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import '../../../../../features/products/products/products_bloc.dart';
 import '../../../../../features/products/products_model.dart';
@@ -17,8 +18,12 @@ import '../widgets/custom_list_similar_products.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView(
-      {super.key, required this.model, this.isMainView = true});
-  final ProductModel model;
+      {super.key,
+      required this.model,
+      this.isMainView = true,
+       this.searchModel});
+  final ProductModel? model;
+  final SearchResult? searchModel;
   final bool isMainView;
 
   @override
@@ -31,7 +36,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isFavorit = widget.model.isFavorite;
+    bool isFavorit = widget.model?.isFavorite ?? widget.searchModel!.isFavorite;
     return PopScope(
       canPop: true,
       onPopInvoked: (didPop) {
@@ -64,12 +69,24 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           builder: (context, state) {
                             return CustomAppBarIcon(
                               onTap: () {
-                                if (isFavorit) {
-                                  addRemoveBloc.add(RemoveProductsFromFavsEvent(
-                                      id: widget.model.id));
-                                } else {
-                                  addRemoveBloc.add(AddProductsToFavsEvent(
-                                      id: widget.model.id));
+                                if (widget.model != null) {
+                                  if (isFavorit) {
+                                    addRemoveBloc.add(
+                                        RemoveProductsFromFavsEvent(
+                                            id: widget.model!.id));
+                                  } else {
+                                    addRemoveBloc.add(AddProductsToFavsEvent(
+                                        id: widget.model!.id));
+                                  }
+                                }else{
+                                      if (isFavorit) {
+                                    addRemoveBloc.add(
+                                        RemoveProductsFromFavsEvent(
+                                            id: widget.searchModel!.id));
+                                  } else {
+                                    addRemoveBloc.add(AddProductsToFavsEvent(
+                                        id: widget.searchModel!.id));
+                                  }
                                 }
                               },
                               isBack: false,
@@ -98,7 +115,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(25)),
                             child: AppImage(
-                              widget.model.mainImage,
+                              widget.model?.mainImage ??
+                                  widget.searchModel!.mainImage,
                               width: double.infinity,
                               height: 250,
                               fit: BoxFit.cover,
@@ -113,7 +131,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               Row(
                                 children: [
                                   Text(
-                                    widget.model.title,
+                                    widget.model?.title ?? widget.searchModel!.title,
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 20.sp,
@@ -121,7 +139,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   ),
                                   const Spacer(),
                                   Text(
-                                    '${widget.model.discount}%',
+                                    '${widget.model?.discount ?? widget.searchModel!.discount}%',
                                     style: TextStyle(
                                         color: const Color(0xffFF0000),
                                         fontSize: 12.sp,
@@ -131,7 +149,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     width: 6,
                                   ),
                                   Text(
-                                    '${widget.model.price}${LocaleKeys.r_s.tr()}',
+                                    '${widget.model?.price ?? widget.searchModel!.price}${LocaleKeys.r_s.tr()}',
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 16.sp,
@@ -141,7 +159,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     width: 2,
                                   ),
                                   Text(
-                                    '${widget.model.priceBeforeDiscount}${LocaleKeys.r_s.tr()}',
+                                    '${widget.model?.priceBeforeDiscount ??widget.searchModel!.priceBeforeDiscount}${LocaleKeys.r_s.tr()}',
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 12.sp,
@@ -159,7 +177,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               Row(
                                 children: [
                                   Text(
-                                    '${LocaleKeys.price.tr()} / 1  ${widget.model.unit.name}',
+                                    '${LocaleKeys.price.tr()} / 1  ${widget.model?.unit.name ?? widget.searchModel!.unit.name}',
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w300,
@@ -168,7 +186,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   ),
                                   const Spacer(),
                                   CustomPlusOrMinusProduct(
-                                    id: widget.model.id,
+                                    id: widget.model?.id ?? widget.searchModel!.id,
                                     index: 1,
                                     // amount: widget.model.amount,
                                   ),
@@ -193,7 +211,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 TextSpan(
-                                  text: "${widget.model.id.toString()} #",
+                                  text: "${widget.model?.id.toString() ?? widget.searchModel!.id.toString()} #",
                                   style: TextStyle(
                                     color: const Color(0xff808080),
                                     fontSize: 16.sp,
@@ -219,7 +237,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            widget.model.description,
+                            widget.model?.description?? widget.searchModel!.description,
                             style: const TextStyle(
                               color: Color(0xff808080),
                               fontSize: 14,
@@ -252,7 +270,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           ),
                         ),
                         CustomListSimilarPrduct(
-                          id: widget.model.categoryId,
+                          id: widget.model?.categoryId ??widget.searchModel!.categoryId,
                         ),
                         const SizedBox(
                           height: 20,
@@ -267,7 +285,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               onTap: () {
                 bloc.add(
                   StorProductCartEvent(
-                    id: widget.model.id,
+                    searchModel: widget.searchModel,
+                    id: widget.model?.id??widget.searchModel!.id,
                     model: widget.model,
                     isProduct: true,
                     amount: bloc.amountProduct,
@@ -323,7 +342,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               builder: (context, state) {
                                 if (state is AddCounterSuccessState) {
                                   return Text(
-                                    '${(widget.model.price! * bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
+                                    '${(widget.model?.price ?? widget.searchModel!.price! * bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
@@ -332,7 +351,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   );
                                 } else {
                                   return Text(
-                                    '${(widget.model.price! * bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
+                                    '${(widget.model?.price?? widget.searchModel!.price!* bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,

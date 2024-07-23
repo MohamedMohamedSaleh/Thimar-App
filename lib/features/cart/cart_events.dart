@@ -13,9 +13,14 @@ class StorProductCartEvent extends CartEvents {
   final int amount;
   final bool isProduct;
   final ProductModel? model;
+  final SearchResult? searchModel;
 
   StorProductCartEvent(
-      {this.amount = 1, this.model, this.isProduct = false, required this.id});
+      {this.searchModel,
+      this.amount = 1,
+      this.model,
+      this.isProduct = false,
+      required this.id});
 }
 
 class UpdateProductCartEvent extends CartEvents {

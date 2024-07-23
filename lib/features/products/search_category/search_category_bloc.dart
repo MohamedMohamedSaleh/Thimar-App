@@ -14,26 +14,29 @@ class GetSearchCategoryBloc
 
   TextEditingController textController = TextEditingController();
   static GetSearchCategoryBloc get(context) => BlocProvider.of(context);
-  int minPrice = 1;
-  int maxPrice = 2000;
+  double minPrice = 1;
+  double maxPrice = 1000;
   String filter = 'asc';
 
   List<SearchResult> search = [];
   Future<void> _getSearch(GetSearchCategoryEvent event,
       Emitter<GetSearchCategryStates> emit) async {
+    print(minPrice);
+    print(maxPrice);
+    print(filter);
     emit(GetSearchCategoryLoadingState());
-    final response = await DioHelper().getData(
-      endPoint:
-          'search_category/${event.id}/?filter=$filter&min_price=$minPrice&max_price=$maxPrice&keyword=${event.text}',
-    );
+    final response = await DioHelper()
+        .getData(endPoint: "search_category/${event.id}/", data: {
+      if (textController.text.isNotEmpty) "keyword": event.value,
+      "filter": filter,
+      "min_price": minPrice,
+      "max_price": maxPrice,
+    });
     if (response.isSuccess) {
       search = SearchProductData.fromJson(response.response!.data)
           .data
           .searchResult
           .toList();
-      if (event.text?.isEmpty ?? true) {
-        search.clear();
-      }
 
       emit(GetSearchCategrySuccessState());
     } else {

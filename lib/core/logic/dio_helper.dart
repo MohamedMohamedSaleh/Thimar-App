@@ -51,7 +51,7 @@ class DioHelper {
           response: response);
     } on DioException catch (ex) {
       return ResponseData(
-          message: ex.response!.data["message"],
+          message: ex.response?.data["message"]??'Error Connection!',
           isSuccess: false,
           response: ex.response);
     }
@@ -69,7 +69,7 @@ class DioHelper {
           response: response);
     } on DioException catch (ex) {
       return ResponseData(
-          message: ex.response!.data["message"],
+          message: ex.response?.data["message"]??'Error Connection!',
           isSuccess: false,
           response: ex.response);
     }
@@ -87,7 +87,7 @@ class DioHelper {
           response: response);
     } on DioException catch (ex) {
       return ResponseData(
-          message: ex.response!.data["message"],
+          message: ex.response?.data["message"]??'Error Connection!',
           isSuccess: false,
           response: ex.response);
     }

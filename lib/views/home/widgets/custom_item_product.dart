@@ -43,7 +43,8 @@ class ItemProductState extends State<ItemProduct> {
       onTap: () {
         navigateTo(
             toPage: ProductDetailsView(
-          model: widget.model!,
+          model: widget.model,
+          searchModel: widget.searchModel,
         ));
       },
       child: SizedBox(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/features/cart/cart_model.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 
 import '../../views/sheets/success_add_to_cart._sheet.dart';
 import '../products/products_model.dart';
@@ -67,7 +68,8 @@ class CartBloc extends Bloc<CartEvents, CartStates> {
         showModalBottomSheet(
           context: navigatorKey.currentContext!,
           builder: (context) => SuccessAddToCartSheet(
-            model: event.model!,
+            model: event.model,
+            searchModel: event.searchModel,
           ),
         );
       } else {

@@ -45,11 +45,11 @@ class Model {
 
 
 class City {
-  late final String id;
-  late final String name;
+  late final String? id;
+  late final String? name;
   
   City.fromJson(Map<String, dynamic> json){
-    id = json['id']??0;
+    id = json['id']??'';
     name = json['name']??'';
   }
 

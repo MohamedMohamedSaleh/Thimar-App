@@ -4,7 +4,14 @@ class GetSearchCategoryEvents {}
 
 class GetSearchCategoryEvent extends GetSearchCategoryEvents {
   final int id;
-  final String? text;
-
-  GetSearchCategoryEvent({required this.id,this.text});
+  final String value;
+  final String? filter;
+  final double? minPrice, maxPrice;
+  GetSearchCategoryEvent({
+      this.value = '',
+    required  this.id,
+      this.filter,
+      this.minPrice,
+      this.maxPrice,
+  });
 }

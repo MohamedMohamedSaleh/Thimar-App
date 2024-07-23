@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
@@ -10,14 +9,16 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_outline_send_button.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
 
 import '../../features/products/products_model.dart';
 
 class SuccessAddToCartSheet extends StatelessWidget {
-  const SuccessAddToCartSheet({super.key, required this.model});
-  final ProductModel model;
+  const SuccessAddToCartSheet({super.key, this.model, this.searchModel});
+  final ProductModel? model;
+  final SearchResult? searchModel;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +60,7 @@ class SuccessAddToCartSheet extends StatelessWidget {
                 ),
                 _Item(
                   model: model,
+                  searchModel: searchModel,
                 ),
                 SizedBox(
                   height: 16.h,
@@ -95,6 +97,9 @@ class SuccessAddToCartSheet extends StatelessWidget {
                                   .amountProduct = 1;
                               Navigator.pop(context);
                               Navigator.pop(context);
+                              if (searchModel != null) {
+                                Navigator.pop(context);
+                              }
                             },
                             title:
                                 LocaleKeys.product_details_browse_offers.tr(),
@@ -114,8 +119,9 @@ class SuccessAddToCartSheet extends StatelessWidget {
 }
 
 class _Item extends StatefulWidget {
-  const _Item({required this.model});
-  final ProductModel model;
+  const _Item({this.model, this.searchModel});
+  final ProductModel? model;
+  final SearchResult? searchModel;
 
   @override
   State<_Item> createState() => _ItemState();
@@ -130,7 +136,7 @@ class _ItemState extends State<_Item> {
         ClipRRect(
           borderRadius: BorderRadius.circular(11).w,
           child: AppImage(
-            widget.model.mainImage,
+            widget.model?.mainImage ?? widget.searchModel!.mainImage,
             height: 61.h,
             width: 66.w,
             fit: BoxFit.cover,
@@ -144,7 +150,7 @@ class _ItemState extends State<_Item> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.model.title,
+              widget.model?.title ?? widget.searchModel!.title,
               style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
@@ -164,7 +170,7 @@ class _ItemState extends State<_Item> {
               height: 2,
             ),
             Text(
-              '${widget.model.price} ${LocaleKeys.r_s.tr()}',
+              '${widget.model?.price ?? widget.searchModel!.price} ${LocaleKeys.r_s.tr()}',
               style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
