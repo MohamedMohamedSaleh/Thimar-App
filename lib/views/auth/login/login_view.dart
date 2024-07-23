@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
 
 import '../../../core/logic/helper_methods.dart';
@@ -39,9 +41,8 @@ class LoginView extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
-              text: "ليس لديك حساب ؟",
-              buttonText: " تسجيل الأن",
-              paddingBottom: 22.h,
+              text: LocaleKeys.log_in_dont_have_an_account.tr(),
+              buttonText: LocaleKeys.log_in_register_now.tr(),
               onPress: () {
                 navigateTo(toPage: const RegisterView());
               },
@@ -80,20 +81,20 @@ class _FormLoginState extends State<FormLogin> {
         padding: const EdgeInsets.only(top: 0),
         children: [
           CustomIntroduction(
-            mainText: "مرحبا بك مرة أخرى",
-            supText: "يمكنك تسجيل الدخول الأن",
+            mainText: LocaleKeys.register_hello_again.tr(),
+            supText: LocaleKeys.log_in_you_can_login_now.tr(),
             paddingHeight: 28.h,
           ),
           CustomAppInput(
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
-                return "رقم الجوال مطلوب";
+                return LocaleKeys.log_in_please_enter_your_mobile_number.tr();
               } else if (value!.length < 10) {
-                return "رقم الهاتف يجب أن يكون أكبر من 10 أرقام";
+                return LocaleKeys.log_in_please_enter_nine_number.tr();
               }
               return null;
             },
-            labelText: "رقم الجوال",
+            labelText: LocaleKeys.log_in_phone_number.tr(),
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
             controller: bloc.phoneController,
@@ -101,14 +102,14 @@ class _FormLoginState extends State<FormLogin> {
           CustomAppInput(
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
-                return "كلمة المرور مطلوبه";
+                return LocaleKeys.log_in_please_enter_your_password_again.tr();
               } else if (value!.length < 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 5 أحرف";
+                return LocaleKeys.log_in_please_enter_six_letters_at_min.tr();
               }
               return null;
             },
             controller: bloc.passwordController,
-            labelText: "كلمة المرور",
+            labelText: LocaleKeys.log_in_password.tr(),
             prefixIcon: "assets/icon/lock_icon.png",
             isPassword: true,
             paddingBottom: 0,
@@ -117,7 +118,7 @@ class _FormLoginState extends State<FormLogin> {
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
               child: Text(
-                "نسيت كلمة المرور ؟",
+                LocaleKeys.log_in_forget_password.tr(),
                 style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w300,
@@ -137,7 +138,7 @@ class _FormLoginState extends State<FormLogin> {
             builder: (context, state) {
               return CustomFillButton(
                 isLoading: state is LoginLoadingState,
-                title: "تسجيل الدخول",
+                title: LocaleKeys.my_account_log_in.tr(),
                 onPress: () {
                   bloc.add(LoginEvent());
                 },

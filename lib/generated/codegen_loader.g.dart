@@ -42,7 +42,7 @@ class CodegenLoader extends AssetLoader {
       "forget_password": "نسيت كلمة المرور",
       "enter_your_phone_number": "أدخل رقم الجوال المرتبط بحسابك",
       "confirm_phone_number": "تأكيد رقم الجوال",
-      "you_have_an_account": "لديك حساب بالفعل؟"
+      "you_have_an_account": " لديك حساب بالفعل؟"
     },
     "my_account": {
       "my_account": "حسابي",
@@ -86,14 +86,14 @@ class CodegenLoader extends AssetLoader {
     "register": {
       "hello_again": "مرحبا بك مرة اخري",
       "you_can_register_new_account_now": "يمكنك تسجيل حساب جديد الان",
-      "please_enter_full_name": "بالرجاء ادخال اسمك بالكامل",
+      "please_enter_full_name": "بالرجاء ادخال اسمك",
       "user_name": "اسم المستخدم",
       "city": "المدينة",
       "choose_your_city": "اختر مدينتك",
       "please_enter_your_city": "بالرجاء ادخال مدينتك",
-      "register": "تسجيل",
+      "register": "تسجيل الدخول",
       "confirm_password": "تأكيد كلمة المرور",
-      "something_wrong": "حدث خطأ"
+      "something_wrong": "كلمة المرور غير متطابقة"
     },
     "account_activation": {"activate_account": "تفعيل الحساب"},
     "home": {
@@ -246,9 +246,9 @@ class CodegenLoader extends AssetLoader {
       "please_enter_six_letters_at_min": "Please enter 6 letters at min",
       "phone_number": "Phone Number",
       "password": "Password",
-      "forget_password": "Forget Password ?",
+      "forget_password": "Forget Password?",
       "login_as_visitor": "Log in as a visitor",
-      "dont_have_an_account": "Don't have an account?",
+      "dont_have_an_account": "Don't have an account? ",
       "register_now": "  Register Now  "
     },
     "forget_password": {
@@ -256,7 +256,7 @@ class CodegenLoader extends AssetLoader {
       "enter_your_phone_number":
           "Enter the mobile number associated with your account",
       "confirm_phone_number": "Confirm phone number",
-      "you_have_an_account": "You have an account ?"
+      "you_have_an_account": "You have an account? "
     },
     "my_account": {
       "my_account": "My Account",
@@ -299,14 +299,14 @@ class CodegenLoader extends AssetLoader {
     "register": {
       "hello_again": "Hello again",
       "you_can_register_new_account_now": "You can register a new account now",
-      "please_enter_full_name": "Please enter your full name",
+      "please_enter_full_name": "Please enter your name",
       "user_name": "User name",
       "city": "City",
       "choose_your_city": "Choose your city",
       "please_enter_your_city": "Please enter your city",
       "register": "Register",
       "confirm_password": "Confirm password",
-      "something_wrong": "SomeThing Wrong"
+      "something_wrong": "Password mismatch"
     },
     "account_activation": {"activate_account": "Activate the account"},
     "home": {

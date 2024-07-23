@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -6,7 +7,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     super.key,
     required this.text,
     required this.buttonText,
-    this.paddingBottom = 26,
+    this.paddingBottom = 40,
     required this.onPress,
   });
   final String text;
@@ -16,7 +17,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: paddingBottom.h, top: 0),
+      padding: EdgeInsets.only(
+        bottom: paddingBottom.h,
+        top: 4,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -28,8 +32,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
               fontWeight: FontWeight.w300,
             ),
           ),
-          TextButton(
-            onPressed: onPress,
+          GestureDetector(
+            onTap: onPress,
             child: Text(
               buttonText,
               style: TextStyle(

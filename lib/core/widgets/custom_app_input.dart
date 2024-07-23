@@ -95,7 +95,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
                       color: const Color(0xffAFAFAF),
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w400)
-                  : null,
+                  : const TextStyle(fontSize: 13),
           labelText: widget.labelText,
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12).r,

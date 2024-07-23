@@ -23,7 +23,7 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterStates> {
   final confirmPasswordController = TextEditingController();
 
   void _register(RegisterEvent event, Emitter<RegisterStates> emit) async {
-    if (formKey.currentState!.validate()) {
+    
       emit(RegisterLoadingState());
       final response = await DioHelper().sendData(
         endPoint: 'client_register',
@@ -53,8 +53,6 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterStates> {
         emit(RegisterFailedState());
         showMessage(message: response.message);
       }
-    } else {
-      autovalidateMode = AutovalidateMode.always;
-    }
+   
   }
 }
