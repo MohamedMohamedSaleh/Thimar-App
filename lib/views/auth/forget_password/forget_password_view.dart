@@ -1,15 +1,31 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/views/auth/forget_password/bloc/forget_password_bloc.dart';
 import '../../../core/logic/helper_methods.dart';
-import '../confirm_code/confirm_code_view.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../login/login_view.dart';
 
-class ForgetPasswordView extends StatelessWidget {
+class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
+
+  @override
+  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+}
+
+class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+  final bloc = KiwiContainer().resolve<ForgetPasswordBloc>();
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +47,14 @@ class ForgetPasswordView extends StatelessWidget {
                   right: 16,
                   left: 16,
                 ).r,
-                child: const FormForgetPassword(),
+                child: FormForgetPassword(
+                  bloc: bloc,
+                ),
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
-              text: "لديك حساب بالفعل ؟ ",
-              buttonText: "تسجيل الدخول",
+              text: LocaleKeys.log_in_dont_have_an_account.tr(),
+              buttonText: LocaleKeys.log_in_register_now.tr(),
               onPress: () {
                 navigateTo(toPage: const LoginView());
               },
@@ -51,8 +69,9 @@ class ForgetPasswordView extends StatelessWidget {
 class FormForgetPassword extends StatefulWidget {
   const FormForgetPassword({
     super.key,
+    required this.bloc,
   });
-
+  final ForgetPasswordBloc bloc;
   @override
   State<FormForgetPassword> createState() => _FormForgetPasswordState();
 }
@@ -72,41 +91,43 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
         padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8).r,
         children: [
           CustomIntroduction(
-            mainText: "نسيت كلمة المرور",
-            supText: "أدخل رقم الجوال المرتبط بحسابك",
+            mainText: LocaleKeys.forget_password_forget_password.tr(),
+            supText: LocaleKeys.forget_password_enter_your_phone_number.tr(),
             paddingHeight: 24.h,
           ),
           CustomAppInput(
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
-                return "رقم الجوال مطلوب";
+                return LocaleKeys.log_in_please_enter_your_mobile_number;
               } else if (value!.length < 10) {
-                return "رقم الهاتف يجب أن يكون أكبر من 10 أرقام";
+                return LocaleKeys.log_in_please_enter_nine_number.tr();
               }
               return null;
             },
-            labelText: "رقم الجوال",
+            labelText: LocaleKeys.log_in_phone_number.tr(),
             prefixIcon: "assets/icon/phone_icon.png",
             isPhone: true,
             paddingBottom: 28.h,
             controller: phoneController,
           ),
-          CustomFillButton(
-            title: "تأكيد رقم الجوال",
-            onPress: () {
-              FocusScope.of(context).unfocus();
-              if (formKey.currentState!.validate()) {
-                navigateTo(
-                  toPage: ConfirmCodeView(
-                    isActive: false,
-                    phone: phoneController.text,
-                  ),
-                );
-              } else {
-                autovalidateMode = AutovalidateMode.onUserInteraction;
+          BlocBuilder(
+            bloc: widget.bloc,
+            builder: (context, state) {
+              return CustomFillButton(
+                isLoading: state is ForgetPasswordLoading,
+                title: LocaleKeys.forget_password_confirm_phone_number.tr(),
+                onPress: () {
+                  FocusScope.of(context).unfocus();
+                  if (formKey.currentState!.validate()) {
+                    widget.bloc
+                        .add(ForgetPasswordEvent(phone: phoneController.text));
+                  } else {
+                    autovalidateMode = AutovalidateMode.onUserInteraction;
 
-                setState(() {});
-              }
+                    setState(() {});
+                  }
+                },
+              );
             },
           ),
         ],

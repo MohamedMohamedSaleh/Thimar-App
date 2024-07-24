@@ -22,6 +22,16 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final bloc = KiwiContainer().resolve<RegisterBloc>();
+  @override
+  void dispose() {
+    bloc.cityController.dispose();
+    bloc.confirmPasswordController.dispose();
+    bloc.nameController.dispose();
+    bloc.passwordController.dispose();
+    bloc.phoneController.dispose();
+    bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

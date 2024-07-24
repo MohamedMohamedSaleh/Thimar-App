@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.d
 import 'package:vegetable_orders_project/core/widgets/custom_circle_or_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_password_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/confirm_code/bloc/confirm_bloc.dart';
 import '../../../core/logic/helper_methods.dart';
@@ -29,6 +31,13 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    confirmBloc.close();
+    changePasswordBloc.close();
+    super.dispose();
   }
 
   @override
@@ -56,10 +65,10 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                   children: [
                     CustomIntroduction(
                       mainText: !widget.isActive
-                          ? "نسيت كلمة المرور"
-                          : "تفعيل الحساب",
+                          ? LocaleKeys.forget_password_forget_password.tr()
+                          : LocaleKeys.account_activation_activate_account.tr(),
                       supText:
-                          "أدخل الكود المكون من 4 أرقام المرسل علي رقم الجوال",
+                          LocaleKeys.check_code_enter_the_code_4digits.tr(),
                       isRequirPhoneCheck: true,
                     ),
                     PinCodeTextField(
@@ -88,7 +97,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                             builder: (context, state) {
                               return CustomFillButton(
                                 isLoading: state is ConfirmloadingState,
-                                title: "تأكيد الكود",
+                                title:
+                                    LocaleKeys.check_code_confirm_the_code.tr(),
                                 onPress: () {
                                   confirmBloc
                                       .add(ConfirmEvent(phone: widget.phone));
@@ -101,7 +111,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                             builder: (context, state) {
                               return CustomFillButton(
                                 isLoading: state is CheckCodeLoadingState,
-                                title: "تأكيد الكود",
+                                title:
+                                    LocaleKeys.check_code_confirm_the_code.tr(),
                                 onPress: () {
                                   changePasswordBloc
                                       .add(CheckCodeEvent(phone: widget.phone));
@@ -113,8 +124,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                       height: 20.h,
                     ),
                     Text(
-                      "لم تستلم الكود ؟\nيمكنك إعادة إرسال الكود بعد",
-                      textDirection: TextDirection.ltr,
+                      "${LocaleKeys.check_code_didnt_receive_code.tr()} \n${LocaleKeys.check_code_you_can_receive_code_after.tr()}",
+                      // textDirection: TextDirection.ltr,
                       style: TextStyle(
                           fontSize: 16.sp, fontWeight: FontWeight.w300),
                       textAlign: TextAlign.center,
@@ -131,8 +142,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
-              text: "لديك حساب بالفعل ؟ ",
-              buttonText: "تسجيل الدخول",
+              text: LocaleKeys.forget_password_you_have_an_account.tr(),
+              buttonText: LocaleKeys.my_account_log_in.tr(),
               onPress: () {
                 navigateTo(toPage: const LoginView());
               },

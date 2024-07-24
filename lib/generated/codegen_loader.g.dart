@@ -249,7 +249,7 @@ class CodegenLoader extends AssetLoader {
       "forget_password": "Forget Password?",
       "login_as_visitor": "Log in as a visitor",
       "dont_have_an_account": "Don't have an account? ",
-      "register_now": "  Register Now  "
+      "register_now": "Register Now"
     },
     "forget_password": {
       "forget_password": "Forget Password",

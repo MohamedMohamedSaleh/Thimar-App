@@ -17,6 +17,7 @@ class UserDataProfile {
   late final String image;
   late final City city;
   late final int isVip;
+  String? phoneEdit;
   UserDataProfile();
   UserDataProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -25,6 +26,7 @@ class UserDataProfile {
     image = json['image'];
     city = City.fromJson(json['city'] ?? {});
     isVip = json['is_vip'];
+    phoneEdit = phone.replaceAll('966', '');
   }
 }
 

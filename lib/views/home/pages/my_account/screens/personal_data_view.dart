@@ -33,7 +33,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
   void initState() {
     super.initState();
     bloc.nameController.text = CacheHelper.getUserName() ?? '';
-    bloc.phoneController.text = CacheHelper.getUserPhone() ?? '';
+    bloc.phoneController.text = CacheHelper.getUserPhoneEdit() ?? '';
     bloc.cityController.text = CacheHelper.getUserCity() ?? '';
   }
 
@@ -158,7 +158,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                                     setState(
                                       () {},
                                     );
-                                  },
+                                  },//966132847241864
                                   icon: Icon(
                                     Icons.clear,
                                     color: Colors.red.shade400,

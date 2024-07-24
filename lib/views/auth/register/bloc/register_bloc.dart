@@ -23,36 +23,42 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterStates> {
   final confirmPasswordController = TextEditingController();
 
   void _register(RegisterEvent event, Emitter<RegisterStates> emit) async {
-    
-      emit(RegisterLoadingState());
-      final response = await DioHelper().sendData(
-        endPoint: 'client_register',
-        data: {
-          "fullname": nameController.text,
-          "password": passwordController.text,
-          "password_confirmation": confirmPasswordController.text,
-          "phone": phoneController.text,
-          "country_id": '1',
-          "city_1": city!.id,
-        },
-      );
+    emit(RegisterLoadingState());
+    final response = await DioHelper().sendData(
+      endPoint: 'client_register',
+      data: {
+        "fullname": nameController.text,
+        "password": passwordController.text,
+        "password_confirmation": confirmPasswordController.text,
+        "phone": phoneController.text,
+        "country_id": '1',
+        "city_1": city!.id,
+      },
+    );
 
-      if (response.isSuccess) {
-        emit(RegisterSuccessState());
-        showMessage(
-          message: response.message,
+    if (response.isSuccess) {
+      emit(RegisterSuccessState());
+      showMessage(
+        message: response.message,
+        type: MessageType.success,
+      );
+      navigateTo(
+        toPage: ConfirmCodeView(
+          isActive: true,
+          phone: phoneController.text,
+        ),
+      );
+      await Future.delayed(const Duration(seconds: 3));
+
+      showMessage(
           type: MessageType.success,
-        );
-        navigateTo(
-          toPage: ConfirmCodeView(
-            isActive: true,
-            phone: phoneController.text,
-          ),
-        );
-      } else {
-        emit(RegisterFailedState());
-        showMessage(message: response.message);
-      }
-   
+          message: "Your Confirm Code is '1111'",
+          paddingBottom:
+              MediaQuery.of(navigatorKey.currentContext!).size.height - 260,
+          duration: 5);
+    } else {
+      emit(RegisterFailedState());
+      showMessage(message: response.message);
+    }
   }
 }

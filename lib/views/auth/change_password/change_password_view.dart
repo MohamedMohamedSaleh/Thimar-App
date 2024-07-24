@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_input.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_password_bloc.dart';
 import '../../../core/logic/helper_methods.dart';
 import '../register/register_view.dart';
@@ -30,7 +32,7 @@ class ChangePasswordView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Padding(
-                padding:  EdgeInsets.only(
+                padding: EdgeInsets.only(
                   right: 16.w,
                   left: 16.w,
                 ),
@@ -40,8 +42,8 @@ class ChangePasswordView extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: CustomBottomNavigationBar(
-              text: "ليس لديك حساب ؟",
-              buttonText: " تسجيل الدخول",
+              text: LocaleKeys.log_in_dont_have_an_account.tr(),
+              buttonText: LocaleKeys.my_account_log_in.tr(),
               paddingBottom: 22.h,
               onPress: () {
                 navigateTo(toPage: const RegisterView());
@@ -70,6 +72,13 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
   String? password;
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
+  @override
+  void dispose() {
+    resetPasswordBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -78,23 +87,23 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
       child: ListView(
         padding: const EdgeInsets.only(top: 0),
         children: [
-           CustomIntroduction(
-            mainText: "نسيت كلمة المرور",
-            supText: "أدخل كلمة المرور الجديدة",
+          CustomIntroduction(
+            mainText: LocaleKeys.forget_password_forget_password.tr(),
+            supText: LocaleKeys.reset_password_enter_new_password.tr(),
             paddingHeight: 17.h,
           ),
           CustomAppInput(
             controller: resetPasswordBloc.passwordController,
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
-                return "كلمة المرور مطلوبه";
+                return LocaleKeys.log_in_please_enter_your_password_again.tr();
               } else if (value!.length < 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 5 أحرف";
+                return LocaleKeys.log_in_please_enter_six_letters_at_min.tr();
               }
               password = value;
               return null;
             },
-            labelText: "كلمة المرور",
+            labelText: LocaleKeys.log_in_password.tr(),
             prefixIcon: "assets/icon/lock_icon.png",
             isPassword: true,
           ),
@@ -102,16 +111,20 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             controller: resetPasswordBloc.confirmPasswordController,
             validator: (String? value) {
               if (value?.isEmpty ?? true) {
-                return "تأكيد كلمة المرور مطلوبه";
+                return LocaleKeys.reset_password_please_enter_new_password_again
+                    .tr();
               } else if (value!.length < 6) {
-                return "كلمة المرور يجب أن تكون أكبر من 5 أحرف";
+                return LocaleKeys
+                    .reset_password_please_enter_new_password_in_6_letters_at_min
+                    .tr();
               } else if (resetPasswordBloc.passwordController.text != value) {
-                return "كلمة المرور غير متطابقة";
+                return LocaleKeys.change_password_two_passwords_not_matching
+                    .tr();
               } else {
                 return null;
               }
             },
-            labelText: "تأكيد كلمة المرور",
+            labelText: LocaleKeys.register_confirm_password.tr(),
             prefixIcon: "assets/icon/lock_icon.png",
             isPassword: true,
             paddingBottom: 25.h,
@@ -120,8 +133,8 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
             bloc: resetPasswordBloc,
             builder: (context, state) {
               return CustomFillButton(
-                isLoading:state is ResetPasswordLoadingState,
-                title: "تغيير كلمة المرور",
+                isLoading: state is ResetPasswordLoadingState,
+                title: LocaleKeys.change_password_change_password.tr(),
                 onPress: () {
                   FocusScope.of(context).unfocus();
                   if (formKey.currentState!.validate()) {
@@ -135,7 +148,7 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
               );
             },
           ),
-           SizedBox(
+          SizedBox(
             height: 20.h,
           ),
         ],

@@ -69,6 +69,8 @@ class _FormLoginState extends State<FormLogin> {
   @override
   void dispose() {
     super.dispose();
+    bloc.passwordController.dispose();
+    bloc.phoneController.dispose();
     bloc.close();
   }
 

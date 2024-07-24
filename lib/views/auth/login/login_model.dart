@@ -1,13 +1,9 @@
 class UserData {
-  
   late final Model model;
 
-  
-  UserData.fromJson(Map<String, dynamic> json){
+  UserData.fromJson(Map<String, dynamic> json) {
     model = Model.fromJson(json['data']);
-
   }
-
 }
 
 class Model {
@@ -23,9 +19,9 @@ class Model {
   late final String token;
   late final int userCartCount;
   late final City city;
+  String? phoneEdit;
 
-  
-  Model.fromJson(Map<String, dynamic> json){
+  Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fullname = json['fullname'];
     phone = json['phone'];
@@ -39,19 +35,17 @@ class Model {
     userType = json['user_type'];
     token = json['token'];
     userCartCount = json['user_cart_count'];
+
+    phoneEdit = phone.replaceAll('966', '');
   }
-
 }
-
 
 class City {
   late final String? id;
   late final String? name;
-  
-  City.fromJson(Map<String, dynamic> json){
-    id = json['id']??'';
-    name = json['name']??'';
+
+  City.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? '';
+    name = json['name'] ?? '';
   }
-
-
 }

@@ -24,8 +24,10 @@ class _CustomCircleOrButtonState extends State<CustomCircleOrButton> {
     minute = 0;
     isTemerFinished = false;
     for (int i = 0; i < 10; i++) {
+      if (!mounted) return;
       setState(() {});
       await Future.delayed(const Duration(seconds: 1));
+      if (!mounted) return;
       second++;
       if (second == 60) {
         minute++;

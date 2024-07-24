@@ -18,7 +18,7 @@ bool isKeyboardOpen = false;
 
 enum MessageType { faild, success }
 
-void showMessage({String? message, MessageType type = MessageType.faild}) {
+void showMessage({String? message, MessageType type = MessageType.faild, double paddingBottom = 50, int duration = 2}) {
   if (message!.isNotEmpty) {
     ScaffoldMessenger.of(navigatorKey.currentContext!).removeCurrentSnackBar();
     ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
@@ -27,8 +27,8 @@ void showMessage({String? message, MessageType type = MessageType.faild}) {
           message,
           textAlign: TextAlign.center,
         ),
-        duration: const Duration(seconds: 2),
-        margin:  EdgeInsets.symmetric(horizontal: 30.w, vertical: 50.h),
+        duration:  Duration(seconds: duration),
+        margin:  EdgeInsets.only(right: 30.w, left: 30.w, bottom: paddingBottom),
         behavior: SnackBarBehavior.floating,
         backgroundColor: (type == MessageType.success)
             ? mainColor.withOpacity(.7)
