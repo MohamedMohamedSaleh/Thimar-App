@@ -1,16 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
-import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/products/products_bloc.dart';
 import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/main.dart';
-import 'package:vegetable_orders_project/views/auth/login/login_view.dart';
+import 'package:vegetable_orders_project/views/auth/logout/logout_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/about_application_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/connect_with_us_view.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/screens/personal_data_view.dart';
@@ -32,6 +32,14 @@ class MyAccountPage extends StatefulWidget {
 }
 
 class _MyAccountPageState extends State<MyAccountPage> {
+  final bloc = KiwiContainer().resolve<LogoutBloc>();
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,13 +252,27 @@ class _MyAccountPageState extends State<MyAccountPage> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    CacheHelper.clearUserData();
-                                    navigateTo(toPage: const LoginView());
+                                    bloc.add(LogoutEvent());
                                   },
-                                  child: _ItemMyAccount(
-                                    title: LocaleKeys.my_account_log_out.tr(),
-                                    icon: 'Turn_off',
-                                    isLogout: true,
+                                  child: BlocBuilder(
+                                    bloc: bloc,
+                                    builder: (context, state) {
+                                      if (state is LogoutLoading) {
+                                        return const SizedBox(
+                                          height: 45,
+                                          width: double.infinity,
+                                          child: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        );
+                                      }
+                                      return _ItemMyAccount(
+                                        title:
+                                            LocaleKeys.my_account_log_out.tr(),
+                                        icon: 'Turn_off',
+                                        isLogout: true,
+                                      );
+                                    },
                                   ),
                                 ),
                               ],

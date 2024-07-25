@@ -24,8 +24,14 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   @override
   void initState() {
     super.initState();
-    bloc.add(GetCurrentOrdersEvent(isLoading: false));
-    bloc.add(GetFinishedOrdersEvent(isLoading: false));
+    bloc.add(GetCurrentOrdersEvent(isLoading: true));
+    bloc.add(GetFinishedOrdersEvent(isLoading: true));
+  }
+
+  @override
+  void dispose() {
+    bloc.isLoading = true;
+    super.dispose();
   }
 
   @override
@@ -45,10 +51,10 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
             BlocBuilder(
               bloc: bloc,
               builder: (context, state) {
-                if ((state is GetCurrentOrdersLoadingState ||
-                        state is GetFinishedOrdersLoadingState ||
-                        bloc.isLoading) &&
-                    state is! GetCurrentOrdersEmptyState) {
+                print(state);
+                if (((state is GetCurrentOrdersLoadingState ||
+                        state is GetFinishedOrdersLoadingState) ||
+                    bloc.isLoading)) {
                   return ListView.separated(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 24),
@@ -69,19 +75,24 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       },
                       child: ListView(
                         // mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          SizedBox(
+                        children: [
+                          const SizedBox(
                             height: 100,
                           ),
-                          //TODO: this is not found change image
-                          AppImage(
-                            'assets/icon/no_data_favs.png',
-                            width: 200,
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 70.0),
+                            child: AppImage(
+                              'assets/images/no_addresses.png',
+                              // width: 200,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
                           ),
                           Text(
-                            'لا توجد طلبات',
-                            style: TextStyle(
-                              fontSize: 25,
+                            LocaleKeys.home_data_not_found.tr(),
+                            style: const TextStyle(
+                              fontSize: 20,
                               color: mainColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -144,18 +155,23 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       },
                       child: ListView(
                         // mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          SizedBox(
+                        children: [
+                          const SizedBox(
                             height: 100,
                           ),
-                          AppImage(
-                            'assets/icon/not_found.png',
-                            height: 180,
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 70),
+                            child: AppImage(
+                              'assets/images/no_addresses.png',
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
                           ),
                           Text(
-                            'لا توجد طلبات',
-                            style: TextStyle(
-                              fontSize: 25,
+                            LocaleKeys.home_data_not_found.tr(),
+                            style: const TextStyle(
+                              fontSize: 20,
                               color: mainColor,
                               fontWeight: FontWeight.bold,
                             ),

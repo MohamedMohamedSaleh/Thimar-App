@@ -39,6 +39,7 @@ dependencies:
   html: ^0.15.4
   flutter_screenutil: ^5.9.0
   flutter_svg: null
+  flutter_native_splash: ^2.4.0
   geocoding: ^3.0.0
   geolocator: ^11.0.0
   google_maps_flutter: ^2.5.3
@@ -52,10 +53,22 @@ dependencies:
 
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.2
   flutter_test:
     sdk: flutter
 
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/vegetable_basket.png"
+  min_sdk_android: 21
+
+flutter_native_splash:
+  color: "#ffffff"
+  android: true
+  ios: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

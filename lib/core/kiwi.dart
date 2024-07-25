@@ -14,6 +14,7 @@ import 'package:vegetable_orders_project/views/auth/change_password/bloc/change_
 import 'package:vegetable_orders_project/views/auth/confirm_code/bloc/confirm_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/forget_password/bloc/forget_password_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/login/bloc/login_bloc.dart';
+import 'package:vegetable_orders_project/views/auth/logout/logout_bloc.dart';
 import 'package:vegetable_orders_project/views/auth/register/bloc/register_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/contact_us/contact_us_bloc.dart';
 import 'package:vegetable_orders_project/views/home/pages/my_account/bloc/edit_password/edit_password_bloc.dart';
@@ -32,6 +33,7 @@ void initKiwi() {
   KiwiContainer container = KiwiContainer();
   container.registerFactory((container) => LoginBloc());
   container.registerFactory((container) => ForgetPasswordBloc());
+  container.registerFactory((container) => LogoutBloc());
   container.registerFactory((container) => RegisterBloc());
   container.registerFactory((container) => GetCitiesBloc());
   container.registerFactory((container) => ConfirmBloc());

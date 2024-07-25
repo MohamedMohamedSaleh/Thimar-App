@@ -9,6 +9,7 @@ import 'package:vegetable_orders_project/views/home/pages/my_account/screens/add
 import 'package:vegetable_orders_project/views/home/pages/my_account/widgets/custom_outline_button.dart';
 
 import '../../core/constants/my_colors.dart';
+import '../../core/widgets/app_image.dart';
 import '../../features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 import '../home/pages/my_account/widgets/custom_title_item.dart';
 
@@ -60,6 +61,33 @@ class _TitlesSheetState extends State<TitlesSheet> {
                     if (state is GetAddressesLoadingState) {
                       return const Center(
                         child: CircularProgressIndicator(),
+                      );
+                    } else if (bloc.list.isEmpty) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                            const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 70.0),
+                            child: AppImage(
+                              'assets/images/no_addresses.png',
+                              // width: 200,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            LocaleKeys.home_data_not_found.tr(),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: mainColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       );
                     }
                     return ListView.builder(

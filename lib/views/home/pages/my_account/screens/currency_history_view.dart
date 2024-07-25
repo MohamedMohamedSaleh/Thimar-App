@@ -47,7 +47,6 @@ class _CurrencyHestoryViewState extends State<CurrencyHestoryView> {
                     notification is ScrollUpdateNotification) {
                   widget.bloc
                       .add(GetWalletEventPaginated(isLoadingPagination: true));
-                  print('Loading pagination');
                 }
                 return true;
               },
