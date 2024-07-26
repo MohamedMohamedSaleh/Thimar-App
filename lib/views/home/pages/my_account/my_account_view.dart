@@ -6,7 +6,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
-import 'package:vegetable_orders_project/features/categoris/bloc/get_category_bloc.dart';
 import 'package:vegetable_orders_project/features/products/products/products_bloc.dart';
 import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/main.dart';
@@ -196,15 +195,13 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                             : "en";
                                     await context.setLocale(Locale(code));
                                     setState(() {});
-                                    KiwiContainer()
-                                        .resolve<GetCategoryBloc>()
-                                        .add(GetCategoryEvent());
-                                    KiwiContainer()
-                                        .resolve<ProductsBloc>()
-                                        .add(GetProductsEvent());
+
                                     KiwiContainer()
                                         .resolve<ProfileBloc>()
                                         .add(GetProfileEvent());
+                                    KiwiContainer().resolve<ProductsBloc>()
+                                      ..isTransitionFav = true
+                                      ..isTransitionProduct = true;
                                   },
                                   child: _ItemMyAccount(
                                     icon: 'language',

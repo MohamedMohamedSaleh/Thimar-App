@@ -82,7 +82,6 @@ class _MainAppBarState extends State<MainAppBar> {
                               builder: (context) => const TitlesSheet(),
                             );
                             if (model?.location.isNotEmpty ?? false) {
-                              // TODO: this is operation to delete some string
                               final list = model!.location.split(' ');
                               list.removeAt(0);
                               String location = list.join(' ');

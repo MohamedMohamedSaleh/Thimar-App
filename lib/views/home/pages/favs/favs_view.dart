@@ -27,6 +27,14 @@ class _FavsPageState extends State<FavsPage> {
   }
 
   @override
+  void initState() {
+    if(bloc.isTransitionFav){
+      bloc.add(GetFavsProductsEvent(isLoading: true));
+    }    
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FadeIn(
       duration: const Duration(milliseconds: 500),

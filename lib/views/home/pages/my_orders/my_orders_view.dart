@@ -51,7 +51,6 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
             BlocBuilder(
               bloc: bloc,
               builder: (context, state) {
-                print(state);
                 if (((state is GetCurrentOrdersLoadingState ||
                         state is GetFinishedOrdersLoadingState) ||
                     bloc.isLoading)) {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 import 'package:vegetable_orders_project/core/widgets/app_image.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_app_bar.dart';
 import 'package:vegetable_orders_project/features/notifications/notifications_bloc.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/widgets/shimmer_loading.dart';
 
 import '../../../../features/notifications/model.dart';
@@ -34,9 +36,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         thereIsIcon: false,
-        title: "الإشعارات",
+        title: LocaleKeys.home_nav_notifications.tr(),
       ),
       body: BlocBuilder(
         bloc: bloc,
@@ -65,7 +67,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               // height: 180,
                             ),
                             Text(
-                              'لا توجد بيانات',
+                              LocaleKeys.home_data_not_found.tr(),
                               style: TextStyle(
                                   fontSize: 25.sp,
                                   color: mainColor,

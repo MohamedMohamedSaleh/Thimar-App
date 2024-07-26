@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -37,7 +38,7 @@ class GetLocationn {
         isGetMyLocation = true;
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
     return myLocation;
   }

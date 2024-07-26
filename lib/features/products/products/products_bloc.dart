@@ -16,6 +16,9 @@ class ProductsBloc extends Bloc<ProductsEvents, ProductsStates> {
     on<RemoveProductsFromFavsEvent>(_removeProductFromFavs);
   }
 
+  bool isTransitionProduct = false;
+  bool isTransitionFav = false;
+
   static Map<int, bool> favorites = {};
   List<ProductModel> list = [];
   Future<void> _getData(
@@ -23,6 +26,7 @@ class ProductsBloc extends Bloc<ProductsEvents, ProductsStates> {
     emit(GetProductLoadingState());
     final response = await DioHelper().getData(endPoint: 'products');
     if (response.isSuccess) {
+      isTransitionProduct = false;
       final model = ProductsData.fromJson(response.response!.data);
       for (var element in model.list) {
         favorites.addAll({element.id: element.isFavorite});
@@ -43,6 +47,7 @@ class ProductsBloc extends Bloc<ProductsEvents, ProductsStates> {
     final response =
         await DioHelper().getData(endPoint: 'client/products/favorites');
     if (response.isSuccess) {
+      isTransitionFav = false;
       final favsModel = ProductsData.fromJson(response.response!.data);
       favsList = favsModel.list;
       emit(GetFavoriteProductSuccrssState());

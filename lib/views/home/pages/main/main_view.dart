@@ -34,7 +34,15 @@ class _MainPageState extends State<MainPage> {
   final getProductsBloc = KiwiContainer().resolve<ProductsBloc>();
   final cartBloc = KiwiContainer().resolve<CartBloc>()
     ..add(ShowCartEvent(isLoading: false));
-
+@override
+  void initState() {
+    if(getProductsBloc.isTransitionProduct){
+      getProductsBloc.add(GetProductsEvent());
+      getSliderBloc.add(GetSliderEvent());
+      getCategoriesBloc.add(GetCategoryEvent());
+    }
+    super.initState();
+  }
   int currentIndex = 0;
 
   @override
