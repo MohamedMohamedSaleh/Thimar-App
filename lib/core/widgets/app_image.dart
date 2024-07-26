@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vegetable_orders_project/core/constants/my_colors.dart';
 
 class AppImage extends StatelessWidget {
   const AppImage(
@@ -28,13 +30,35 @@ class AppImage extends StatelessWidget {
         color: color,
       );
     } else if (path.startsWith('http')) {
-      return Image.network(
-        path,
+      return CachedNetworkImage(
+        imageUrl: path,
+        placeholder: (context, url) => FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Loading...',
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.grey[400],
+            ),
+          ),
+        ),
+        errorWidget: (context, url, error) => const Icon(
+          Icons.error_outline_rounded,
+          color: mainColor,
+        ),
         height: height?.h,
         width: width?.w,
         fit: fit,
         color: color,
       );
+
+      /*  return Image.network(
+        path,
+        height: height?.h,
+        width: width?.w,
+        fit: fit,
+        color: color,
+      ); */
     } else {
       return Image.asset(
         path,

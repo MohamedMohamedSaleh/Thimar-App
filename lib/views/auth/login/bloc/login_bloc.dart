@@ -16,11 +16,13 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final formKey = GlobalKey<FormState>();
-  final phoneController = TextEditingController(text: "966132847241864");
-  final passwordController = TextEditingController(text: "123456789");
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
   // bool isLoading = false;
 
   void _login(LoginEvent event, Emitter<LoginStates> emit) async {
+    FocusScope.of(navigatorKey.currentContext!).unfocus();
+
     if (formKey.currentState!.validate()) {
       emit(LoginLoadingState());
       final response = await DioHelper().sendData(
@@ -35,7 +37,6 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
       );
 
       if (response.isSuccess) {
-       
         UserData model = UserData.fromJson(response.response!.data);
         await CacheHelper.saveUserData(model.model);
         if (!(navigatorKey.currentContext!.mounted)) return;

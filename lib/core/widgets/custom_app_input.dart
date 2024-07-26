@@ -48,11 +48,9 @@ class _CustomAppInputState extends State<CustomAppInput> {
       ),
       child: TextFormField(
         onChanged: widget.onChange,
-        cursorHeight: widget.isData ? 17.h : null,
-        style: widget.isData
-            ? TextStyle(
-                color: mainColor, fontSize: 15.sp, fontWeight: FontWeight.bold)
-            : null,
+        cursorHeight: 17.h,
+        style: TextStyle(
+            color: mainColor, fontSize: 15.sp, fontWeight: FontWeight.bold),
         controller: widget.controller,
         validator: widget.validator,
         enabled: widget.isEnabled,

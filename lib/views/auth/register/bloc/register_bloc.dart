@@ -23,6 +23,7 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterStates> {
   final confirmPasswordController = TextEditingController();
 
   void _register(RegisterEvent event, Emitter<RegisterStates> emit) async {
+    FocusScope.of(navigatorKey.currentContext!).unfocus();
     emit(RegisterLoadingState());
     final response = await DioHelper().sendData(
       endPoint: 'client_register',

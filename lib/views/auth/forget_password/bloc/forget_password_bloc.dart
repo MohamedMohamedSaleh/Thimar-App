@@ -15,6 +15,8 @@ class ForgetPasswordBloc
 
   Future<void> _sendData(
       ForgetPasswordEvent event, Emitter<ForgetPasswordStates> emit) async {
+    FocusScope.of(navigatorKey.currentContext!).unfocus();
+
     emit(ForgetPasswordLoading());
     final response =
         await DioHelper().sendData(endPoint: 'forget_password', data: {

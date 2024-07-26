@@ -19,6 +19,8 @@ class ConfirmBloc extends Bloc<ConfirmEvent, ConfirmStates> {
   final confirmCodeController = TextEditingController();
 
   void _verify(ConfirmEvent event, Emitter<ConfirmStates> emit) async {
+    FocusScope.of(navigatorKey.currentContext!).unfocus();
+
     emit(ConfirmloadingState());
     final response = await DioHelper().sendData(
       endPoint: 'verify',

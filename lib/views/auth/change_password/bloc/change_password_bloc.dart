@@ -21,6 +21,8 @@ class ChangePasswordBloc
 
   Future<void> _checkCode(
       CheckCodeEvent event, Emitter<ChangePasswordStates> emit) async {
+    FocusScope.of(navigatorKey.currentContext!).unfocus();
+
     emit(CheckCodeLoadingState());
     final response = await DioHelper().sendData(endPoint: 'check_code', data: {
       "phone": event.phone,
@@ -37,6 +39,8 @@ class ChangePasswordBloc
 
   Future<void> _resetPassword(
       ResetPasswordEvent event, Emitter<ChangePasswordStates> emit) async {
+    FocusScope.of(navigatorKey.currentContext!).unfocus();
+
     emit(ResetPasswordLoadingState());
     final response =
         await DioHelper().sendData(endPoint: 'reset_password', data: {

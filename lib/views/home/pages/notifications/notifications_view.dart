@@ -131,7 +131,7 @@ class _Item extends StatelessWidget {
                     color: const Color(0xff4C8613).withAlpha(13)),
                 child: Padding(
                   padding: const EdgeInsets.all(6),
-                  child: Image.network(
+                  child: AppImage(
                     model.image ?? "assets/images/vegetable_basket.png",
                   ),
                 ),
