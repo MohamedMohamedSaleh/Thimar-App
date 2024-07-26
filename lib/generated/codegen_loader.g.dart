@@ -70,7 +70,7 @@ class CodegenLoader extends AssetLoader {
       "confirm_the_code": "تأكيد الكود",
       "didnt_receive_code": "لم تستلم الكود ؟",
       "you_can_receive_code_after": "يمكنك اعادة ارسال الكود بعد",
-      "resend": "أعادة الارسال"
+      "resend": "إعادة الارسال"
     },
     "reset_password": {
       "current_password": "كلمة المرور الحاليه",

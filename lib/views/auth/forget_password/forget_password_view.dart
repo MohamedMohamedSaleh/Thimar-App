@@ -8,9 +8,9 @@ import 'package:vegetable_orders_project/core/widgets/custom_bottom_navigation.d
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_intoduction.dart';
 import 'package:vegetable_orders_project/views/auth/forget_password/bloc/forget_password_bloc.dart';
+import 'package:vegetable_orders_project/views/auth/register/register_view.dart';
 import '../../../core/logic/helper_methods.dart';
 import '../../../generated/locale_keys.g.dart';
-import '../login/login_view.dart';
 
 class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
@@ -56,7 +56,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
               text: LocaleKeys.log_in_dont_have_an_account.tr(),
               buttonText: LocaleKeys.log_in_register_now.tr(),
               onPress: () {
-                navigateTo(toPage: const LoginView());
+                navigateTo(toPage: const RegisterView());
               },
             ),
           ),
@@ -87,50 +87,53 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
     return Form(
       key: formKey,
       autovalidateMode: autovalidateMode,
-      child: ListView(
-        padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8).r,
-        children: [
-          CustomIntroduction(
-            mainText: LocaleKeys.forget_password_forget_password.tr(),
-            supText: LocaleKeys.forget_password_enter_your_phone_number.tr(),
-            paddingHeight: 24.h,
-          ),
-          CustomAppInput(
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return LocaleKeys.log_in_please_enter_your_mobile_number;
-              } else if (value!.length < 10) {
-                return LocaleKeys.log_in_please_enter_nine_number.tr();
-              }
-              return null;
-            },
-            labelText: LocaleKeys.log_in_phone_number.tr(),
-            prefixIcon: "assets/icon/phone_icon.png",
-            isPhone: true,
-            paddingBottom: 28.h,
-            controller: phoneController,
-          ),
-          BlocBuilder(
-            bloc: widget.bloc,
-            builder: (context, state) {
-              return CustomFillButton(
-                isLoading: state is ForgetPasswordLoading,
-                title: LocaleKeys.forget_password_confirm_phone_number.tr(),
-                onPress: () {
-                  FocusScope.of(context).unfocus();
-                  if (formKey.currentState!.validate()) {
-                    widget.bloc
-                        .add(ForgetPasswordEvent(phone: phoneController.text));
-                  } else {
-                    autovalidateMode = AutovalidateMode.onUserInteraction;
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: ListView(
+          padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8).r,
+          children: [
+            CustomIntroduction(
+              mainText: LocaleKeys.forget_password_forget_password.tr(),
+              supText: LocaleKeys.forget_password_enter_your_phone_number.tr(),
+              paddingHeight: 24.h,
+            ),
+            CustomAppInput(
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return LocaleKeys.log_in_please_enter_your_mobile_number;
+                } else if (value!.length < 10) {
+                  return LocaleKeys.log_in_please_enter_nine_number.tr();
+                }
+                return null;
+              },
+              labelText: LocaleKeys.log_in_phone_number.tr(),
+              prefixIcon: "assets/icon/phone_icon.png",
+              isPhone: true,
+              paddingBottom: 28.h,
+              controller: phoneController,
+            ),
+            BlocBuilder(
+              bloc: widget.bloc,
+              builder: (context, state) {
+                return CustomFillButton(
+                  isLoading: state is ForgetPasswordLoading,
+                  title: LocaleKeys.forget_password_confirm_phone_number.tr(),
+                  onPress: () {
+                    FocusScope.of(context).unfocus();
+                    if (formKey.currentState!.validate()) {
+                      widget.bloc.add(
+                          ForgetPasswordEvent(phone: phoneController.text));
+                    } else {
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
 
-                    setState(() {});
-                  }
-                },
-              );
-            },
-          ),
-        ],
+                      setState(() {});
+                    }
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

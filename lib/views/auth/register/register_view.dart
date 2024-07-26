@@ -58,170 +58,180 @@ class _RegisterViewState extends State<RegisterView> {
                   key: bloc.formKey,
                   child: GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
-                    child: ListView(
-                      children: [
-                        CustomIntroduction(
-                          mainText: LocaleKeys.register_hello_again.tr(),
-                          supText: LocaleKeys
-                              .register_you_can_register_new_account_now
-                              .tr(),
-                          paddingHeight: 22.h,
-                        ),
-                        CustomAppInput(
-                          validator: (value) {
-                            if (value?.isEmpty ?? true) {
-                              return LocaleKeys.register_please_enter_full_name
-                                  .tr();
-                            }
-                            return null;
-                          },
-                          controller: bloc.nameController,
-                          labelText: LocaleKeys.register_user_name.tr(),
-                          prefixIcon: "assets/icon/name_icon.png",
-                        ),
-                        CustomAppInput(
-                          validator: (value) {
-                            if (value?.isEmpty ?? true) {
-                              return LocaleKeys
-                                  .log_in_please_enter_your_mobile_number
-                                  .tr();
-                            } else if (value!.length < 10) {
-                              return LocaleKeys.log_in_please_enter_nine_number
-                                  .tr();
-                            }
-                            return null;
-                          },
-                          controller: bloc.phoneController,
-                          labelText: LocaleKeys.log_in_phone_number.tr(),
-                          prefixIcon: "assets/icon/phone_icon.png",
-                          isPhone: true,
-                        ),
-                        StatefulBuilder(
-                          builder: (context, setState) => Row(
-                            children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    bloc.city = await showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: const Radius.circular(28).w,
-                                          topRight: const Radius.circular(28).w,
+                    child: GestureDetector(
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      child: ListView(
+                        children: [
+                          CustomIntroduction(
+                            mainText: LocaleKeys.register_hello_again.tr(),
+                            supText: LocaleKeys
+                                .register_you_can_register_new_account_now
+                                .tr(),
+                            paddingHeight: 22.h,
+                          ),
+                          CustomAppInput(
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return LocaleKeys
+                                    .register_please_enter_full_name
+                                    .tr();
+                              }
+                              return null;
+                            },
+                            controller: bloc.nameController,
+                            labelText: LocaleKeys.register_user_name.tr(),
+                            prefixIcon: "assets/icon/name_icon.png",
+                          ),
+                          CustomAppInput(
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return LocaleKeys
+                                    .log_in_please_enter_your_mobile_number
+                                    .tr();
+                              } else if (value!.length < 10) {
+                                return LocaleKeys
+                                    .log_in_please_enter_nine_number
+                                    .tr();
+                              }
+                              return null;
+                            },
+                            controller: bloc.phoneController,
+                            labelText: LocaleKeys.log_in_phone_number.tr(),
+                            prefixIcon: "assets/icon/phone_icon.png",
+                            isPhone: true,
+                          ),
+                          StatefulBuilder(
+                            builder: (context, setState) => Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      bloc.city = await showModalBottomSheet(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft:
+                                                const Radius.circular(28).w,
+                                            topRight:
+                                                const Radius.circular(28).w,
+                                          ),
                                         ),
-                                      ),
-                                      clipBehavior: Clip.antiAlias,
-                                      context: context,
-                                      builder: (context) => const CitiesSheet(),
-                                    );
-                                    if (bloc.city != null) {
-                                      setState(
-                                        () {},
+                                        clipBehavior: Clip.antiAlias,
+                                        context: context,
+                                        builder: (context) =>
+                                            const CitiesSheet(),
                                       );
-                                    }
-                                  },
-                                  child: AbsorbPointer(
-                                    absorbing: true,
-                                    child: CustomAppInput(
-                                      validator: (value) {
-                                        if (bloc.city?.name.isEmpty ?? true) {
-                                          return LocaleKeys
-                                              .register_please_enter_your_city
-                                              .tr();
-                                        }
-                                        return null;
-                                      },
-                                      controller: bloc.cityController,
-                                      labelText: bloc.city?.name ??
-                                          LocaleKeys.register_city.tr(),
-                                      prefixIcon: "assets/icon/city_icon.png",
-                                      paddingBottom: 0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              (bloc.city != null)
-                                  ? IconButton(
-                                      onPressed: () {
-                                        bloc.city = null;
+                                      if (bloc.city != null) {
                                         setState(
                                           () {},
                                         );
-                                      },
-                                      icon: Icon(
-                                        Icons.clear,
-                                        color: Colors.red.shade400,
+                                      }
+                                    },
+                                    child: AbsorbPointer(
+                                      absorbing: true,
+                                      child: CustomAppInput(
+                                        validator: (value) {
+                                          if (bloc.city?.name.isEmpty ?? true) {
+                                            return LocaleKeys
+                                                .register_please_enter_your_city
+                                                .tr();
+                                          }
+                                          return null;
+                                        },
+                                        controller: bloc.cityController,
+                                        labelText: bloc.city?.name ??
+                                            LocaleKeys.register_city.tr(),
+                                        prefixIcon: "assets/icon/city_icon.png",
+                                        paddingBottom: 0,
                                       ),
-                                    )
-                                  : const SizedBox(),
-                            ],
+                                    ),
+                                  ),
+                                ),
+                                (bloc.city != null)
+                                    ? IconButton(
+                                        onPressed: () {
+                                          bloc.city = null;
+                                          setState(
+                                            () {},
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.clear,
+                                          color: Colors.red.shade400,
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 9.h,
-                        ),
-                        CustomAppInput(
-                          validator: (String? value) {
-                            if (value?.isEmpty ?? true) {
-                              return LocaleKeys
-                                  .log_in_please_enter_your_password_again
-                                  .tr();
-                            } else if (value!.length < 6) {
-                              return LocaleKeys
-                                  .log_in_please_enter_six_letters_at_min
-                                  .tr();
-                            }
-                            return null;
-                          },
-                          controller: bloc.passwordController,
-                          labelText: LocaleKeys.log_in_password.tr(),
-                          prefixIcon: "assets/icon/lock_icon.png",
-                          isPassword: true,
-                          paddingBottom: 9.h,
-                        ),
-                        CustomAppInput(
-                          validator: (String? value) {
-                            if (value?.isEmpty ?? true) {
-                              return LocaleKeys
-                                  .log_in_please_enter_your_password_again
-                                  .tr();
-                            } else if (value!.length < 6) {
-                              return LocaleKeys
-                                  .log_in_please_enter_six_letters_at_min
-                                  .tr();
-                            } else if (value != bloc.passwordController.text) {
-                              return LocaleKeys.register_something_wrong.tr();
-                            } else {
+                          SizedBox(
+                            height: 9.h,
+                          ),
+                          CustomAppInput(
+                            validator: (String? value) {
+                              if (value?.isEmpty ?? true) {
+                                return LocaleKeys
+                                    .log_in_please_enter_your_password_again
+                                    .tr();
+                              } else if (value!.length < 6) {
+                                return LocaleKeys
+                                    .log_in_please_enter_six_letters_at_min
+                                    .tr();
+                              }
                               return null;
-                            }
-                          },
-                          controller: bloc.confirmPasswordController,
-                          labelText: LocaleKeys.register_confirm_password.tr(),
-                          prefixIcon: "assets/icon/lock_icon.png",
-                          isPassword: true,
-                          paddingBottom: 24.h,
-                        ),
-                        BlocBuilder(
-                          bloc: bloc,
-                          builder: (context, state) {
-                            return CustomFillButton(
-                              isLoading: state is RegisterLoadingState,
-                              title: LocaleKeys.register_register.tr(),
-                              onPress: () {
-                                FocusScope.of(context).unfocus();
-                                if (bloc.formKey.currentState!.validate()) {
-                                  bloc.add(RegisterEvent());
-                                } else {
-                                  bloc.autovalidateMode =
-                                      AutovalidateMode.always;
-                                }
-                              },
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                      ],
+                            },
+                            controller: bloc.passwordController,
+                            labelText: LocaleKeys.log_in_password.tr(),
+                            prefixIcon: "assets/icon/lock_icon.png",
+                            isPassword: true,
+                            paddingBottom: 9.h,
+                          ),
+                          CustomAppInput(
+                            validator: (String? value) {
+                              if (value?.isEmpty ?? true) {
+                                return LocaleKeys
+                                    .log_in_please_enter_your_password_again
+                                    .tr();
+                              } else if (value!.length < 6) {
+                                return LocaleKeys
+                                    .log_in_please_enter_six_letters_at_min
+                                    .tr();
+                              } else if (value !=
+                                  bloc.passwordController.text) {
+                                return LocaleKeys.register_something_wrong.tr();
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: bloc.confirmPasswordController,
+                            labelText:
+                                LocaleKeys.register_confirm_password.tr(),
+                            prefixIcon: "assets/icon/lock_icon.png",
+                            isPassword: true,
+                            paddingBottom: 24.h,
+                          ),
+                          BlocBuilder(
+                            bloc: bloc,
+                            builder: (context, state) {
+                              return CustomFillButton(
+                                isLoading: state is RegisterLoadingState,
+                                title: LocaleKeys.register_register.tr(),
+                                onPress: () {
+                                  FocusScope.of(context).unfocus();
+                                  if (bloc.formKey.currentState!.validate()) {
+                                    bloc.add(RegisterEvent());
+                                  } else {
+                                    bloc.autovalidateMode =
+                                        AutovalidateMode.always;
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

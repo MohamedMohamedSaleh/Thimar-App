@@ -84,74 +84,77 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
     return Form(
       key: formKey,
       autovalidateMode: autovalidateMode,
-      child: ListView(
-        padding: const EdgeInsets.only(top: 0),
-        children: [
-          CustomIntroduction(
-            mainText: LocaleKeys.forget_password_forget_password.tr(),
-            supText: LocaleKeys.reset_password_enter_new_password.tr(),
-            paddingHeight: 17.h,
-          ),
-          CustomAppInput(
-            controller: resetPasswordBloc.passwordController,
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return LocaleKeys.log_in_please_enter_your_password_again.tr();
-              } else if (value!.length < 6) {
-                return LocaleKeys.log_in_please_enter_six_letters_at_min.tr();
-              }
-              password = value;
-              return null;
-            },
-            labelText: LocaleKeys.log_in_password.tr(),
-            prefixIcon: "assets/icon/lock_icon.png",
-            isPassword: true,
-          ),
-          CustomAppInput(
-            controller: resetPasswordBloc.confirmPasswordController,
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return LocaleKeys.reset_password_please_enter_new_password_again
-                    .tr();
-              } else if (value!.length < 6) {
-                return LocaleKeys
-                    .reset_password_please_enter_new_password_in_6_letters_at_min
-                    .tr();
-              } else if (resetPasswordBloc.passwordController.text != value) {
-                return LocaleKeys.change_password_two_passwords_not_matching
-                    .tr();
-              } else {
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: ListView(
+          padding: const EdgeInsets.only(top: 0),
+          children: [
+            CustomIntroduction(
+              mainText: LocaleKeys.forget_password_forget_password.tr(),
+              supText: LocaleKeys.reset_password_enter_new_password.tr(),
+              paddingHeight: 17.h,
+            ),
+            CustomAppInput(
+              controller: resetPasswordBloc.passwordController,
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return LocaleKeys.log_in_please_enter_your_password_again.tr();
+                } else if (value!.length < 6) {
+                  return LocaleKeys.log_in_please_enter_six_letters_at_min.tr();
+                }
+                password = value;
                 return null;
-              }
-            },
-            labelText: LocaleKeys.register_confirm_password.tr(),
-            prefixIcon: "assets/icon/lock_icon.png",
-            isPassword: true,
-            paddingBottom: 25.h,
-          ),
-          BlocBuilder(
-            bloc: resetPasswordBloc,
-            builder: (context, state) {
-              return CustomFillButton(
-                isLoading: state is ResetPasswordLoadingState,
-                title: LocaleKeys.change_password_change_password.tr(),
-                onPress: () {
-                  FocusScope.of(context).unfocus();
-                  if (formKey.currentState!.validate()) {
-                    resetPasswordBloc
-                        .add(ResetPasswordEvent(phone: widget.phone));
-                  } else {
-                    autovalidateMode = AutovalidateMode.onUserInteraction;
-                    setState(() {});
-                  }
-                },
-              );
-            },
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-        ],
+              },
+              labelText: LocaleKeys.log_in_password.tr(),
+              prefixIcon: "assets/icon/lock_icon.png",
+              isPassword: true,
+            ),
+            CustomAppInput(
+              controller: resetPasswordBloc.confirmPasswordController,
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return LocaleKeys.reset_password_please_enter_new_password_again
+                      .tr();
+                } else if (value!.length < 6) {
+                  return LocaleKeys
+                      .reset_password_please_enter_new_password_in_6_letters_at_min
+                      .tr();
+                } else if (resetPasswordBloc.passwordController.text != value) {
+                  return LocaleKeys.change_password_two_passwords_not_matching
+                      .tr();
+                } else {
+                  return null;
+                }
+              },
+              labelText: LocaleKeys.register_confirm_password.tr(),
+              prefixIcon: "assets/icon/lock_icon.png",
+              isPassword: true,
+              paddingBottom: 25.h,
+            ),
+            BlocBuilder(
+              bloc: resetPasswordBloc,
+              builder: (context, state) {
+                return CustomFillButton(
+                  isLoading: state is ResetPasswordLoadingState,
+                  title: LocaleKeys.change_password_change_password.tr(),
+                  onPress: () {
+                    FocusScope.of(context).unfocus();
+                    if (formKey.currentState!.validate()) {
+                      resetPasswordBloc
+                          .add(ResetPasswordEvent(phone: widget.phone));
+                    } else {
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
+                      setState(() {});
+                    }
+                  },
+                );
+              },
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
       ),
     );
   }

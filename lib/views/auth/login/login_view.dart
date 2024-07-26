@@ -79,78 +79,82 @@ class _FormLoginState extends State<FormLogin> {
     return Form(
       key: bloc.formKey,
       autovalidateMode: bloc.autovalidateMode,
-      child: ListView(
-        padding: const EdgeInsets.only(top: 0),
-        children: [
-          CustomIntroduction(
-            mainText: LocaleKeys.register_hello_again.tr(),
-            supText: LocaleKeys.log_in_you_can_login_now.tr(),
-            paddingHeight: 28.h,
-          ),
-          CustomAppInput(
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return LocaleKeys.log_in_please_enter_your_mobile_number.tr();
-              } else if (value!.length < 10) {
-                return LocaleKeys.log_in_please_enter_nine_number.tr();
-              }
-              return null;
-            },
-            labelText: LocaleKeys.log_in_phone_number.tr(),
-            prefixIcon: "assets/icon/phone_icon.png",
-            isPhone: true,
-            controller: bloc.phoneController,
-          ),
-          CustomAppInput(
-            validator: (String? value) {
-              if (value?.isEmpty ?? true) {
-                return LocaleKeys.log_in_please_enter_your_password_again.tr();
-              } else if (value!.length < 6) {
-                return LocaleKeys.log_in_please_enter_six_letters_at_min.tr();
-              }
-              return null;
-            },
-            controller: bloc.passwordController,
-            labelText: LocaleKeys.log_in_password.tr(),
-            prefixIcon: "assets/icon/lock_icon.png",
-            isPassword: true,
-            paddingBottom: 0,
-          ),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              child: Text(
-                LocaleKeys.log_in_forget_password.tr(),
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w300,
-                    height: .1,
-                    color: Colors.black),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: ListView(
+          padding: const EdgeInsets.only(top: 0),
+          children: [
+            CustomIntroduction(
+              mainText: LocaleKeys.register_hello_again.tr(),
+              supText: LocaleKeys.log_in_you_can_login_now.tr(),
+              paddingHeight: 28.h,
+            ),
+            CustomAppInput(
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return LocaleKeys.log_in_please_enter_your_mobile_number.tr();
+                } else if (value!.length < 10) {
+                  return LocaleKeys.log_in_please_enter_nine_number.tr();
+                }
+                return null;
+              },
+              labelText: LocaleKeys.log_in_phone_number.tr(),
+              prefixIcon: "assets/icon/phone_icon.png",
+              isPhone: true,
+              controller: bloc.phoneController,
+            ),
+            CustomAppInput(
+              validator: (String? value) {
+                if (value?.isEmpty ?? true) {
+                  return LocaleKeys.log_in_please_enter_your_password_again
+                      .tr();
+                } else if (value!.length < 6) {
+                  return LocaleKeys.log_in_please_enter_six_letters_at_min.tr();
+                }
+                return null;
+              },
+              controller: bloc.passwordController,
+              labelText: LocaleKeys.log_in_password.tr(),
+              prefixIcon: "assets/icon/lock_icon.png",
+              isPassword: true,
+              paddingBottom: 0,
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(
+                child: Text(
+                  LocaleKeys.log_in_forget_password.tr(),
+                  style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w300,
+                      height: .1,
+                      color: Colors.black),
+                ),
+                onPressed: () {
+                  navigateTo(toPage: const ForgetPasswordView());
+                },
               ),
-              onPressed: () {
-                navigateTo(toPage: const ForgetPasswordView());
+            ),
+            SizedBox(
+              height: 32.h,
+            ),
+            BlocBuilder(
+              bloc: bloc,
+              builder: (context, state) {
+                return CustomFillButton(
+                  isLoading: state is LoginLoadingState,
+                  title: LocaleKeys.my_account_log_in.tr(),
+                  onPress: () {
+                    bloc.add(LoginEvent());
+                  },
+                );
               },
             ),
-          ),
-          SizedBox(
-            height: 32.h,
-          ),
-          BlocBuilder(
-            bloc: bloc,
-            builder: (context, state) {
-              return CustomFillButton(
-                isLoading: state is LoginLoadingState,
-                title: LocaleKeys.my_account_log_in.tr(),
-                onPress: () {
-                  bloc.add(LoginEvent());
-                },
-              );
-            },
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-        ],
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
       ),
     );
   }

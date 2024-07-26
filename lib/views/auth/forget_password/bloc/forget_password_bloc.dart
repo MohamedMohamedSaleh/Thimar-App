@@ -23,7 +23,10 @@ class ForgetPasswordBloc
 
     if (response.isSuccess) {
       emit(ForgetPasswordSuccess());
-      navigateTo(toPage: ConfirmCodeView(isActive: false, phone: event.phone));
+      if (!event.resend) {
+        navigateTo(
+            toPage: ConfirmCodeView(isActive: false, phone: event.phone));
+      }
       await Future.delayed(const Duration(seconds: 3));
 
       showMessage(
