@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
@@ -21,7 +20,6 @@ class SetUpdateAdressBloc
 
   Future<void> _addAddress(
       SetAddressEvent event, Emitter<SetUpdateAddressStates> emit) async {
-      FocusScope.of(navigatorKey.currentContext!).unfocus();
     emit(SetAddressLoadingState());
     final response =
         await DioHelper().sendData(endPoint: '/client/addresses', data: {
@@ -46,7 +44,6 @@ class SetUpdateAdressBloc
 
   Future<void> _updateAddress(
       UpdateAddressEvent event, Emitter<SetUpdateAddressStates> emit) async {
-      FocusScope.of(navigatorKey.currentContext!).unfocus();
     emit(UpdateAddressLoadingState());
     final response = await DioHelper()
         .updateData(endPoint: '/client/addresses/${event.id}', data: {

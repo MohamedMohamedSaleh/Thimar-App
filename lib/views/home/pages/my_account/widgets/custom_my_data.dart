@@ -88,7 +88,7 @@ class _CustomMyDataState extends State<CustomMyData> {
                 height: 2,
               ),
               Text(
-                state.data.phone,
+                "+${state.data.phone}",
                 style: TextStyle(
                   color: widget.isMain
                       ? const Color(0xffA2D273)
@@ -96,6 +96,7 @@ class _CustomMyDataState extends State<CustomMyData> {
                   fontSize: widget.isMain ? 14 : 16,
                   fontWeight: FontWeight.w400,
                 ),
+                textDirection: TextDirection.ltr,
               ),
             ],
           );

@@ -146,6 +146,7 @@ class _CustomAppInputState extends State<CustomAppInput> {
                       ),
                       Text(
                         "+966",
+                        textDirection: TextDirection.ltr,
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     ],

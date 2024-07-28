@@ -228,6 +228,8 @@ class _AddTitleViewState extends State<AddTitleView> {
                                   ? LocaleKeys.addresses_add_address.tr()
                                   : LocaleKeys.addresses_edit_address.tr(),
                               onPress: () {
+                                FocusScope.of(context).unfocus();
+
                                 if (formKey.currentState!.validate()) {
                                   widget.isAddTitle
                                       ? bloc.add(

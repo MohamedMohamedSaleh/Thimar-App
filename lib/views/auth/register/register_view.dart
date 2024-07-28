@@ -63,6 +63,7 @@ class _RegisterViewState extends State<RegisterView> {
                       child: ListView(
                         children: [
                           CustomIntroduction(
+                            phone: "",
                             mainText: LocaleKeys.register_hello_again.tr(),
                             supText: LocaleKeys
                                 .register_you_can_register_new_account_now
@@ -88,7 +89,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 return LocaleKeys
                                     .log_in_please_enter_your_mobile_number
                                     .tr();
-                              } else if (value!.length < 10) {
+                              } else if (value!.length < 9) {
                                 return LocaleKeys
                                     .log_in_please_enter_nine_number
                                     .tr();

@@ -93,6 +93,7 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
           padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8).r,
           children: [
             CustomIntroduction(
+              phone: '',
               mainText: LocaleKeys.forget_password_forget_password.tr(),
               supText: LocaleKeys.forget_password_enter_your_phone_number.tr(),
               paddingHeight: 24.h,
@@ -101,7 +102,7 @@ class _FormForgetPasswordState extends State<FormForgetPassword> {
               validator: (String? value) {
                 if (value?.isEmpty ?? true) {
                   return LocaleKeys.log_in_please_enter_your_mobile_number;
-                } else if (value!.length < 10) {
+                } else if (value!.length < 9) {
                   return LocaleKeys.log_in_please_enter_nine_number.tr();
                 }
                 return null;

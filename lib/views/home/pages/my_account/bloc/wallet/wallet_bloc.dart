@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
@@ -57,7 +58,7 @@ class WalletBloc extends Bloc<WalletEvents, WalletState> {
         pageNumber++;
       } else {
         showMessage(
-            message: "Not Found Transactions", type: MessageType.success);
+            message: navigatorKey.currentContext!.locale.languageCode == "en" ? "No Transactions" : "لا يوجد معاملات", type: MessageType.success);
       }
       emit(GetWalletPaginatedSuccess());
     } else {

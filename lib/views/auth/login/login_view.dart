@@ -85,6 +85,7 @@ class _FormLoginState extends State<FormLogin> {
           padding: const EdgeInsets.only(top: 0),
           children: [
             CustomIntroduction(
+              phone: '',
               mainText: LocaleKeys.register_hello_again.tr(),
               supText: LocaleKeys.log_in_you_can_login_now.tr(),
               paddingHeight: 28.h,
@@ -93,7 +94,7 @@ class _FormLoginState extends State<FormLogin> {
               validator: (String? value) {
                 if (value?.isEmpty ?? true) {
                   return LocaleKeys.log_in_please_enter_your_mobile_number.tr();
-                } else if (value!.length < 10) {
+                } else if (value!.length < 9) {
                   return LocaleKeys.log_in_please_enter_nine_number.tr();
                 }
                 return null;
@@ -145,6 +146,7 @@ class _FormLoginState extends State<FormLogin> {
                   isLoading: state is LoginLoadingState,
                   title: LocaleKeys.my_account_log_in.tr(),
                   onPress: () {
+                    FocusScope.of(context).unfocus();
                     bloc.add(LoginEvent());
                   },
                 );

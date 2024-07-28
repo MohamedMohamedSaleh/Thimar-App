@@ -90,7 +90,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           return LocaleKeys
                               .log_in_please_enter_your_mobile_number
                               .tr();
-                        } else if (value!.length < 10) {
+                        } else if (value!.length < 9) {
                           return LocaleKeys.log_in_please_enter_nine_number
                               .tr();
                         }

@@ -9,9 +9,11 @@ import 'package:vegetable_orders_project/core/widgets/custom_app_bar_icon.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_fill_button.dart';
 import 'package:vegetable_orders_project/core/widgets/custom_outline_send_button.dart';
 import 'package:vegetable_orders_project/features/cart/cart_bloc.dart';
+import 'package:vegetable_orders_project/features/products/search_products/search_products_bloc.dart';
 import 'package:vegetable_orders_project/features/products/search_products/search_products_model.dart';
 import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 import 'package:vegetable_orders_project/views/home/cart_and_orders/cart_view.dart';
+import 'package:vegetable_orders_project/views/home/home_view.dart';
 
 import '../../features/products/products_model.dart';
 
@@ -76,9 +78,21 @@ class SuccessAddToCartSheet extends StatelessWidget {
                               KiwiContainer()
                                   .resolve<CartBloc>()
                                   .amountProduct = 1;
-                              Navigator.pop(context);
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
+                              // KiwiContainer().resolve<GetSearchProductsBloc>()
+                              //   ..textController.clear()
+                              //   ..search.clear();
+                              navigateTo(
+                                  toPage: const HomeView(), isRemove: true);
+                              KiwiContainer().resolve<GetSearchProductsBloc>()
+                                ..add(GetSearchProductsEvent(text: ''))
+                                ..textController.clear()
+                                ..search.clear()
+                                ..isNotFound = false;
+                              FocusManager.instance.primaryFocus?.unfocus();
                               navigateTo(toPage: const CartView());
+                              FocusScope.of(context).unfocus();
+                              Navigator.canPop(context);
                             }),
                       ),
                     ),
@@ -95,11 +109,20 @@ class SuccessAddToCartSheet extends StatelessWidget {
                               KiwiContainer()
                                   .resolve<CartBloc>()
                                   .amountProduct = 1;
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              if (searchModel != null) {
-                                Navigator.pop(context);
-                              }
+
+                              navigateTo(
+                                  toPage: const HomeView(), isRemove: true);
+                              KiwiContainer().resolve<GetSearchProductsBloc>()
+                                ..add(GetSearchProductsEvent(text: ''))
+                                ..textController.clear()
+                                ..search.clear()
+                                ..isNotFound = false;
+
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              // Navigator.pop(context);
+                              // if (searchModel != null) {
+                              //   Navigator.canPop(context);
+                              // }
                             },
                             title:
                                 LocaleKeys.product_details_browse_offers.tr(),

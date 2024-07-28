@@ -90,6 +90,7 @@ class _FormChanegePasswordState extends State<FormChanegePassword> {
           padding: const EdgeInsets.only(top: 0),
           children: [
             CustomIntroduction(
+              phone: widget.phone,
               mainText: LocaleKeys.forget_password_forget_password.tr(),
               supText: LocaleKeys.reset_password_enter_new_password.tr(),
               paddingHeight: 17.h,

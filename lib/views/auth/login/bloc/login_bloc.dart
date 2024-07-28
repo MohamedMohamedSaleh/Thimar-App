@@ -21,10 +21,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
   // bool isLoading = false;
 
   void _login(LoginEvent event, Emitter<LoginStates> emit) async {
-    FocusScope.of(navigatorKey.currentContext!).unfocus();
 
     if (formKey.currentState!.validate()) {
       emit(LoginLoadingState());
+    
       final response = await DioHelper().sendData(
         endPoint: "login",
         data: {

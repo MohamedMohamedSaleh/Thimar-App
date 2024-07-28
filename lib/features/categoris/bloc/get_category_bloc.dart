@@ -10,6 +10,7 @@ class GetCategoryBloc extends Bloc<GetCategoryEvents, GetCategoryStates> {
     on<GetCategoryEvent>(_getData);
   }
 
+  bool isTransitionCategory = false;
   Future<void> _getData(
       GetCategoryEvent event, Emitter<GetCategoryStates> emit) async {
     emit(GetCtegoryLoadingState());
@@ -17,6 +18,7 @@ class GetCategoryBloc extends Bloc<GetCategoryEvents, GetCategoryStates> {
 
     if (response.isSuccess) {
       final model = CategoryData.fromJson(response.response!.data);
+      isTransitionCategory = false;
       emit(GetCtegorySuccessState(model: model.list));
     } else {
       emit(GetCtegoryFailedState(msg: response.message));

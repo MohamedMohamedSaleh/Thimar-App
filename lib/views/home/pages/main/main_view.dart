@@ -34,15 +34,16 @@ class _MainPageState extends State<MainPage> {
   final getProductsBloc = KiwiContainer().resolve<ProductsBloc>();
   final cartBloc = KiwiContainer().resolve<CartBloc>()
     ..add(ShowCartEvent(isLoading: false));
-@override
+  @override
   void initState() {
-    if(getProductsBloc.isTransitionProduct){
+    if (getProductsBloc.isTransitionProduct) {
       getProductsBloc.add(GetProductsEvent());
       getSliderBloc.add(GetSliderEvent());
       getCategoriesBloc.add(GetCategoryEvent());
     }
     super.initState();
   }
+
   int currentIndex = 0;
 
   @override
@@ -129,7 +130,8 @@ class _MainPageState extends State<MainPage> {
                         BlocBuilder(
                           bloc: getSliderBloc,
                           builder: (context, state) {
-                            if (state is GetSliderLoadingState) {
+                            if (state is GetSliderLoadingState ||
+                                getSliderBloc.isTransitionSlider) {
                               return sliderShimmerLoading();
                             } else if (state is GetSliderSuccessState) {
                               return StatefulBuilder(
@@ -210,7 +212,8 @@ class _MainPageState extends State<MainPage> {
                         BlocBuilder(
                           bloc: getCategoriesBloc,
                           builder: (context, state) {
-                            if (state is GetCtegoryLoadingState) {
+                            if (state is GetCtegoryLoadingState ||
+                               getCategoriesBloc.isTransitionCategory) {
                               return SizedBox(
                                 height: 90,
                                 child: ListView.separated(
@@ -262,7 +265,8 @@ class _MainPageState extends State<MainPage> {
                           bloc: getProductsBloc,
                           builder: (context, state) {
                             if (getProductsBloc.list.isEmpty ||
-                                state is GetProductLoadingState) {
+                                state is GetProductLoadingState ||
+                                getProductsBloc.isTransitionProduct) {
                               return const ShimmerLoadingProduct();
                             } else {
                               return GridView.builder(

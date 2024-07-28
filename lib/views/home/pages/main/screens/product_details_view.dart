@@ -342,7 +342,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               builder: (context, state) {
                                 if (state is AddCounterSuccessState) {
                                   return Text(
-                                    '${(widget.model?.price ?? widget.searchModel!.price! * bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
+                                    '${((widget.model?.price ?? widget.searchModel!.price!) * bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
@@ -351,7 +351,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   );
                                 } else {
                                   return Text(
-                                    '${(widget.model?.price?? widget.searchModel!.price!* bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
+                                    '${((widget.model?.price?? widget.searchModel!.price!)* bloc.amountProduct).toDouble().toStringAsFixed(2)} ${LocaleKeys.r_s.tr()}',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,

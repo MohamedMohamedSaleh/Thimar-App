@@ -66,6 +66,7 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                     padding: const EdgeInsets.only(bottom: 15).r,
                     children: [
                       CustomIntroduction(
+                        phone: widget.phone,
                         mainText: !widget.isActive
                             ? LocaleKeys.forget_password_forget_password.tr()
                             : LocaleKeys.account_activation_activate_account
@@ -136,7 +137,9 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                       SizedBox(
                         height: 30.h,
                       ),
-                       CustomCircleOrButton(phone: widget.phone,),
+                      CustomCircleOrButton(
+                        phone: widget.phone,
+                      ),
                       SizedBox(
                         height: 20.h,
                       ),

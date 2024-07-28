@@ -11,7 +11,7 @@ class GetSearchProductsBloc
   GetSearchProductsBloc() : super(GetSearchProductsStates()) {
     on<GetSearchProductsEvent>(_getSearch);
   }
-
+bool isTranslate = false;
 bool isNotFound = false;
   TextEditingController textController = TextEditingController();
   String searchText = '';

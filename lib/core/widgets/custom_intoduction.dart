@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as mat;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 
 class CustomIntroduction extends StatelessWidget {
   const CustomIntroduction({
@@ -8,11 +11,13 @@ class CustomIntroduction extends StatelessWidget {
     required this.supText,
     this.isRequirPhoneCheck = false,
     this.paddingHeight = 20,
+    required this.phone,
   });
   final String mainText;
   final String supText;
   final bool isRequirPhoneCheck;
   final double paddingHeight;
+  final String phone;
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +54,17 @@ class CustomIntroduction extends StatelessWidget {
             ? Row(
                 children: [
                   Text(
-                    "+9660548745",
-                    textDirection: TextDirection.ltr,
+                    "+966$phone",
+                    //TODO: change phone
+
+                    textDirection: mat.TextDirection.ltr,
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w300,
                         height: .5),
+                  ),
+                  const SizedBox(
+                    width: 3,
                   ),
                   TextButton(
                     onPressed: () {},
@@ -64,7 +74,7 @@ class CustomIntroduction extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      " تغيير رقم الجوال",
+                      LocaleKeys.check_code_change_phone_number.tr(),
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 16.sp,
