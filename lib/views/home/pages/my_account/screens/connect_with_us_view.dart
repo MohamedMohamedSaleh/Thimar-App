@@ -74,12 +74,12 @@ class _ConnectWithUsViewState extends State<ConnectWithUsView> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(16),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
+                                const Row(
                                   children: [
                                     AppImage(
                                       'assets/icon/svg/account/Location_Calling.svg',
@@ -97,31 +97,33 @@ class _ConnectWithUsViewState extends State<ConnectWithUsView> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 14,
                                 ),
                                 Row(
                                   children: [
-                                    AppImage(
+                                    const AppImage(
                                       'assets/icon/svg/account/Calling.svg',
                                       height: 15,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 7,
                                     ),
                                     Text(
-                                      '+966 054 87452',
-                                      style: TextStyle(
+                                      context.locale.languageCode == 'en'
+                                          ? '+96605487452'
+                                          : '96605487452+',
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w300,
                                           color: Color(0xff091022)),
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 14,
                                 ),
-                                Row(
+                                const Row(
                                   children: [
                                     AppImage(
                                       'assets/icon/svg/account/Message.svg',

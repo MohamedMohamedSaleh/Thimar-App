@@ -49,14 +49,7 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterStates> {
           phone: phoneController.text,
         ),
       );
-      await Future.delayed(const Duration(seconds: 3));
 
-      showMessage(
-          type: MessageType.success,
-          message: "Your Confirm Code is '1111'",
-          paddingBottom:
-              MediaQuery.of(navigatorKey.currentContext!).size.height - 260,
-          duration: 5);
     } else {
       emit(RegisterFailedState());
       showMessage(message: response.message);

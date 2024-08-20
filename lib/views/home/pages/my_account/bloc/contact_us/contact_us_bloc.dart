@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 
 import '../../../../../../core/logic/helper_methods.dart';
-import '../../../../home_view.dart';
 
 part 'contact_us_event.dart';
 part 'contact_us_state.dart';
@@ -29,8 +28,7 @@ class ContactUsBloc extends Bloc<ContactUsEvents, ContactUsState> {
     if (response.isSuccess) {
       emit(ContactUsSuccess());
       showMessage(message: response.message, type: MessageType.success);
-
-      navigateTo(toPage: const HomeView(), isRemove: true);
+      Navigator.pop(navigatorKey.currentContext!);
     } else {
       emit(ContactUsFailed());
       showMessage(message: response.message);

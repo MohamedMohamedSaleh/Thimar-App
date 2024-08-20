@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
-import 'package:vegetable_orders_project/views/home/home_view.dart';
-
+import 'package:vegetable_orders_project/features/addresses/get_delete_addresses/get_delete_addresses_bloc.dart';
 part 'set_address_events.dart';
 part 'set_address_states.dart';
 
@@ -34,7 +35,10 @@ class SetUpdateAdressBloc
     if (response.isSuccess) {
       emit(SetAddressSuccessState());
       showMessage(message: response.message, type: MessageType.success);
-      navigateTo(toPage: const HomeView(), isRemove: true);
+      Navigator.of(navigatorKey.currentContext!).pop();
+      KiwiContainer()
+          .resolve<GetDeleteAddressesBloc>()
+          .add(GetAddressesEvent(isLoading: false));
       CacheHelper.removeLocation();
     } else {
       emit(SetAddressFailedState());
@@ -50,15 +54,18 @@ class SetUpdateAdressBloc
       'type': event.type,
       'phone': event.phone,
       'description': event.descripion,
-      if(CacheHelper.getLat() != null) 'location': CacheHelper.getLocation(),
-     if(CacheHelper.getLat() != null) 'lat': CacheHelper.getLat(),
-      if(CacheHelper.getLat() != null)  'lng': CacheHelper.getLng(),
+      if (CacheHelper.getLat() != null) 'location': CacheHelper.getLocation(),
+      if (CacheHelper.getLat() != null) 'lat': CacheHelper.getLat(),
+      if (CacheHelper.getLat() != null) 'lng': CacheHelper.getLng(),
       'is_default': event.isDefault,
     });
     if (response.isSuccess) {
       emit(UpdateAddressSuccessState());
       showMessage(message: response.message, type: MessageType.success);
-      navigateTo(toPage: const HomeView(), isRemove: true);
+      Navigator.of(navigatorKey.currentContext!).pop();
+      KiwiContainer()
+          .resolve<GetDeleteAddressesBloc>()
+          .add(GetAddressesEvent(isLoading: false));
       CacheHelper.removeLocation();
     } else {
       emit(UpdateAddressFailedState());

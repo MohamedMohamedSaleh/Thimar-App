@@ -29,14 +29,6 @@ class ForgetPasswordBloc
         navigateTo(
             toPage: ConfirmCodeView(isActive: false, phone: event.phone));
       }
-      await Future.delayed(const Duration(seconds: 3));
-
-      showMessage(
-          type: MessageType.success,
-          message: "Your Confirm Code is '1111'",
-          paddingBottom:
-              MediaQuery.of(navigatorKey.currentContext!).size.height - 260,
-          duration: 5);
     } else {
       emit(ForgetPasswordFailed());
       showMessage(message: response.message, type: MessageType.success);

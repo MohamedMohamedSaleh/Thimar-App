@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
-import 'package:vegetable_orders_project/views/home/home_view.dart';
 
 part 'suggestions_event.dart';
 part 'suggestions_state.dart';
@@ -24,8 +23,8 @@ class SuggestionsBloc extends Bloc<SuggestionsEvents, SuggestionsStates> {
       "content": content.text,
     });
     if (response.isSuccess) {
-      navigateTo(toPage: const HomeView(), isRemove: true);
       showMessage(message: response.message, type: MessageType.success);
+      Navigator.pop(navigatorKey.currentContext!);
       emit(SentSuggestionsSuccess());
     } else {
       showMessage(message: response.message);

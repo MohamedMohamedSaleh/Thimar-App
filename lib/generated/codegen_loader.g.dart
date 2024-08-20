@@ -67,7 +67,7 @@ class CodegenLoader extends AssetLoader {
           "أدخل الكود المكون من 4 أرقام المرسل علي رقم الجوال",
       "change_phone_number": "نغيير رقم الجوال",
       "enter_the_code": "ادخل الكود",
-      "confirm_the_code": "تأكيد الكود",
+      "confirm_the_code": "جاري تأكيد الكود...",
       "didnt_receive_code": "لم تستلم الكود ؟",
       "you_can_receive_code_after": "يمكنك اعادة ارسال الكود بعد",
       "resend": "إعادة الارسال"
@@ -281,7 +281,7 @@ class CodegenLoader extends AssetLoader {
           "Enter the 4-digit code sent to your mobile number",
       "change_phone_number": "Change phone number",
       "enter_the_code": "Enter the code",
-      "confirm_the_code": "Confirm the code",
+      "confirm_the_code": "Confirm the code...",
       "didnt_receive_code": "Didn't receive the code?",
       "you_can_receive_code_after": "You can resend the code after",
       "resend": "Resend"

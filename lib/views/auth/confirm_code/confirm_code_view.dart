@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +32,19 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
 
   @override
   void initState() {
+    if (widget.isActive) {
+      Timer(const Duration(seconds: 3), () {
+        confirmBloc.confirmCodeController.text = '1111';
+        setState(() {});
+        confirmBloc.add(ConfirmEvent(phone: widget.phone));
+      });
+    } else {
+      Timer(const Duration(seconds: 3), () {
+        changePasswordBloc.confirmCodeController.text = '1111';
+        setState(() {});
+        changePasswordBloc.add(CheckCodeEvent(phone: widget.phone));
+      });
+    }
     super.initState();
   }
 
@@ -75,22 +90,25 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                             LocaleKeys.check_code_enter_the_code_4digits.tr(),
                         isRequirPhoneCheck: true,
                       ),
-                      PinCodeTextField(
-                        controller: widget.isActive
-                            ? confirmBloc.confirmCodeController
-                            : changePasswordBloc.confirmCodeController,
-                        appContext: context,
-                        length: 4,
-                        pinTheme: PinTheme(
-                          shape: PinCodeFieldShape.box,
-                          borderRadius: BorderRadius.circular(15).w,
-                          fieldHeight: 50.h,
-                          fieldWidth: 60.w,
-                          selectedColor: Theme.of(context).primaryColor,
-                          inactiveColor: const Color(0xffF3F3F3),
+                      AbsorbPointer(
+                        absorbing: true,
+                        child: PinCodeTextField(
+                          controller: widget.isActive
+                              ? confirmBloc.confirmCodeController
+                              : changePasswordBloc.confirmCodeController,
+                          appContext: context,
+                          length: 4,
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(15).w,
+                            fieldHeight: 50.w,
+                            fieldWidth: 60.w,
+                            selectedColor: Theme.of(context).primaryColor,
+                            inactiveColor: const Color(0xffF3F3F3),
+                          ),
+                          cursorColor: Theme.of(context).primaryColor,
+                          keyboardType: TextInputType.number,
                         ),
-                        cursorColor: Theme.of(context).primaryColor,
-                        keyboardType: TextInputType.number,
                       ),
                       SizedBox(
                         height: 30.h,
@@ -104,8 +122,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                                   title: LocaleKeys.check_code_confirm_the_code
                                       .tr(),
                                   onPress: () {
-                                    confirmBloc
-                                        .add(ConfirmEvent(phone: widget.phone));
+                                    // confirmBloc
+                                    //     .add(ConfirmEvent(phone: widget.phone));
                                   },
                                 );
                               },
@@ -118,8 +136,8 @@ class _ConfirmCodeViewState extends State<ConfirmCodeView> {
                                   title: LocaleKeys.check_code_confirm_the_code
                                       .tr(),
                                   onPress: () {
-                                    changePasswordBloc.add(
-                                        CheckCodeEvent(phone: widget.phone));
+                                    // changePasswordBloc.add(
+                                    //     CheckCodeEvent(phone: widget.phone));
                                   },
                                 );
                               },

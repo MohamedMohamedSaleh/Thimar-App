@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegetable_orders_project/core/logic/dio_helper.dart';
 import 'package:vegetable_orders_project/core/logic/helper_methods.dart';
-import 'package:vegetable_orders_project/views/home/home_view.dart';
 
 part 'edit_password_event.dart';
 part 'edit_password_state.dart';
@@ -31,7 +30,8 @@ class EditPasswordBloc extends Bloc<EditPasswordEvents, EditPasswordStates> {
       if (response.isSuccess) {
         emit(EditPasswordSuccess());
         showMessage(message: response.message, type: MessageType.success);
-        navigateTo(toPage: const HomeView(), isRemove: true);
+      Navigator.pop(navigatorKey.currentContext!);
+
       } else {
         emit(EditPasswordFailed());
         showMessage(message: response.message);

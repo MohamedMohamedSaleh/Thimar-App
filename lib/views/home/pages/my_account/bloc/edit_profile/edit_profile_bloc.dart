@@ -5,7 +5,6 @@ import '../../../../../../core/logic/cache_helper.dart';
 import '../../../../../../core/logic/dio_helper.dart';
 import '../../../../../../core/logic/helper_methods.dart';
 import '../../../../../../models/cities_model.dart';
-import '../../../../home_view.dart';
 import '../profile_model.dart';
 
 part 'edit_profile_event.dart';
@@ -38,7 +37,8 @@ class EditProfilBloc extends Bloc<EditDataEvents, EditDataStates> {
       if (response.isSuccess) {
         final model = ProfileData.fromJson(response.response!.data).data;
         CacheHelper.saveEditData(model);
-        navigateTo(toPage: const HomeView(), isRemove: true);
+        Navigator.pop(navigatorKey.currentContext!);
+
         showMessage(message: response.message, type: MessageType.success);
 
         emit(EditProfileDataSuccessState());
