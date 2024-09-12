@@ -5,7 +5,7 @@ import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 
 class DioHelper {
   final Dio _dio =
-      Dio(BaseOptions(baseUrl: "https://thimar.amr.aait-d.com/api/", headers: {
+      Dio(BaseOptions(baseUrl: "", headers: {
     'Accept': 'application/json',
     'Authorization': "Bearer ${CacheHelper.getUserToken()}",
     'Accept-Language': LocaleKeys.lang.tr(),
