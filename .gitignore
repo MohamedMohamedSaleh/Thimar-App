@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 # Ignore dio_helper.dart for sensitive data
-lib/core/logic/dio_helper.dart
+/lib/core/logic/dio_helper.dart
