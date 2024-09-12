@@ -4,6 +4,7 @@ import 'package:vegetable_orders_project/core/logic/cache_helper.dart';
 import 'package:vegetable_orders_project/generated/locale_keys.g.dart';
 
 class DioHelper {
+  // delete the base url 
   final Dio _dio =
       Dio(BaseOptions(baseUrl: "", headers: {
     'Accept': 'application/json',
