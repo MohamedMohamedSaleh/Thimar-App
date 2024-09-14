@@ -36,7 +36,8 @@ Thimar is a scalable e-commerce application built using the **Flutter** framewor
 
 
 ## 📸 Screenshots
-#### Auth
+
+### Auth
 
 <p align="left">
  <img src="https://github.com/user-attachments/assets/d2e25fd0-7214-430e-a4b8-f00181779f00" width="200" alt="auth">
@@ -47,6 +48,45 @@ Thimar is a scalable e-commerce application built using the **Flutter** framewor
  <img src="https://github.com/user-attachments/assets/33bf74cb-90ba-4570-a8c5-2ec513d1695a" width="200" alt="auth">
  <img src="https://github.com/user-attachments/assets/c8037d7a-fe6f-4b27-a9a5-0dbe9f312c38" width="200" alt="auth">
 
+</p>
+
+### Pages
+
+<p align="left">
+ <img src="https://github.com/user-attachments/assets/3d7faa32-85e5-4d0a-ad23-fa1615aff420" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/674e9d6e-fbd2-4c03-9f3d-a8c83273865c" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/39348ac3-689d-4fe5-9b36-29fe45ee9454" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/938963d1-0a7d-4f59-92b5-b298c7a9984a" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/cbda8a2f-5105-41b8-a518-fdcead42f429" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/14282586-29af-40eb-8270-9bdd2d389534" width="200" alt="auth">
+</p>
+
+### Screens
+
+<p align="left">
+ <img src="https://github.com/user-attachments/assets/241733fd-1fb9-48ab-830b-6a82090867ae" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/2e2987e9-e06f-4b33-9a18-43b981a31759" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/c25c469c-9232-4ffe-a7bc-12c1dc8f2ffa" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/f12bae64-7d5c-4484-8654-78343e6a8bef" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/eaf402ce-143a-4b30-b40d-063c64a4ed5b" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/6125b783-e411-4d2b-9372-88a0be8d8147" width="200" alt="auth">
+</p>
+
+### Acounte Screens
+
+<p align="left">
+ <img src="https://github.com/user-attachments/assets/9a7e947b-7a1a-413c-b5f3-80805800355d" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/d44e05e1-c7b6-4cf6-ad59-69d2652f2cb5" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/6562fb67-a43e-49e5-9e58-facf9f190ad2" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/822b64bc-7eb2-4fd2-99f3-a305954f349b" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/9a19d234-4e1b-4cd2-94ed-81881469de7c" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/16507157-7ee7-4ae3-bfcc-518e4f9b88d4" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/3ff1e0c0-a45f-43a3-b25c-4e244d2530d8" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/6fec97a8-1063-437e-9cfa-a93c47d68849" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/0dad82f3-6fd4-4a96-b174-c4150ac8f8a6" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/378db51b-a797-4c43-91b2-ac197ce833ab" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/225b0b07-b23b-4f1b-9c26-15ed291ed01e" width="200" alt="auth">
+ <img src="https://github.com/user-attachments/assets/16a9187a-01d5-444c-ab0f-03213866d99b" width="200" alt="auth">
 </p>
 
 <img align="center" src="https://64.media.tumblr.com/446f36513b5f3077749d1044fae86cc1/tumblr_n05yiydwuF1shpedgo1_500.gif" width= 70% height=5px>
